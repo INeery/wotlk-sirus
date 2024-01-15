@@ -202,11 +202,13 @@ type AttackTable struct {
 	MeleeCritSuppression float64
 	SpellCritSuppression float64
 
-	DamageDealtMultiplier        float64 // attacker buff, applied in applyAttackerModifiers()
-	DamageTakenMultiplier        float64 // defender debuff, applied in applyTargetModifiers()
-	NatureDamageTakenMultiplier  float64
-	HauntSEDamageTakenMultiplier float64
-	HealingDealtMultiplier       float64
+	DamageDealtMultiplier            float64 // attacker buff, applied in applyAttackerModifiers()
+	DamageTakenMultiplier            float64 // defender debuff, applied in applyTargetModifiers()
+	NatureDamageTakenMultiplier      float64
+	HauntSEDamageTakenMultiplier     float64
+	HealingDealtMultiplier           float64
+	StormstrikeDamageTakenMultiplier float64 // target debuff multiplies damage for non-periodic non-aoe shaman spells
+	MaelstromDamageMultiplier        float64
 }
 
 func NewAttackTable(attacker *Unit, defender *Unit) *AttackTable {
@@ -214,11 +216,13 @@ func NewAttackTable(attacker *Unit, defender *Unit) *AttackTable {
 		Attacker: attacker,
 		Defender: defender,
 
-		DamageDealtMultiplier:        1,
-		DamageTakenMultiplier:        1,
-		NatureDamageTakenMultiplier:  1,
-		HauntSEDamageTakenMultiplier: 1,
-		HealingDealtMultiplier:       1,
+		DamageDealtMultiplier:            1,
+		DamageTakenMultiplier:            1,
+		NatureDamageTakenMultiplier:      1,
+		HauntSEDamageTakenMultiplier:     1,
+		HealingDealtMultiplier:           1,
+		StormstrikeDamageTakenMultiplier: 1,
+		MaelstromDamageMultiplier:        1,
 	}
 
 	if defender.Type == EnemyUnit {

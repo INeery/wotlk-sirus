@@ -26,9 +26,9 @@ func (shaman *Shaman) registerLavaLashSpell() {
 
 	imbueMultiplier := 1.0
 	if shaman.SelfBuffs.ImbueOH == proto.ShamanImbue_FlametongueWeapon || shaman.SelfBuffs.ImbueOH == proto.ShamanImbue_FlametongueWeaponDownrank {
-		imbueMultiplier = 1.25
+		imbueMultiplier = 2
 		if shaman.HasMajorGlyph(proto.ShamanMajorGlyph_GlyphOfLavaLash) {
-			imbueMultiplier = 1.35
+			imbueMultiplier = 2.1
 		}
 	}
 
@@ -64,7 +64,7 @@ func (shaman *Shaman) registerLavaLashSpell() {
 			},
 		},
 
-		DamageMultiplier: imbueMultiplier *
+		DamageMultiplier: 0.7 * imbueMultiplier *
 			core.TernaryFloat64(shaman.HasSetBonus(ItemSetWorldbreakerBattlegear, 2), 1.2, 1),
 		CritMultiplier:   shaman.ElementalCritMultiplier(0),
 		ThreatMultiplier: shaman.spellThreatMultiplier(),

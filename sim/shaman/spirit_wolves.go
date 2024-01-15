@@ -22,8 +22,8 @@ type SpiritWolves struct {
 }
 
 func (SpiritWolves *SpiritWolves) EnableWithTimeout(sim *core.Simulation) {
-	SpiritWolves.SpiritWolf1.EnableWithTimeout(sim, SpiritWolves.SpiritWolf1, time.Second*45)
-	SpiritWolves.SpiritWolf2.EnableWithTimeout(sim, SpiritWolves.SpiritWolf1, time.Second*45)
+	SpiritWolves.SpiritWolf1.EnableWithTimeout(sim, SpiritWolves.SpiritWolf1, time.Second*25)
+	SpiritWolves.SpiritWolf2.EnableWithTimeout(sim, SpiritWolves.SpiritWolf1, time.Second*25)
 }
 
 func (SpiritWolves *SpiritWolves) CancelGCDTimer(sim *core.Simulation) {

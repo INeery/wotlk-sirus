@@ -385,9 +385,15 @@ func (spell *Spell) attackerDamageMultiplierInternal(attackTable *AttackTable) f
 		return 1
 	}
 
-	return spell.Unit.PseudoStats.DamageDealtMultiplier *
+	multiplier := spell.Unit.PseudoStats.DamageDealtMultiplier *
 		spell.Unit.PseudoStats.SchoolDamageDealtMultiplier[spell.SchoolIndex] *
 		attackTable.DamageDealtMultiplier
+
+	if spell.Flags.Matches(SpellFlagMaelstromBoostable) {
+		multiplier *= attackTable.MaelstromDamageMultiplier
+	}
+
+	return multiplier
 }
 
 func (result *SpellResult) applyTargetModifiers(spell *Spell, attackTable *AttackTable, isPeriodic bool) {
@@ -416,6 +422,10 @@ func (spell *Spell) TargetDamageMultiplier(attackTable *AttackTable, isPeriodic 
 
 	if spell.Flags.Matches(SpellFlagHauntSE) {
 		multiplier *= attackTable.HauntSEDamageTakenMultiplier
+	}
+
+	if spell.Flags.Matches(SpellFlagStormstrikeBoostable) {
+		multiplier *= attackTable.StormstrikeDamageTakenMultiplier
 	}
 
 	if spell.SpellSchool.Matches(SpellSchoolNature) {

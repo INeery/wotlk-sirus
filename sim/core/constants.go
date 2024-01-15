@@ -38,3 +38,5 @@ type Hand bool
 
 const MainHand Hand = true
 const OffHand Hand = false
+const DefaultMainHandMultiplier = 1
+const DefaultOffHandMultiplier = 0.5

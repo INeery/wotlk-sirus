@@ -49,7 +49,7 @@ func (shaman *Shaman) registerLavaBurstSpell() {
 		ActionID:    actionID,
 		SpellSchool: core.SpellSchoolFire,
 		ProcMask:    core.ProcMaskSpellDamage,
-		Flags:       SpellFlagFocusable | core.SpellFlagAPL,
+		Flags:       SpellFlagFocusable | core.SpellFlagAPL | core.SpellFlagStormstrikeBoostable | core.SpellFlagMaelstromBoostable,
 
 		ManaCost: core.ManaCostOptions{
 			BaseCost:   0.1,

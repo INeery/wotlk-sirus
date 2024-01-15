@@ -40,6 +40,7 @@ func (shaman *Shaman) ApplyTalents() {
 	}
 	if shaman.Talents.MentalDexterity > 0 {
 		shaman.AddStatDependency(stats.Intellect, stats.AttackPower, []float64{0, 0.33, 0.66, 1}[shaman.Talents.MentalDexterity])
+		shaman.AddStat(stats.SpellHit, float64(shaman.Talents.MentalDexterity*1))
 	}
 	if shaman.Talents.NaturesBlessing > 0 {
 		shaman.AddStatDependency(stats.Intellect, stats.SpellPower, 0.1*float64(shaman.Talents.NaturesBlessing))
@@ -414,6 +415,11 @@ func (shaman *Shaman) applyMaelstromWeapon() {
 			multDiff := 0.2 * float64(newStacks-oldStacks)
 			shaman.LightningBolt.CastTimeMultiplier -= multDiff
 			shaman.ChainLightning.CastTimeMultiplier -= multDiff
+			shaman.LavaBurst.CastTimeMultiplier -= multDiff
+
+			for _, target := range shaman.Env.Encounter.TargetUnits {
+				shaman.AttackTables[target.UnitIndex].MaelstromDamageMultiplier = 1.0 + 0.05*float64(newStacks)
+			}
 
 			if enhT10Bonus && shaman.MaelstromWeaponAura.GetStacks() == 5 {
 				if sim.RandomFloat("Maelstrom Power") < 0.15 {
@@ -422,15 +428,18 @@ func (shaman *Shaman) applyMaelstromWeapon() {
 			}
 		},
 		OnSpellHitDealt: func(aura *core.Aura, sim *core.Simulation, spell *core.Spell, result *core.SpellResult) {
-			if !spell.Flags.Matches(SpellFlagElectric) {
+			if !spell.Flags.Matches(core.SpellFlagMaelstromBoostable) {
 				return
 			}
+
+			for _, target := range shaman.Env.Encounter.TargetUnits {
+				shaman.AttackTables[target.UnitIndex].MaelstromDamageMultiplier = 1.0
+			}
+
 			shaman.MaelstromWeaponAura.Deactivate(sim)
 		},
 	})
 
-	ppmm := shaman.AutoAttacks.NewPPMManager(core.TernaryFloat64(shaman.HasSetBonus(ItemSetWorldbreakerBattlegear, 4), 2.4, 2.0)*
-		float64(shaman.Talents.MaelstromWeapon), core.ProcMaskMelee)
 	// This aura is hidden, just applies stacks of the proc aura.
 	shaman.RegisterAura(core.Aura{
 		Label:    "MaelstromWeapon",
@@ -443,9 +452,13 @@ func (shaman *Shaman) applyMaelstromWeapon() {
 				return
 			}
 
-			if ppmm.Proc(sim, spell.ProcMask, "Maelstrom Weapon") {
+			if spell.ProcMask.Matches(core.ProcMaskMeleeMHAuto | core.ProcMaskMeleeOHAuto) {
 				shaman.MaelstromWeaponAura.Activate(sim)
 				shaman.MaelstromWeaponAura.AddStack(sim)
+
+				if result.DidCrit() {
+					shaman.MaelstromWeaponAura.AddStack(sim)
+				}
 			}
 		},
 	})

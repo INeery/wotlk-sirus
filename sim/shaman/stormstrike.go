@@ -19,17 +19,16 @@ func (shaman *Shaman) StormstrikeDebuffAura(target *core.Unit) *core.Aura {
 		Duration:  time.Second * 12,
 		MaxStacks: 4,
 		OnGain: func(aura *core.Aura, sim *core.Simulation) {
-			shaman.AttackTables[aura.Unit.UnitIndex].NatureDamageTakenMultiplier *= core.TernaryFloat64(shaman.HasMajorGlyph(proto.ShamanMajorGlyph_GlyphOfStormstrike), 1.28, 1.2)
+			shaman.AttackTables[aura.Unit.UnitIndex].StormstrikeDamageTakenMultiplier *= core.TernaryFloat64(shaman.HasMajorGlyph(proto.ShamanMajorGlyph_GlyphOfStormstrike), 1.32, 1.2)
 		},
 		OnExpire: func(aura *core.Aura, sim *core.Simulation) {
-			shaman.AttackTables[aura.Unit.UnitIndex].NatureDamageTakenMultiplier /= core.TernaryFloat64(shaman.HasMajorGlyph(proto.ShamanMajorGlyph_GlyphOfStormstrike), 1.28, 1.2)
-
+			shaman.AttackTables[aura.Unit.UnitIndex].StormstrikeDamageTakenMultiplier /= core.TernaryFloat64(shaman.HasMajorGlyph(proto.ShamanMajorGlyph_GlyphOfStormstrike), 1.32, 1.2)
 		},
 		OnSpellHitTaken: func(aura *core.Aura, sim *core.Simulation, spell *core.Spell, result *core.SpellResult) {
 			if spell.Unit != &shaman.Unit {
 				return
 			}
-			if spell.SpellSchool != core.SpellSchoolNature {
+			if !spell.Flags.Matches(core.SpellFlagStormstrikeBoostable) {
 				return
 			}
 			if !result.Landed() || result.Damage == 0 {
@@ -88,12 +87,12 @@ func (shaman *Shaman) registerStormstrikeSpell() {
 
 	manaMetrics := shaman.NewManaMetrics(core.ActionID{SpellID: 51522})
 
-	cooldownTime := time.Duration(core.TernaryFloat64(shaman.HasSetBonus(ItemSetGladiatorsEarthshaker, 4), 6, 8))
+	cooldownTime := time.Duration(core.TernaryFloat64(shaman.HasSetBonus(ItemSetGladiatorsEarthshaker, 4), 4, 6))
 	impSSChance := 0.5 * float64(shaman.Talents.ImprovedStormstrike)
 
 	shaman.Stormstrike = shaman.RegisterSpell(core.SpellConfig{
 		ActionID:    StormstrikeActionID,
-		SpellSchool: core.SpellSchoolPhysical,
+		SpellSchool: core.SpellSchoolNature,
 		ProcMask:    core.ProcMaskMeleeMHSpecial,
 		Flags:       core.SpellFlagMeleeMetrics | core.SpellFlagAPL | core.SpellFlagIncludeTargetBonusDamage,
 
@@ -112,14 +111,14 @@ func (shaman *Shaman) registerStormstrikeSpell() {
 		},
 
 		ThreatMultiplier: 1,
-		DamageMultiplier: core.TernaryFloat64(shaman.HasSetBonus(ItemSetWorldbreakerBattlegear, 2), 1.2, 1),
+		DamageMultiplier: 1,
 		CritMultiplier:   shaman.DefaultMeleeCritMultiplier(),
 
 		ApplyEffects: func(sim *core.Simulation, target *core.Unit, spell *core.Spell) {
 			result := spell.CalcOutcome(sim, target, spell.OutcomeMeleeSpecialHit)
 			if result.Landed() {
 				if impSSChance > 0 && sim.RandomFloat("Improved Stormstrike") < impSSChance {
-					shaman.AddMana(sim, 0.2*shaman.BaseMana, manaMetrics)
+					shaman.AddMana(sim, (0.2+float64(shaman.Talents.ImprovedStormstrike)*0.2)*shaman.BaseMana, manaMetrics)
 				}
 				ssDebuffAura := ssDebuffAuras.Get(target)
 				ssDebuffAura.Activate(sim)

@@ -55,9 +55,10 @@ func NewEnhancementShaman(character *core.Character, options *proto.Player) *Enh
 
 	// Enable Auto Attacks for this spec
 	enh.EnableAutoAttacks(enh, core.AutoAttackOptions{
-		MainHand:       enh.WeaponFromMainHand(enh.DefaultMeleeCritMultiplier()),
-		OffHand:        enh.WeaponFromOffHand(enh.DefaultMeleeCritMultiplier()),
-		AutoSwingMelee: true,
+		MainHand:          enh.WeaponFromMainHand(enh.DefaultMeleeCritMultiplier()),
+		OffHand:           enh.WeaponFromOffHand(enh.DefaultMeleeCritMultiplier()),
+		AutoSwingMelee:    true,
+		OffHandMultiplier: CalculateOffhandMultiplier(enh),
 	})
 
 	enh.ApplySyncType(enhOptions.Options.SyncType)
@@ -86,6 +87,19 @@ func NewEnhancementShaman(character *core.Character, options *proto.Player) *Enh
 	enh.ShamanisticRageManaThreshold = enhOptions.Rotation.ShamanisticRageManaThreshold
 
 	return enh
+}
+
+func CalculateOffhandMultiplier(enh *EnhancementShaman) float64 {
+	switch enh.Talents.DualWieldSpecialization {
+	case 1:
+		return 0.665
+	case 2:
+		return 0.83
+	case 3:
+		return 1
+	default:
+		return 0.5
+	}
 }
 
 func (enh *EnhancementShaman) getImbueProcMask(imbue proto.ShamanImbue) core.ProcMask {

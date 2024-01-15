@@ -117,16 +117,16 @@ func (weapon *Weapon) AverageDamage() float64 {
 	return (weapon.BaseDamageMin + weapon.BaseDamageMax) / 2
 }
 
-func (weapon *Weapon) CalculateWeaponDamage(sim *Simulation, attackPower float64) float64 {
-	return weapon.BaseDamage(sim) + (weapon.SwingSpeed*attackPower)/weapon.AttackPowerPerDPS
+func (wa *WeaponAttack) CalculateWeaponDamage(sim *Simulation, attackPower float64) float64 {
+	return (wa.BaseDamage(sim) + (wa.SwingSpeed*attackPower)/wa.AttackPowerPerDPS) * wa.attackMultiplier
 }
 
-func (weapon *Weapon) CalculateAverageWeaponDamage(attackPower float64) float64 {
-	return weapon.AverageDamage() + (weapon.SwingSpeed*attackPower)/weapon.AttackPowerPerDPS
+func (wa *WeaponAttack) CalculateAverageWeaponDamage(attackPower float64) float64 {
+	return (wa.AverageDamage() + (wa.SwingSpeed*attackPower)/wa.AttackPowerPerDPS) * wa.attackMultiplier
 }
 
-func (weapon *Weapon) CalculateNormalizedWeaponDamage(sim *Simulation, attackPower float64) float64 {
-	return weapon.BaseDamage(sim) + (weapon.NormalizedSwingSpeed*attackPower)/weapon.AttackPowerPerDPS
+func (wa *WeaponAttack) CalculateNormalizedWeaponDamage(sim *Simulation, attackPower float64) float64 {
+	return (wa.BaseDamage(sim) + (wa.NormalizedSwingSpeed*attackPower)/wa.AttackPowerPerDPS) * wa.attackMultiplier
 }
 
 func (unit *Unit) MHWeaponDamage(sim *Simulation, attackPower float64) float64 {
@@ -137,10 +137,10 @@ func (unit *Unit) MHNormalizedWeaponDamage(sim *Simulation, attackPower float64)
 }
 
 func (unit *Unit) OHWeaponDamage(sim *Simulation, attackPower float64) float64 {
-	return 0.5 * unit.AutoAttacks.oh.CalculateWeaponDamage(sim, attackPower)
+	return unit.AutoAttacks.oh.CalculateWeaponDamage(sim, attackPower)
 }
 func (unit *Unit) OHNormalizedWeaponDamage(sim *Simulation, attackPower float64) float64 {
-	return 0.5 * unit.AutoAttacks.oh.CalculateNormalizedWeaponDamage(sim, attackPower)
+	return unit.AutoAttacks.oh.CalculateNormalizedWeaponDamage(sim, attackPower)
 }
 
 func (unit *Unit) RangedWeaponDamage(sim *Simulation, attackPower float64) float64 {
@@ -164,7 +164,7 @@ func (spell *Spell) IsMelee() bool {
 	return spell.ProcMask.Matches(ProcMaskMelee)
 }
 
-func (aa *AutoAttacks) MH() *Weapon {
+func (aa *AutoAttacks) MH() *WeaponAttack {
 	return aa.mh.getWeapon()
 }
 
@@ -172,7 +172,7 @@ func (aa *AutoAttacks) SetMH(weapon Weapon) {
 	aa.mh.setWeapon(weapon)
 }
 
-func (aa *AutoAttacks) OH() *Weapon {
+func (aa *AutoAttacks) OH() *WeaponAttack {
 	return aa.oh.getWeapon()
 }
 
@@ -180,7 +180,7 @@ func (aa *AutoAttacks) SetOH(weapon Weapon) {
 	aa.oh.setWeapon(weapon)
 }
 
-func (aa *AutoAttacks) Ranged() *Weapon {
+func (aa *AutoAttacks) Ranged() *WeaponAttack {
 	return aa.ranged.getWeapon()
 }
 
@@ -239,10 +239,13 @@ type WeaponAttack struct {
 
 	curSwingSpeed    float64
 	curSwingDuration time.Duration
+
+	// Attack damage multiplier. Typically, 1 for MH and 0.5  for OH
+	attackMultiplier float64
 }
 
-func (wa *WeaponAttack) getWeapon() *Weapon {
-	return &wa.Weapon
+func (wa *WeaponAttack) getWeapon() *WeaponAttack {
+	return wa
 }
 
 func (wa *WeaponAttack) setWeapon(weapon Weapon) {
@@ -313,12 +316,13 @@ type AutoAttacks struct {
 
 // Options for initializing auto attacks.
 type AutoAttackOptions struct {
-	MainHand        Weapon
-	OffHand         Weapon
-	Ranged          Weapon
-	AutoSwingMelee  bool // If true, core engine will handle calling SwingMelee() for you.
-	AutoSwingRanged bool // If true, core engine will handle calling SwingRanged() for you.
-	ReplaceMHSwing  ReplaceMHSwing
+	MainHand          Weapon
+	OffHand           Weapon
+	Ranged            Weapon
+	AutoSwingMelee    bool // If true, core engine will handle calling SwingMelee() for you.
+	AutoSwingRanged   bool // If true, core engine will handle calling SwingRanged() for you.
+	ReplaceMHSwing    ReplaceMHSwing
+	OffHandMultiplier float64 // Typically, 0.5 for offhand. Also, considered 0.5 if not filled
 }
 
 func (unit *Unit) EnableAutoAttacks(agent Agent, options AutoAttackOptions) {
@@ -328,6 +332,9 @@ func (unit *Unit) EnableAutoAttacks(agent Agent, options AutoAttackOptions) {
 	if options.OffHand.AttackPowerPerDPS == 0 {
 		options.OffHand.AttackPowerPerDPS = DefaultAttackPowerPerDPS
 	}
+	if options.OffHandMultiplier == 0 {
+		options.OffHandMultiplier = DefaultOffHandMultiplier
+	}
 
 	unit.AutoAttacks = AutoAttacks{
 		AutoSwingMelee:  options.AutoSwingMelee,
@@ -336,20 +343,23 @@ func (unit *Unit) EnableAutoAttacks(agent Agent, options AutoAttackOptions) {
 		IsDualWielding: options.OffHand.SwingSpeed != 0,
 
 		mh: WeaponAttack{
-			agent:        agent,
-			unit:         unit,
-			Weapon:       options.MainHand,
-			replaceSwing: options.ReplaceMHSwing,
+			agent:            agent,
+			unit:             unit,
+			Weapon:           options.MainHand,
+			replaceSwing:     options.ReplaceMHSwing,
+			attackMultiplier: DefaultMainHandMultiplier,
 		},
 		oh: WeaponAttack{
-			agent:  agent,
-			unit:   unit,
-			Weapon: options.OffHand,
+			agent:            agent,
+			unit:             unit,
+			Weapon:           options.OffHand,
+			attackMultiplier: options.OffHandMultiplier,
 		},
 		ranged: WeaponAttack{
-			agent:  agent,
-			unit:   unit,
-			Weapon: options.Ranged,
+			agent:            agent,
+			unit:             unit,
+			Weapon:           options.Ranged,
+			attackMultiplier: DefaultMainHandMultiplier,
 		},
 	}
 

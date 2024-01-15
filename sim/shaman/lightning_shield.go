@@ -13,7 +13,6 @@ func (shaman *Shaman) registerLightningShieldSpell() {
 	}
 
 	actionID := core.ActionID{SpellID: 49281}
-	procChance := 0.02*float64(shaman.Talents.StaticShock) + core.TernaryFloat64(shaman.HasSetBonus(ItemSetThrallsBattlegear, 2), 0.03, 0)
 
 	procSpell := shaman.RegisterSpell(core.SpellConfig{
 		ActionID:    core.ActionID{SpellID: 49279},
@@ -41,22 +40,12 @@ func (shaman *Shaman) registerLightningShieldSpell() {
 		Label:     "Lightning Shield",
 		ActionID:  actionID,
 		Duration:  time.Minute * 10,
-		MaxStacks: 9,
+		MaxStacks: 3,
 		OnReset: func(aura *core.Aura, sim *core.Simulation) {
 			aura.Activate(sim)
 		},
 		OnGain: func(aura *core.Aura, sim *core.Simulation) {
-			aura.SetStacks(sim, 3+(2*shaman.Talents.StaticShock))
-		},
-		OnSpellHitDealt: func(aura *core.Aura, sim *core.Simulation, spell *core.Spell, result *core.SpellResult) {
-			if !spell.ProcMask.Matches(core.ProcMaskMelee) || !result.Landed() {
-				return
-			}
-			if sim.RandomFloat("Static Shock") > procChance {
-				return
-			}
-			aura.RemoveStack(sim)
-			procSpell.Cast(sim, result.Target)
+			aura.SetStacks(sim, 3)
 		},
 		OnSpellHitTaken: func(aura *core.Aura, sim *core.Simulation, spell *core.Spell, result *core.SpellResult) {
 			if !spell.ProcMask.Matches(core.ProcMaskMelee) || !result.Landed() {
