@@ -13,6 +13,8 @@ import (
 type SpiritWolf struct {
 	core.Pet
 
+	spiritBite *core.Spell
+
 	shamanOwner *Shaman
 }
 
@@ -42,7 +44,7 @@ var spiritWolfBaseStats = stats.Stats{
 	stats.AttackPower: -20,
 
 	// Add 1.8% because pets aren't affected by that component of crit suppression.
-	stats.MeleeCrit: (1.1515 + 1.8) * core.CritRatingPerCritChance,
+	// stats.MeleeCrit: (1.1515 + 1.8) * core.CritRatingPerCritChance,
 }
 
 func (shaman *Shaman) NewSpiritWolf(index int) *SpiritWolf {
@@ -62,6 +64,7 @@ func (shaman *Shaman) NewSpiritWolf(index int) *SpiritWolf {
 	})
 
 	spiritWolf.AddStatDependency(stats.Strength, stats.AttackPower, 2)
+	// TO DO учитывается ли зависимость от ловкости или тупо крита шамана?
 	spiritWolf.AddStatDependency(stats.Agility, stats.MeleeCrit, core.CritRatingPerCritChance/83.3)
 	core.ApplyPetConsumeEffects(&spiritWolf.Character, shaman.Consumes)
 
@@ -81,15 +84,15 @@ func (shaman *Shaman) makeStatInheritance() core.PetStatInheritance {
 			stats.Stamina:     ownerStats[stats.Stamina] * 0.3,
 			stats.Armor:       ownerStats[stats.Armor] * 0.35,
 			stats.AttackPower: ownerStats[stats.AttackPower] * (core.TernaryFloat64(shaman.HasMajorGlyph(proto.ShamanMajorGlyph_GlyphOfFeralSpirit), 0.61, 0.31)),
-
-			stats.MeleeHit:  hitRatingFromOwner,
-			stats.Expertise: math.Floor(math.Floor(ownerHitChance)*PetExpertiseScale) * core.ExpertisePerQuarterPercentReduction,
+			stats.MeleeCrit:   ownerStats[stats.MeleeCrit],
+			stats.MeleeHit:    hitRatingFromOwner,
+			stats.Expertise:   math.Floor(math.Floor(ownerHitChance)*PetExpertiseScale) * core.ExpertisePerQuarterPercentReduction,
 		}
 	}
 }
 
 func (spiritWolf *SpiritWolf) Initialize() {
-	// Nothing
+	spiritWolf.RegisterSpiritByteSpell()
 }
 
 func (spiritWolf *SpiritWolf) ExecuteCustomRotation(_ *core.Simulation) {
@@ -107,4 +110,29 @@ func (spiritWolf *SpiritWolf) Reset(sim *core.Simulation) {
 
 func (spiritWolf *SpiritWolf) GetPet() *core.Pet {
 	return &spiritWolf.Pet
+}
+
+func (spiritWolf *SpiritWolf) RegisterSpiritByteSpell() {
+	spiritWolf.spiritBite = spiritWolf.RegisterSpell(core.SpellConfig{
+		ActionID:    core.ActionID{SpellID: 373531},
+		SpellSchool: core.SpellSchoolNature,
+		ProcMask:    core.ProcMaskMeleeMHSpecial,
+		Flags:       core.SpellFlagMeleeMetrics,
+
+		Cast: core.CastConfig{
+			DefaultCast: core.Cast{
+				GCD: core.GCDDefault,
+			},
+			IgnoreHaste: true, // TO DO а игнорирует ли? нужны замеры бл и тд
+		},
+
+		CritMultiplier:   2,
+		ThreatMultiplier: 1,
+
+		ApplyEffects: func(sim *core.Simulation, target *core.Unit, spell *core.Spell) {
+			//baseDamage := sim.Roll(203, 227) + 0.571*spell.SpellPower()
+			//spell.CalcAndDealDamage(sim, target, baseDamage, spell.OutcomeMagicHitAndCrit)
+			// TO DO написать расчёт
+		},
+	})
 }
