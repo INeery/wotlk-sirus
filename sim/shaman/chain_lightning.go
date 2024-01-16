@@ -8,7 +8,7 @@ import (
 )
 
 func (shaman *Shaman) registerChainLightningSpell() {
-	numHits := min(core.TernaryInt32(shaman.HasMajorGlyph(proto.ShamanMajorGlyph_GlyphOfChainLightning), 4, 3), shaman.Env.GetNumTargets())
+	numHits := GetChainLightningHitsNumber(shaman)
 	shaman.ChainLightning = shaman.newChainLightningSpell(false)
 	shaman.ChainLightningLOs = []*core.Spell{}
 	for i := int32(0); i < numHits; i++ {
@@ -26,12 +26,13 @@ func (shaman *Shaman) newChainLightningSpell(isLightningOverload bool) *core.Spe
 	if !isLightningOverload {
 		spellConfig.Cast.CD = core.Cooldown{
 			Timer:    shaman.NewTimer(),
-			Duration: time.Second*6 - []time.Duration{0, 750 * time.Millisecond, 1500 * time.Millisecond, 2500 * time.Millisecond}[shaman.Talents.StormEarthAndFire],
+			Duration: GetChainLightningCooldown(shaman),
 		}
 	}
 
-	numHits := min(core.TernaryInt32(shaman.HasMajorGlyph(proto.ShamanMajorGlyph_GlyphOfChainLightning), 4, 3), shaman.Env.GetNumTargets())
-	dmgReductionPerBounce := core.TernaryFloat64(shaman.HasSetBonus(ItemSetTidefury, 2), 0.83, 0.7)
+	numHits := GetChainLightningHitsNumber(shaman)
+
+	dmgMultiplierPerBounce := GetGetChainLightningBounceMultiplier(shaman)
 	dmgBonus := shaman.electricSpellBonusDamage(0.5714)
 	spellCoeff := 0.5714 + 0.04*float64(shaman.Talents.Shamanism)
 
@@ -52,10 +53,31 @@ func (shaman *Shaman) newChainLightningSpell(isLightningOverload bool) *core.Spe
 
 			spell.DealDamage(sim, result)
 
-			bounceCoeff *= dmgReductionPerBounce
+			bounceCoeff *= dmgMultiplierPerBounce
 			curTarget = sim.Environment.NextTargetUnit(curTarget)
 		}
 	}
 
 	return shaman.RegisterSpell(spellConfig)
+}
+
+func GetChainLightningHitsNumber(shaman *Shaman) int32 {
+	bonusHits := core.TernaryInt32(shaman.HasMajorGlyph(proto.ShamanMajorGlyph_GlyphOfChainLightning), 1, 0)
+	bonusHits += shaman.Talents.StaticShock
+	numHits := min(3+bonusHits, shaman.Env.GetNumTargets())
+	return numHits
+}
+
+func GetChainLightningCooldown(shaman *Shaman) time.Duration {
+	cooldown := time.Second*6 - []time.Duration{0, 750 * time.Millisecond, 1500 * time.Millisecond, 2500 * time.Millisecond}[shaman.Talents.StormEarthAndFire]
+	cooldown -= []time.Duration{0, 2 * time.Second, 4 * time.Second, 6 * time.Second}[shaman.Talents.StaticShock]
+
+	return max(cooldown, 0)
+}
+
+func GetGetChainLightningBounceMultiplier(shaman *Shaman) float64 {
+	dmgReductionPerBounce := core.TernaryFloat64(shaman.HasSetBonus(ItemSetTidefury, 2), 0.87, 0.7)
+	dmgReductionPerBounce += float64(shaman.Talents.StaticShock) * 0.1
+
+	return max(dmgReductionPerBounce, 1)
 }
