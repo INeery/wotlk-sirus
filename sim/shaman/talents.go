@@ -47,6 +47,7 @@ func (shaman *Shaman) ApplyTalents() {
 	}
 
 	if shaman.Talents.SpiritWeapons {
+		shaman.MultiplyStat(stats.Stamina, 0.2)
 		shaman.PseudoStats.ThreatMultiplier *= 0.7
 		shaman.PseudoStats.CanParry = true
 	}
@@ -405,7 +406,7 @@ func (shaman *Shaman) applyMaelstromWeapon() {
 	// for LB / CL / LvB
 	// They can't actually hit while casting, but the AA timer doesnt reset if you cast during the AA timer.
 
-	// For sim purposes maelstrom weapon only impacts CL / LB
+	// For sim purposes maelstrom weapon only impacts CL / LB / LB
 	shaman.MaelstromWeaponAura = shaman.RegisterAura(core.Aura{
 		Label:     "MaelstromWeapon Proc",
 		ActionID:  core.ActionID{SpellID: 53817},
