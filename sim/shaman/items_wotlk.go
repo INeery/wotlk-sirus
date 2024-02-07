@@ -201,10 +201,10 @@ var ItemSetEarthshatterBattlegear = core.NewItemSet(core.ItemSet{
 	Name: "Earthshatter Battlegear",
 	Bonuses: map[int32]core.ApplyEffect{
 		2: func(agent core.Agent) {
-			// 10% damage to lightning shield. implemented in lightning_shield.go
+			// Lava lash triggers aoe that deals damage equals to 30% of shaman's AP
 		},
 		4: func(agent core.Agent) {
-			// +5% to flurry. implemented in talents.go
+			// earth shock damage +95%
 		},
 	},
 })
@@ -213,10 +213,10 @@ var ItemSetWorldbreakerBattlegear = core.NewItemSet(core.ItemSet{
 	Name: "Worldbreaker Battlegear",
 	Bonuses: map[int32]core.ApplyEffect{
 		2: func(agent core.Agent) {
-			//20% damage to stormstrike and lava lash
+			//33% damage to LB
 		},
 		4: func(agent core.Agent) {
-			//20% increase to maelstrom proc rate
+			//34% damage to CL
 		},
 	},
 })

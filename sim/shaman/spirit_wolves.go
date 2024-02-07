@@ -15,6 +15,8 @@ type SpiritWolf struct {
 
 	spiritBite *core.Spell
 
+	extraSpiritBite *core.Spell
+
 	shamanOwner *Shaman
 }
 
@@ -29,8 +31,8 @@ func (SpiritWolves *SpiritWolves) EnableWithTimeout(sim *core.Simulation) {
 }
 
 func (SpiritWolves *SpiritWolves) CancelGCDTimer(sim *core.Simulation) {
-	SpiritWolves.SpiritWolf1.CancelGCDTimer(sim)
-	SpiritWolves.SpiritWolf2.CancelGCDTimer(sim)
+	//SpiritWolves.SpiritWolf1.CancelGCDTimer(sim)
+	//SpiritWolves.SpiritWolf2.CancelGCDTimer(sim)
 }
 
 var spiritWolfBaseStats = stats.Stats{
@@ -43,8 +45,10 @@ var spiritWolfBaseStats = stats.Stats{
 	stats.Strength:    331,
 	stats.AttackPower: -20,
 
+	//stats.Mana: 10000,
+
 	// Add 1.8% because pets aren't affected by that component of crit suppression.
-	// stats.MeleeCrit: (1.1515 + 1.8) * core.CritRatingPerCritChance,
+	stats.MeleeCrit: (1.1515 + 1.8) * core.CritRatingPerCritChance,
 }
 
 func (shaman *Shaman) NewSpiritWolf(index int) *SpiritWolf {
@@ -53,19 +57,10 @@ func (shaman *Shaman) NewSpiritWolf(index int) *SpiritWolf {
 		shamanOwner: shaman,
 	}
 
-	spiritWolf.EnableAutoAttacks(spiritWolf, core.AutoAttackOptions{
-		MainHand: core.Weapon{
-			BaseDamageMin:  246,
-			BaseDamageMax:  372,
-			SwingSpeed:     1.5,
-			CritMultiplier: 2,
-		},
-		AutoSwingMelee: true,
-	})
-
 	spiritWolf.AddStatDependency(stats.Strength, stats.AttackPower, 2)
 	// TO DO учитывается ли зависимость от ловкости или тупо крита шамана?
 	spiritWolf.AddStatDependency(stats.Agility, stats.MeleeCrit, core.CritRatingPerCritChance/83.3)
+
 	core.ApplyPetConsumeEffects(&spiritWolf.Character, shaman.Consumes)
 
 	shaman.AddPet(spiritWolf)
@@ -92,10 +87,26 @@ func (shaman *Shaman) makeStatInheritance() core.PetStatInheritance {
 }
 
 func (spiritWolf *SpiritWolf) Initialize() {
-	spiritWolf.RegisterSpiritByteSpell()
+	spiritWolf.spiritBite = spiritWolf.RegisterSpiritByteSpell(false)
+	spiritWolf.extraSpiritBite = spiritWolf.RegisterSpiritByteSpell(true)
 }
 
-func (spiritWolf *SpiritWolf) ExecuteCustomRotation(_ *core.Simulation) {
+func (spiritWolf *SpiritWolf) ExecuteCustomRotation(sim *core.Simulation) {
+	if !spiritWolf.spiritBite.IsReady(sim) {
+		spiritWolf.WaitUntil(sim, spiritWolf.spiritBite.CD.ReadyAt())
+		return
+	}
+
+	spiritWolf.spiritBite.Cast(sim, spiritWolf.CurrentTarget)
+}
+
+func (shaman *Shaman) BiteWhenWolvesAreActive(sim *core.Simulation, target *core.Unit) {
+	if shaman.SpiritWolves.SpiritWolf1.IsEnabled() {
+		shaman.SpiritWolves.SpiritWolf1.extraSpiritBite.Cast(sim, target)
+	}
+	if shaman.SpiritWolves.SpiritWolf2.IsEnabled() {
+		shaman.SpiritWolves.SpiritWolf2.extraSpiritBite.Cast(sim, target)
+	}
 }
 
 func (spiritWolf *SpiritWolf) Reset(sim *core.Simulation) {
@@ -112,27 +123,28 @@ func (spiritWolf *SpiritWolf) GetPet() *core.Pet {
 	return &spiritWolf.Pet
 }
 
-func (spiritWolf *SpiritWolf) RegisterSpiritByteSpell() {
-	spiritWolf.spiritBite = spiritWolf.RegisterSpell(core.SpellConfig{
-		ActionID:    core.ActionID{SpellID: 373531},
+func (spiritWolf *SpiritWolf) RegisterSpiritByteSpell(isExtraBite bool) *core.Spell {
+	return spiritWolf.RegisterSpell(core.SpellConfig{
+		ActionID:    core.ActionID{SpellID: 47964},
 		SpellSchool: core.SpellSchoolNature,
 		ProcMask:    core.ProcMaskMeleeMHSpecial,
 		Flags:       core.SpellFlagMeleeMetrics,
 
 		Cast: core.CastConfig{
 			DefaultCast: core.Cast{
-				GCD: core.GCDDefault,
+				GCD: core.Ternary(isExtraBite, 0, core.GCDDefault),
 			},
 			IgnoreHaste: true, // TO DO а игнорирует ли? нужны замеры бл и тд
 		},
 
+		DamageMultiplier: 1,
 		CritMultiplier:   2,
 		ThreatMultiplier: 1,
 
 		ApplyEffects: func(sim *core.Simulation, target *core.Unit, spell *core.Spell) {
-			//baseDamage := sim.Roll(203, 227) + 0.571*spell.SpellPower()
-			//spell.CalcAndDealDamage(sim, target, baseDamage, spell.OutcomeMagicHitAndCrit)
-			// TO DO написать расчёт
+			ownerDmgMultiplier := spiritWolf.Owner.AttackTables[target.UnitIndex].DamageDealtMultiplier
+			baseDamage := spiritWolf.Unit.GetStats()[stats.AttackPower] * 0.125 * ownerDmgMultiplier
+			spell.CalcAndDealDamage(sim, target, baseDamage, spell.OutcomeMeleeSpecialHitAndCrit)
 		},
 	})
 }

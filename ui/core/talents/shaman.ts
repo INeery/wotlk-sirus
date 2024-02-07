@@ -96,7 +96,7 @@ export const shamanGlyphsConfig: GlyphsConfig = {
 		},
 		[ShamanMajorGlyph.GlyphOfLightningBolt]: {
 			name: 'Glyph of Lightning Bolt',
-			description: 'Increases the damage dealt by Lightning Bolt by 4%.',
+			description: 'Increases the damage dealt by Lightning Bolt by 10%.',
 			iconUrl: 'https://wow.zamimg.com/images/wow/icons/large/spell_nature_lightning.jpg',
 		},
 		[ShamanMajorGlyph.GlyphOfLightningShield]: {
@@ -126,7 +126,7 @@ export const shamanGlyphsConfig: GlyphsConfig = {
 		},
 		[ShamanMajorGlyph.GlyphOfStormstrike]: {
 			name: 'Glyph of Stormstrike',
-			description: 'Increases the Nature damage bonus from your Stormstrike ability by an additional 8%.',
+			description: 'Increases the Nature damage bonus from your Stormstrike ability by an additional 12%.',
 			iconUrl: 'https://wow.zamimg.com/images/wow/icons/large/ability_shaman_stormstrike.jpg',
 		},
 		[ShamanMajorGlyph.GlyphOfThunder]: {

@@ -20,11 +20,15 @@ func (shaman *Shaman) newLightningBoltSpellConfig(isLightningOverload bool) core
 		isLightningOverload)
 
 	if shaman.HasMajorGlyph(proto.ShamanMajorGlyph_GlyphOfLightningBolt) {
-		spellConfig.DamageMultiplier += 0.04
+		spellConfig.DamageMultiplier += 0.1
 	}
 
 	if shaman.HasSetBonus(ItemSetSkyshatterRegalia, 4) {
 		spellConfig.DamageMultiplier += 0.05
+	}
+
+	if shaman.HasSetBonus(ItemSetWorldbreakerBattlegear, 2) {
+		spellConfig.DamageMultiplier += 0.33
 	}
 
 	var lbDotSpell *core.Spell
@@ -81,6 +85,10 @@ func (shaman *Shaman) newLightningBoltSpellConfig(isLightningOverload bool) core
 		}
 
 		spell.DealDamage(sim, result)
+
+		if result.Landed() {
+			shaman.BiteWhenWolvesAreActive(sim, target)
+		}
 	}
 
 	return spellConfig

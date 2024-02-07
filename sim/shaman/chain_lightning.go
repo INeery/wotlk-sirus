@@ -23,6 +23,10 @@ func (shaman *Shaman) newChainLightningSpell(isLightningOverload bool) *core.Spe
 		time.Millisecond*2000,
 		isLightningOverload)
 
+	if shaman.HasSetBonus(ItemSetWorldbreakerBattlegear, 4) {
+		spellConfig.DamageMultiplier += 0.34
+	}
+
 	if !isLightningOverload {
 		spellConfig.Cast.CD = core.Cooldown{
 			Timer:    shaman.NewTimer(),
@@ -53,6 +57,10 @@ func (shaman *Shaman) newChainLightningSpell(isLightningOverload bool) *core.Spe
 
 			spell.DealDamage(sim, result)
 
+			if result.Landed() {
+				shaman.BiteWhenWolvesAreActive(sim, target)
+			}
+
 			bounceCoeff *= dmgMultiplierPerBounce
 			curTarget = sim.Environment.NextTargetUnit(curTarget)
 		}
@@ -72,7 +80,7 @@ func GetChainLightningCooldown(shaman *Shaman) time.Duration {
 	cooldown := time.Second*6 - []time.Duration{0, 750 * time.Millisecond, 1500 * time.Millisecond, 2500 * time.Millisecond}[shaman.Talents.StormEarthAndFire]
 	cooldown -= []time.Duration{0, 2 * time.Second, 4 * time.Second, 6 * time.Second}[shaman.Talents.StaticShock]
 
-	return max(cooldown, 0)
+	return max(cooldown, core.GCDDefault)
 }
 
 func GetGetChainLightningBounceMultiplier(shaman *Shaman) float64 {

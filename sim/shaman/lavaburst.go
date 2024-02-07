@@ -66,8 +66,11 @@ func (shaman *Shaman) registerLavaBurstSpell() {
 			},
 		},
 
-		BonusHitRating:   float64(shaman.Talents.ElementalPrecision) * core.SpellHitRatingPerHitChance,
-		DamageMultiplier: 1 + 0.01*float64(shaman.Talents.Concussion) + 0.02*float64(shaman.Talents.CallOfFlame),
+		BonusHitRating: float64(shaman.Talents.ElementalPrecision) * core.SpellHitRatingPerHitChance,
+		DamageMultiplier: 1 +
+			0.01*float64(shaman.Talents.Concussion) +
+			0.02*float64(shaman.Talents.CallOfFlame) +
+			core.TernaryFloat64(shaman.HasSetBonus(ItemSetWorldbreakerBattlegear, 2), 0.33, 0),
 		CritMultiplier:   shaman.ElementalCritMultiplier([]float64{0, 0.06, 0.12, 0.24}[shaman.Talents.LavaFlows] + core.TernaryFloat64(shaman.HasSetBonus(ItemSetEarthShatterGarb, 4), 0.1, 0)),
 		ThreatMultiplier: shaman.spellThreatMultiplier(),
 
@@ -81,6 +84,10 @@ func (shaman *Shaman) registerLavaBurstSpell() {
 				dot.Spell.Cast(sim, target)
 			}
 			spell.DealDamage(sim, result)
+
+			if result.Landed() {
+				shaman.BiteWhenWolvesAreActive(sim, target)
+			}
 		},
 	})
 }

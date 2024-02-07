@@ -45,7 +45,7 @@ func (shaman *Shaman) newWindfuryImbueSpell(isMH bool) *core.Spell {
 		tag = 2
 		procMask = core.ProcMaskMeleeOHSpecial
 		weaponDamageFunc = shaman.OHWeaponDamage
-		apBonus *= 2 // applied after 50% offhand penalty
+
 	}
 
 	spellConfig := core.SpellConfig{

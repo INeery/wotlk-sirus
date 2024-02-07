@@ -50,9 +50,16 @@ func (shaman *Shaman) newShockSpellConfig(spellID int32, spellSchool core.SpellS
 
 func (shaman *Shaman) registerEarthShockSpell(shockTimer *core.Timer) {
 	config := shaman.newShockSpellConfig(49231, core.SpellSchoolNature, 0.18, shockTimer, core.SpellFlagStormstrikeBoostable)
+
+	config.DamageMultiplier += core.TernaryFloat64(shaman.HasSetBonus(ItemSetEarthshatterBattlegear, 4), 0.95, 0)
+
 	config.ApplyEffects = func(sim *core.Simulation, target *core.Unit, spell *core.Spell) {
 		baseDamage := sim.Roll(854, 900) + 0.386*spell.SpellPower()
-		spell.CalcAndDealDamage(sim, target, baseDamage, spell.OutcomeMagicHitAndCrit)
+		result := spell.CalcAndDealDamage(sim, target, baseDamage, spell.OutcomeMagicHitAndCrit)
+
+		if result.Landed() {
+			shaman.BiteWhenWolvesAreActive(sim, target)
+		}
 	}
 
 	shaman.EarthShock = shaman.RegisterSpell(config)
@@ -74,6 +81,10 @@ func (shaman *Shaman) registerFlameShockSpell(shockTimer *core.Timer) {
 			spell.Dot(target).Apply(sim)
 		}
 		spell.DealDamage(sim, result)
+
+		if result.Landed() {
+			shaman.BiteWhenWolvesAreActive(sim, target)
+		}
 	}
 
 	bonusPeriodicDamageMultiplier := 0 +
@@ -118,7 +129,11 @@ func (shaman *Shaman) registerFrostShockSpell(shockTimer *core.Timer) {
 	config.ThreatMultiplier *= 2
 	config.ApplyEffects = func(sim *core.Simulation, target *core.Unit, spell *core.Spell) {
 		baseDamage := sim.Roll(812, 858) + 0.386*spell.SpellPower()
-		spell.CalcAndDealDamage(sim, target, baseDamage, spell.OutcomeMagicHitAndCrit)
+		result := spell.CalcAndDealDamage(sim, target, baseDamage, spell.OutcomeMagicHitAndCrit)
+
+		if result.Landed() {
+			shaman.BiteWhenWolvesAreActive(sim, target)
+		}
 	}
 
 	shaman.FrostShock = shaman.RegisterSpell(config)

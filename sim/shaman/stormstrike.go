@@ -141,7 +141,12 @@ func (shaman *Shaman) registerStormstrikeSpell() {
 
 				shaman.Stormstrike.SpellMetrics[target.UnitIndex].Hits--
 			}
+
 			spell.DealOutcome(sim, result)
+
+			if result.Landed() {
+				shaman.BiteWhenWolvesAreActive(sim, target)
+			}
 		},
 		ExtraCastCondition: func(sim *core.Simulation, target *core.Unit) bool {
 			return shaman.HasMHWeapon() || shaman.HasOHWeapon()

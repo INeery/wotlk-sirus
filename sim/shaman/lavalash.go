@@ -44,6 +44,29 @@ func (shaman *Shaman) registerLavaLashSpell() {
 		indomitabilityAura = shaman.NewTemporaryStatsAura("Fury of the Gladiator", core.ActionID{SpellID: 60555}, stats.Stats{stats.AttackPower: 204}, time.Second*10)
 	}
 
+	var volcanicSurge *core.Spell
+	if shaman.HasSetBonus(ItemSetEarthshatterBattlegear, 2) {
+		volcanicSurge = shaman.RegisterSpell(core.SpellConfig{
+			ActionID:         core.ActionID{SpellID: 373522},
+			SpellSchool:      core.SpellSchoolFire,
+			ProcMask:         core.ProcMaskEmpty,
+			Flags:            core.SpellFlagNoOnCastComplete | core.SpellFlagIgnoreModifiers, // TODO Выяснить применяется ли к урону модификаторы цели (дебаф от лока например)
+			DamageMultiplier: 1,
+			ThreatMultiplier: 1,
+
+			ApplyEffects: func(sim *core.Simulation, target *core.Unit, spell *core.Spell) {
+				//TODO может мисануть, критануть, учитывает множитель урона шамана?
+				dmgMultiplier := shaman.AttackTables[target.UnitIndex].DamageDealtMultiplier
+				baseDamage := shaman.Unit.GetStats()[stats.AttackPower] * 0.3 * dmgMultiplier
+
+				for targetIndex := int32(0); targetIndex < shaman.Env.GetNumTargets(); targetIndex++ {
+					curTarget := shaman.Env.GetTargetUnit(targetIndex)
+					spell.CalcAndDealDamage(sim, curTarget, baseDamage, spell.OutcomeAlwaysHit)
+				}
+			},
+		})
+	}
+
 	shaman.LavaLash = shaman.RegisterSpell(core.SpellConfig{
 		ActionID:    core.ActionID{SpellID: 60103},
 		SpellSchool: core.SpellSchoolFire,
@@ -64,8 +87,7 @@ func (shaman *Shaman) registerLavaLashSpell() {
 			},
 		},
 
-		DamageMultiplier: 0.7 * imbueMultiplier *
-			core.TernaryFloat64(shaman.HasSetBonus(ItemSetWorldbreakerBattlegear, 2), 1.2, 1),
+		DamageMultiplier: 0.7 * imbueMultiplier,
 		CritMultiplier:   shaman.ElementalCritMultiplier(0),
 		ThreatMultiplier: shaman.spellThreatMultiplier(),
 
@@ -80,6 +102,14 @@ func (shaman *Shaman) registerLavaLashSpell() {
 				if indomitabilityAura != nil {
 					indomitabilityAura.Activate(sim)
 				}
+			}
+
+			if result.Landed() {
+				shaman.BiteWhenWolvesAreActive(sim, target)
+			}
+
+			if result.Landed() && volcanicSurge != nil {
+				volcanicSurge.Cast(sim, target)
 			}
 		},
 		ExtraCastCondition: func(sim *core.Simulation, target *core.Unit) bool {

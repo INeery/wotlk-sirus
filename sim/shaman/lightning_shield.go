@@ -21,7 +21,6 @@ func (shaman *Shaman) registerLightningShieldSpell() {
 
 		DamageMultiplier: 1 +
 			0.05*float64(shaman.Talents.ImprovedShields) +
-			core.TernaryFloat64(shaman.HasSetBonus(ItemSetEarthshatterBattlegear, 2), 0.1, 0) +
 			core.TernaryFloat64(shaman.HasMajorGlyph(proto.ShamanMajorGlyph_GlyphOfLightningShield), 0.2, 0),
 		ThreatMultiplier: 1, //fix when spirit weapons is fixed
 

@@ -327,10 +327,6 @@ func (shaman *Shaman) applyFlurry() {
 
 	bonus := 1.0 + 0.06*float64(shaman.Talents.Flurry)
 
-	if shaman.HasSetBonus(ItemSetEarthshatterBattlegear, 4) {
-		bonus += 0.05
-	}
-
 	inverseBonus := 1 / bonus
 
 	procAura := shaman.RegisterAura(core.Aura{
