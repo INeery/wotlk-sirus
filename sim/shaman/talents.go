@@ -40,14 +40,14 @@ func (shaman *Shaman) ApplyTalents() {
 	}
 	if shaman.Talents.MentalDexterity > 0 {
 		shaman.AddStatDependency(stats.Intellect, stats.AttackPower, []float64{0, 0.33, 0.66, 1}[shaman.Talents.MentalDexterity])
-		shaman.AddStat(stats.SpellHit, float64(shaman.Talents.MentalDexterity*1))
+		shaman.AddStat(stats.SpellHit, float64(shaman.Talents.MentalDexterity)*core.SpellHitRatingPerHitChance)
 	}
 	if shaman.Talents.NaturesBlessing > 0 {
 		shaman.AddStatDependency(stats.Intellect, stats.SpellPower, 0.1*float64(shaman.Talents.NaturesBlessing))
 	}
 
 	if shaman.Talents.SpiritWeapons {
-		shaman.MultiplyStat(stats.Stamina, 0.2)
+		shaman.MultiplyStat(stats.Stamina, 1.2)
 		shaman.PseudoStats.ThreatMultiplier *= 0.7
 		shaman.PseudoStats.CanParry = true
 	}

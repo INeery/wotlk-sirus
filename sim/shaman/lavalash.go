@@ -71,7 +71,7 @@ func (shaman *Shaman) registerLavaLashSpell() {
 		ActionID:    core.ActionID{SpellID: 60103},
 		SpellSchool: core.SpellSchoolFire,
 		ProcMask:    core.ProcMaskMeleeOHSpecial,
-		Flags:       core.SpellFlagMeleeMetrics | core.SpellFlagAPL,
+		Flags:       core.SpellFlagMeleeMetrics | core.SpellFlagAPL | core.SpellFlagStormstrikeBoostable,
 
 		ManaCost: core.ManaCostOptions{
 			BaseCost: 0.04,
@@ -87,15 +87,12 @@ func (shaman *Shaman) registerLavaLashSpell() {
 			},
 		},
 
-		DamageMultiplier: 0.7 * imbueMultiplier,
+		DamageMultiplier: .7 * imbueMultiplier,
 		CritMultiplier:   shaman.ElementalCritMultiplier(0),
 		ThreatMultiplier: shaman.spellThreatMultiplier(),
 
 		ApplyEffects: func(sim *core.Simulation, target *core.Unit, spell *core.Spell) {
-			baseDamage := flatDamageBonus +
-				spell.Unit.OHWeaponDamage(sim, spell.MeleeAttackPower()) +
-				spell.BonusWeaponDamage()
-
+			baseDamage := flatDamageBonus + spell.Unit.OHWeaponDamage(sim, spell.MeleeAttackPower()) + spell.BonusWeaponDamage()
 			result := spell.CalcAndDealDamage(sim, target, baseDamage, spell.OutcomeMeleeSpecialHitAndCrit)
 
 			if result.Landed() { //TODO: verify that it actually needs to hit
