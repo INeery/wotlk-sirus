@@ -37,12 +37,12 @@ func init() {
 	//newHasteActive(38070, 148, time.Second*20, time.Minute*2) // Foresight's Anticipation
 	//newHasteActive(38258, 140, time.Second*20, time.Minute*2) // Sailor's Knotted Charm
 	//newHasteActive(38259, 140, time.Second*20, time.Minute*2) // First Mate's Pocketwatch
-	newHasteActive(38764, 208, time.Second*20, time.Minute*2) // Rune of Finite Variation
-	newHasteActive(40531, 491, time.Second*20, time.Minute*2) // Mark of Norgannon
-	newHasteActive(43836, 212, time.Second*20, time.Minute*2) // Thorny Rose Brooch
-	newHasteActive(45466, 457, time.Second*20, time.Minute*2) // Scale of Fates
-	newHasteActive(46088, 375, time.Second*20, time.Minute*2) // Platinum Disks of Swiftness
-	newHasteActive(48722, 512, time.Second*20, time.Minute*2) // Shard of the Crystal Heart
+	newHasteActive(38764, 208, time.Second*20, time.Minute*2)  // Rune of Finite Variation
+	newHasteActive(40531, 1015, time.Second*20, time.Minute*2) // Mark of Norgannon
+	newHasteActive(43836, 212, time.Second*20, time.Minute*2)  // Thorny Rose Brooch
+	newHasteActive(45466, 457, time.Second*20, time.Minute*2)  // Scale of Fates
+	newHasteActive(46088, 375, time.Second*20, time.Minute*2)  // Platinum Disks of Swiftness
+	newHasteActive(48722, 512, time.Second*20, time.Minute*2)  // Shard of the Crystal Heart
 
 	newAttackPowerActive := testFirstOnly(func(itemID int32, bonus float64, duration time.Duration, cooldown time.Duration) {
 		core.NewSimpleStatOffensiveTrinketEffect(itemID, stats.Stats{stats.AttackPower: bonus, stats.RangedAttackPower: bonus}, duration, cooldown)

@@ -111,7 +111,8 @@ func (shaman *Shaman) registerStormstrikeSpell() {
 		},
 
 		ThreatMultiplier: 1,
-		DamageMultiplier: 1,
+		//TODO можно проверить, но пока кажется что WeaponMastery влияет на урон ЛБ и УБ (так как это расчёт урона от оружия хотя и не физ школа)
+		DamageMultiplier: 1 * []float64{1, 1.04, 1.07, 1.1}[shaman.Talents.WeaponMastery],
 		CritMultiplier:   shaman.DefaultMeleeCritMultiplier(),
 
 		ApplyEffects: func(sim *core.Simulation, target *core.Unit, spell *core.Spell) {
