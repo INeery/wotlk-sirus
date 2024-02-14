@@ -71,7 +71,7 @@ func (shaman *Shaman) registerLavaLashSpell() {
 		ActionID:    core.ActionID{SpellID: 60103},
 		SpellSchool: core.SpellSchoolFire,
 		ProcMask:    core.ProcMaskMeleeOHSpecial,
-		Flags:       core.SpellFlagMeleeMetrics | core.SpellFlagAPL,
+		Flags:       core.SpellFlagMeleeMetrics | core.SpellFlagAPL | core.SpellFlagStormstrikeBoostable,
 
 		ManaCost: core.ManaCostOptions{
 			BaseCost: 0.04,
