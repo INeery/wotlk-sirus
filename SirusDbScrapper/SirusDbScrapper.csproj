@@ -1,0 +1,81 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <OutputType>Exe</OutputType>
+        <TargetFramework>net8.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <None Remove="Database\originalSimDb.bin" />
+      <Content Include="Database\originalSimDb.bin">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
+      <None Remove="Proto\ui.proto" />
+      <Content Include="Proto\ui.proto">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
+      <None Remove="Proto\api.proto" />
+      <Content Include="Proto\api.proto">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
+      <None Remove="Proto\apl.proto" />
+      <Content Include="Proto\apl.proto">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
+      <None Remove="Proto\common.proto" />
+      <Content Include="Proto\common.proto">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
+      <None Remove="Proto\deathknight.proto" />
+      <Content Include="Proto\deathknight.proto">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
+      <None Remove="Proto\druid.proto" />
+      <Content Include="Proto\druid.proto">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
+      <None Remove="Proto\hunter.proto" />
+      <Content Include="Proto\hunter.proto">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
+      <None Remove="Proto\mage.proto" />
+      <Content Include="Proto\mage.proto">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
+      <None Remove="Proto\paladin.proto" />
+      <Content Include="Proto\paladin.proto">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
+      <None Remove="Proto\priest.proto" />
+      <Content Include="Proto\priest.proto">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
+      <None Remove="Proto\rogue.proto" />
+      <Content Include="Proto\rogue.proto">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
+      <None Remove="Proto\shaman.proto" />
+      <Content Include="Proto\shaman.proto">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
+      <None Remove="Proto\test.proto" />
+      <Content Include="Proto\test.proto">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
+      <None Remove="Proto\warlock.proto" />
+      <Content Include="Proto\warlock.proto">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
+      <None Remove="Proto\warrior.proto" />
+      <Content Include="Proto\warrior.proto">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Google.Protobuf" Version="3.25.3" />
+    </ItemGroup>
+    
+</Project>
