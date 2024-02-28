@@ -415,7 +415,7 @@ func (shaman *Shaman) applyMaelstromWeapon() {
 			shaman.LavaBurst.CastTimeMultiplier -= multDiff
 
 			for _, target := range shaman.Env.Encounter.TargetUnits {
-				shaman.AttackTables[target.UnitIndex].MaelstromDamageMultiplier = 1.0 + 0.05*float64(newStacks)
+				shaman.AttackTables[target.UnitIndex].MaelstromDamageMultiplier = 1.0 + 0.02*float64(newStacks)
 			}
 
 			if enhT10Bonus && shaman.MaelstromWeaponAura.GetStacks() == 5 {
