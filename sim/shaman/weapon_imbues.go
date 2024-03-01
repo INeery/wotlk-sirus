@@ -52,22 +52,27 @@ func (shaman *Shaman) newWindfuryImbueSpell(isMH bool) *core.Spell {
 		ActionID:    core.ActionID{SpellID: 58804, Tag: int32(tag)},
 		SpellSchool: core.SpellSchoolPhysical,
 		ProcMask:    procMask,
-		Flags:       core.SpellFlagMeleeMetrics | core.SpellFlagIncludeTargetBonusDamage,
+		Flags:       core.SpellFlagMeleeMetrics | core.SpellFlagIncludeTargetBonusDamage | core.SpellFlagStormstrikeBoostable,
 
 		DamageMultiplier: []float64{1, 1.13, 1.27, 1.4}[shaman.Talents.ElementalWeapons],
 		CritMultiplier:   shaman.DefaultMeleeCritMultiplier(),
 		ThreatMultiplier: 1,
 
 		ApplyEffects: func(sim *core.Simulation, target *core.Unit, spell *core.Spell) {
+			//	TODO Убедится что прок ВФ снимает 1 стак бури
+
 			constBaseDamage := spell.BonusWeaponDamage()
 			mAP := spell.MeleeAttackPower() + apBonus
-
 			baseDamage1 := constBaseDamage + weaponDamageFunc(sim, mAP)
-			baseDamage2 := constBaseDamage + weaponDamageFunc(sim, mAP)
 			result1 := spell.CalcDamage(sim, target, baseDamage1, spell.OutcomeMeleeSpecialHitAndCrit)
-			result2 := spell.CalcDamage(sim, target, baseDamage2, spell.OutcomeMeleeSpecialHitAndCrit)
 			spell.DealDamage(sim, result1)
+
+			//	По сути от ВФ влетает 2 удара, но снимается только 1 стак бури. Поэтому вешаем на этот удар специальный маркер и потом снимаем его.
+			spell.Flags |= core.SpellFlagDontConsumeStormstrikeDebuffStack
+			baseDamage2 := constBaseDamage + weaponDamageFunc(sim, mAP)
+			result2 := spell.CalcDamage(sim, target, baseDamage2, spell.OutcomeMeleeSpecialHitAndCrit)
 			spell.DealDamage(sim, result2)
+			spell.Flags &^= core.SpellFlagDontConsumeStormstrikeDebuffStack
 		},
 	}
 

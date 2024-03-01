@@ -198,6 +198,7 @@ const (
 	SpellFlagPrepullPotion                                  // Indicates this spell is the prepull potion.
 	SpellFlagCombatPotion                                   // Indicates this spell is the combat potion.
 	SpellFlagStormstrikeBoostable
+	SpellFlagDontConsumeStormstrikeDebuffStack
 	SpellFlagMaelstromBoostable // Spell benefits from Stormstrike debuff effect
 	// Used to let agents categorize their spells.
 	SpellFlagAgentReserved1
