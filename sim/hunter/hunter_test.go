@@ -14,9 +14,9 @@ func init() {
 
 func TestBM(t *testing.T) {
 	core.RunTestSuite(t, t.Name(), core.FullCharacterTestSuiteGenerator(core.CharacterSuiteConfig{
-		Class:      proto.Class_ClassHunter,
-		Race:       proto.Race_RaceOrc,
-		OtherRaces: []proto.Race{proto.Race_RaceDwarf},
+		Class:               proto.Class_ClassHunter,
+		Constellation:       proto.Constellation_Orc,
+		OtherConstellations: []proto.Constellation{proto.Constellation_Dwarf},
 
 		GearSet:     core.GetGearSet("../../ui/hunter/gear_sets", "p1_sv"),
 		Talents:     BMTalents,
@@ -31,9 +31,9 @@ func TestBM(t *testing.T) {
 
 func TestMM(t *testing.T) {
 	core.RunTestSuite(t, t.Name(), core.FullCharacterTestSuiteGenerator(core.CharacterSuiteConfig{
-		Class:      proto.Class_ClassHunter,
-		Race:       proto.Race_RaceOrc,
-		OtherRaces: []proto.Race{proto.Race_RaceDwarf},
+		Class:               proto.Class_ClassHunter,
+		Constellation:       proto.Constellation_Orc,
+		OtherConstellations: []proto.Constellation{proto.Constellation_Dwarf},
 
 		GearSet:     core.GetGearSet("../../ui/hunter/gear_sets", "p1_mm"),
 		Talents:     MMTalents,
@@ -51,9 +51,9 @@ func TestMM(t *testing.T) {
 
 func TestSV(t *testing.T) {
 	core.RunTestSuite(t, t.Name(), core.FullCharacterTestSuiteGenerator(core.CharacterSuiteConfig{
-		Class:      proto.Class_ClassHunter,
-		Race:       proto.Race_RaceOrc,
-		OtherRaces: []proto.Race{proto.Race_RaceDwarf},
+		Class:               proto.Class_ClassHunter,
+		Constellation:       proto.Constellation_Orc,
+		OtherConstellations: []proto.Constellation{proto.Constellation_Dwarf},
 
 		GearSet:     core.GetGearSet("../../ui/hunter/gear_sets", "p1_sv"),
 		Talents:     SVTalents,
@@ -93,7 +93,7 @@ func BenchmarkSimulate(b *testing.B) {
 	rsr := &proto.RaidSimRequest{
 		Raid: core.SinglePlayerRaidProto(
 			&proto.Player{
-				Race:          proto.Race_RaceOrc,
+				Constellation: proto.Constellation_Orc,
 				Class:         proto.Class_ClassHunter,
 				Equipment:     core.GetGearSet("../../ui/hunter/gear_sets", "p1_sv").GearSet,
 				Consumes:      FullConsumes,

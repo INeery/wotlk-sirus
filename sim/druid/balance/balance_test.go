@@ -14,8 +14,8 @@ func init() {
 
 func TestBalance(t *testing.T) {
 	core.RunTestSuite(t, t.Name(), core.FullCharacterTestSuiteGenerator(core.CharacterSuiteConfig{
-		Class: proto.Class_ClassDruid,
-		Race:  proto.Race_RaceTauren,
+		Class:         proto.Class_ClassDruid,
+		Constellation: proto.Constellation_Tauren,
 
 		GearSet: core.GetGearSet("../../../ui/balance_druid/gear_sets", "p1"),
 		OtherGearSets: []core.GearSetCombo{
@@ -34,8 +34,8 @@ func TestBalance(t *testing.T) {
 
 func TestBalancePhase3(t *testing.T) {
 	core.RunTestSuite(t, t.Name(), core.FullCharacterTestSuiteGenerator(core.CharacterSuiteConfig{
-		Class: proto.Class_ClassDruid,
-		Race:  proto.Race_RaceTauren,
+		Class:         proto.Class_ClassDruid,
+		Constellation: proto.Constellation_Tauren,
 
 		GearSet: core.GetGearSet("../../../ui/balance_druid/gear_sets", "p3_alliance"),
 		Talents: "5102233115331303213305311031--205003002",

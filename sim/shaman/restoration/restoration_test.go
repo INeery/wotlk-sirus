@@ -14,8 +14,8 @@ func init() {
 
 func TestRestoration(t *testing.T) {
 	core.RunTestSuite(t, t.Name(), core.FullCharacterTestSuiteGenerator(core.CharacterSuiteConfig{
-		Class: proto.Class_ClassShaman,
-		Race:  proto.Race_RaceTroll,
+		Class:         proto.Class_ClassShaman,
+		Constellation: proto.Constellation_Troll,
 
 		GearSet:     core.GetGearSet("../../../ui/restoration_shaman/gear_sets", "p1"),
 		Talents:     StandardTalents,
@@ -46,7 +46,7 @@ func BenchmarkSimulate(b *testing.B) {
 	rsr := &proto.RaidSimRequest{
 		Raid: core.SinglePlayerRaidProto(
 			&proto.Player{
-				Race:          proto.Race_RaceOrc,
+				Constellation: proto.Constellation_Orc,
 				Class:         proto.Class_ClassShaman,
 				Equipment:     core.GetGearSet("../../../ui/restoration_shaman/gear_sets", "p1").GearSet,
 				Consumes:      FullConsumes,

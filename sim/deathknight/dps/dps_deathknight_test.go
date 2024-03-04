@@ -14,9 +14,9 @@ func init() {
 
 func TestBlood(t *testing.T) {
 	core.RunTestSuite(t, t.Name(), core.FullCharacterTestSuiteGenerator(core.CharacterSuiteConfig{
-		Class:      proto.Class_ClassDeathknight,
-		Race:       proto.Race_RaceOrc,
-		OtherRaces: []proto.Race{proto.Race_RaceHuman},
+		Class:               proto.Class_ClassDeathknight,
+		Constellation:       proto.Constellation_Orc,
+		OtherConstellations: []proto.Constellation{proto.Constellation_Human},
 
 		GearSet:     core.GetGearSet("../../../ui/deathknight/gear_sets", "p3_blood"),
 		Talents:     BloodTalents,
@@ -31,9 +31,9 @@ func TestBlood(t *testing.T) {
 
 func TestUnholy(t *testing.T) {
 	core.RunTestSuite(t, t.Name(), core.FullCharacterTestSuiteGenerator(core.CharacterSuiteConfig{
-		Class:      proto.Class_ClassDeathknight,
-		Race:       proto.Race_RaceOrc,
-		OtherRaces: []proto.Race{proto.Race_RaceHuman},
+		Class:               proto.Class_ClassDeathknight,
+		Constellation:       proto.Constellation_Orc,
+		OtherConstellations: []proto.Constellation{proto.Constellation_Human},
 
 		GearSet:     core.GetGearSet("../../../ui/deathknight/gear_sets", "p3_uh_dw"),
 		Talents:     UnholyTalents,
@@ -53,9 +53,9 @@ func TestUnholy(t *testing.T) {
 
 func TestFrost(t *testing.T) {
 	core.RunTestSuite(t, t.Name(), core.FullCharacterTestSuiteGenerator(core.CharacterSuiteConfig{
-		Class:      proto.Class_ClassDeathknight,
-		Race:       proto.Race_RaceOrc,
-		OtherRaces: []proto.Race{proto.Race_RaceHuman},
+		Class:               proto.Class_ClassDeathknight,
+		Constellation:       proto.Constellation_Orc,
+		OtherConstellations: []proto.Constellation{proto.Constellation_Human},
 
 		GearSet:     core.GetGearSet("../../../ui/deathknight/gear_sets", "p3_frost"),
 		Talents:     FrostTalents,
@@ -77,9 +77,9 @@ func TestFrost(t *testing.T) {
 
 func TestFrostUH(t *testing.T) {
 	core.RunTestSuite(t, t.Name(), core.FullCharacterTestSuiteGenerator(core.CharacterSuiteConfig{
-		Class:      proto.Class_ClassDeathknight,
-		Race:       proto.Race_RaceOrc,
-		OtherRaces: []proto.Race{proto.Race_RaceHuman},
+		Class:               proto.Class_ClassDeathknight,
+		Constellation:       proto.Constellation_Orc,
+		OtherConstellations: []proto.Constellation{proto.Constellation_Human},
 
 		GearSet:     core.GetGearSet("../../../ui/deathknight/gear_sets", "p3_frost"),
 		Talents:     FrostUHTalents,

@@ -285,7 +285,7 @@ message SavedSettings {
 	Debuffs debuffs = 7;
 	IndividualBuffs player_buffs = 3;
 	Consumes consumes = 4;
-	Race race = 5;
+	Constellation constellation = 5;
 	repeated Profession professions = 9;
 	bool enable_item_swap = 18;
 	ItemSwap item_swap = 17;

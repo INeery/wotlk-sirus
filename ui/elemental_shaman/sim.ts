@@ -4,7 +4,7 @@ import {
 	Faction,
 	IndividualBuffs,
 	PartyBuffs,
-	Race,
+	Constellation,
 	RaidBuffs,
 	Spec,
 	Stat,
@@ -188,9 +188,9 @@ const SPEC_CONFIG = registerSpecConfig(Spec.SpecElementalShaman, {
 			specOptions: Presets.DefaultOptions,
 			consumes: Presets.DefaultConsumes,
 			defaultFactionRaces: {
-				[Faction.Unknown]: Race.RaceUnknown,
-				[Faction.Alliance]: Race.RaceDraenei,
-				[Faction.Horde]: Race.RaceOrc,
+				[Faction.Unknown]: Constellation.UnknownConstellation,
+				[Faction.Alliance]: Constellation.Draenei,
+				[Faction.Horde]: Constellation.Orc,
 			},
 			defaultGear: {
 				[Faction.Unknown]: {},

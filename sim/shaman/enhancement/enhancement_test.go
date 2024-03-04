@@ -14,9 +14,9 @@ func init() {
 
 func TestEnhancement(t *testing.T) {
 	core.RunTestSuite(t, t.Name(), core.FullCharacterTestSuiteGenerator(core.CharacterSuiteConfig{
-		Class:      proto.Class_ClassShaman,
-		Race:       proto.Race_RaceTroll,
-		OtherRaces: []proto.Race{proto.Race_RaceOrc},
+		Class:               proto.Class_ClassShaman,
+		Constellation:       proto.Constellation_Troll,
+		OtherConstellations: []proto.Constellation{proto.Constellation_Orc},
 
 		GearSet:     core.GetGearSet("../../../ui/enhancement_shaman/gear_sets", "p1"),
 		Talents:     StandardTalents,
@@ -54,7 +54,7 @@ func BenchmarkSimulate(b *testing.B) {
 	rsr := &proto.RaidSimRequest{
 		Raid: core.SinglePlayerRaidProto(
 			&proto.Player{
-				Race:          proto.Race_RaceOrc,
+				Constellation: proto.Constellation_Orc,
 				Class:         proto.Class_ClassShaman,
 				Equipment:     core.GetGearSet("../../../ui/enhancement_shaman/gear_sets", "p1").GearSet,
 				TalentsString: StandardTalents,

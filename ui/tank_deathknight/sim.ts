@@ -5,7 +5,7 @@ import {
 	IndividualBuffs,
 	PartyBuffs,
 	PseudoStat,
-	Race,
+	Constellation,
 	RaidBuffs,
 	Spec,
 	Stat,
@@ -227,9 +227,9 @@ const SPEC_CONFIG = registerSpecConfig(Spec.SpecTankDeathknight, {
 			specOptions: Presets.DefaultOptions,
 			consumes: Presets.DefaultConsumes,
 			defaultFactionRaces: {
-				[Faction.Unknown]: Race.RaceUnknown,
-				[Faction.Alliance]: Race.RaceHuman,
-				[Faction.Horde]: Race.RaceTroll,
+				[Faction.Unknown]: Constellation.UnknownConstellation,
+				[Faction.Alliance]: Constellation.Human,
+				[Faction.Horde]: Constellation.Troll,
 			},
 			defaultGear: {
 				[Faction.Unknown]: {},

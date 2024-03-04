@@ -14,8 +14,8 @@ func init() {
 
 func TestFeralTank(t *testing.T) {
 	core.RunTestSuite(t, t.Name(), core.FullCharacterTestSuiteGenerator(core.CharacterSuiteConfig{
-		Class: proto.Class_ClassDruid,
-		Race:  proto.Race_RaceTauren,
+		Class:         proto.Class_ClassDruid,
+		Constellation: proto.Constellation_Tauren,
 
 		GearSet:     core.GetGearSet("../../../ui/feral_tank_druid/gear_sets", "p1"),
 		Talents:     StandardTalents,
@@ -46,12 +46,12 @@ func BenchmarkSimulate(b *testing.B) {
 	rsr := &proto.RaidSimRequest{
 		Raid: core.SinglePlayerRaidProto(
 			&proto.Player{
-				Race:      proto.Race_RaceTauren,
-				Class:     proto.Class_ClassDruid,
-				Equipment: core.GetGearSet("../../../ui/feral_tank_druid/gear_sets", "p1").GearSet,
-				Consumes:  FullConsumes,
-				Spec:      PlayerOptionsDefault,
-				Buffs:     core.FullIndividualBuffs,
+				Constellation: proto.Constellation_Tauren,
+				Class:         proto.Class_ClassDruid,
+				Equipment:     core.GetGearSet("../../../ui/feral_tank_druid/gear_sets", "p1").GearSet,
+				Consumes:      FullConsumes,
+				Spec:          PlayerOptionsDefault,
+				Buffs:         core.FullIndividualBuffs,
 
 				InFrontOfTarget: true,
 			},

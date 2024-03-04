@@ -7,11 +7,11 @@ import (
 	"github.com/wowsims/wotlk/sim/core/stats"
 )
 
-func applyRaceEffects(agent Agent) {
+func applyConstellationsEffects(agent Agent) {
 	character := agent.GetCharacter()
 
-	switch character.Race {
-	case proto.Race_RaceBloodElf:
+	switch character.Constellation {
+	case proto.Constellation_BloodElf:
 		character.PseudoStats.ReducedArcaneHitTakenChance += 0.02
 		character.PseudoStats.ReducedFireHitTakenChance += 0.02
 		character.PseudoStats.ReducedFrostHitTakenChance += 0.02
@@ -67,10 +67,10 @@ func applyRaceEffects(agent Agent) {
 				return true
 			},
 		})
-	case proto.Race_RaceDraenei:
+	case proto.Constellation_Draenei:
 		character.PseudoStats.ReducedShadowHitTakenChance += 0.02
 		// TODO: Gift of the naaru for healers
-	case proto.Race_RaceDwarf:
+	case proto.Constellation_Dwarf:
 		character.PseudoStats.ReducedFrostHitTakenChance += 0.02
 
 		// Gun specialization (+1% ranged crit when using a gun).
@@ -111,18 +111,18 @@ func applyRaceEffects(agent Agent) {
 			Spell: spell,
 			Type:  CooldownTypeDPS,
 		})
-	case proto.Race_RaceGnome:
+	case proto.Constellation_Gnome:
 		character.PseudoStats.ReducedArcaneHitTakenChance += 0.02
 		character.MultiplyStat(stats.Intellect, 1.05)
-	case proto.Race_RaceHuman:
+	case proto.Constellation_Human:
 		character.MultiplyStat(stats.Spirit, 1.03)
 		applyWeaponSpecialization(character, 3*ExpertisePerQuarterPercentReduction,
 			proto.WeaponType_WeaponTypeMace, proto.WeaponType_WeaponTypeSword)
-	case proto.Race_RaceNightElf:
+	case proto.Constellation_NightElf:
 		character.PseudoStats.ReducedNatureHitTakenChance += 0.02
 		character.PseudoStats.ReducedPhysicalHitTakenChance += 0.02
 		// TODO: Shadowmeld?
-	case proto.Race_RaceOrc:
+	case proto.Constellation_Orc:
 		// Command (Pet damage +5%)
 		for _, pet := range character.Pets {
 			pet.PseudoStats.DamageDealtMultiplier *= 1.05
@@ -156,10 +156,10 @@ func applyRaceEffects(agent Agent) {
 		// Axe specialization
 		applyWeaponSpecialization(character, 5*ExpertisePerQuarterPercentReduction,
 			proto.WeaponType_WeaponTypeAxe, proto.WeaponType_WeaponTypeFist)
-	case proto.Race_RaceTauren:
+	case proto.Constellation_Tauren:
 		character.PseudoStats.ReducedNatureHitTakenChance += 0.02
 		character.AddStat(stats.Health, character.GetBaseStats()[stats.Health]*0.05)
-	case proto.Race_RaceTroll:
+	case proto.Constellation_Troll:
 		// Bow specialization (+1% ranged crit when using a bow).
 		if character.Ranged().RangedWeaponType == proto.RangedWeaponType_RangedWeaponTypeBow {
 			character.AddBonusRangedCritRating(1 * CritRatingPerCritChance)
@@ -206,7 +206,7 @@ func applyRaceEffects(agent Agent) {
 			Spell: berserkingSpell,
 			Type:  CooldownTypeDPS,
 		})
-	case proto.Race_RaceUndead:
+	case proto.Constellation_Undead:
 		character.PseudoStats.ReducedShadowHitTakenChance += 0.02
 	}
 }

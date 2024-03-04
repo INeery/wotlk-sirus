@@ -14,8 +14,8 @@ func init() {
 
 func TestSmite(t *testing.T) {
 	core.RunTestSuite(t, t.Name(), core.FullCharacterTestSuiteGenerator(core.CharacterSuiteConfig{
-		Class: proto.Class_ClassPriest,
-		Race:  proto.Race_RaceUndead,
+		Class:         proto.Class_ClassPriest,
+		Constellation: proto.Constellation_Undead,
 
 		GearSet:     core.GetGearSet("../../../ui/smite_priest/gear_sets", "p1"),
 		Talents:     DefaultTalents,

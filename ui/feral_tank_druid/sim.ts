@@ -6,7 +6,7 @@ import {
 	IndividualBuffs,
 	PartyBuffs,
 	PseudoStat,
-	Race,
+	Constellation,
 	RaidBuffs,
 	Spec,
 	Stat,
@@ -252,9 +252,9 @@ const SPEC_CONFIG = registerSpecConfig(Spec.SpecFeralTankDruid, {
 			specOptions: Presets.DefaultOptions,
 			consumes: Presets.DefaultConsumes,
 			defaultFactionRaces: {
-				[Faction.Unknown]: Race.RaceUnknown,
-				[Faction.Alliance]: Race.RaceNightElf,
-				[Faction.Horde]: Race.RaceTauren,
+				[Faction.Unknown]: Constellation.UnknownConstellation,
+				[Faction.Alliance]: Constellation.NightElf,
+				[Faction.Horde]: Constellation.Tauren,
 			},
 			defaultGear: {
 				[Faction.Unknown]: {},

@@ -30,7 +30,7 @@ import {
 	PartyBuffs,
 	Profession,
 	PseudoStat,
-	Race,
+	Constellation,
 	RaidBuffs,
 	Spec,
 	Stat,
@@ -92,7 +92,7 @@ export interface RaidSimPreset<SpecType extends Spec> {
 	consumes: Consumes,
 
 	defaultName: string,
-	defaultFactionRaces: Record<Faction, Race>,
+	defaultFactionRaces: Record<Faction, Constellation>,
 	defaultGear: Record<Faction, Record<number, EquipmentSpec>>,
 	otherDefaults?: OtherDefaults,
 
@@ -169,7 +169,7 @@ export interface Settings {
 	partyBuffs: PartyBuffs,
 	individualBuffs: IndividualBuffs,
 	consumes: Consumes,
-	race: Race,
+	race: Constellation,
 	professions?: Array<Profession>;
 }
 

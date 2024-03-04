@@ -65,10 +65,10 @@ func TestIndividualSim(t *testing.T) {
 	req := &proto.RaidSimRequest{
 		Raid: core.SinglePlayerRaidProto(
 			&proto.Player{
-				Race:      proto.Race_RaceTroll,
-				Class:     proto.Class_ClassShaman,
-				Equipment: p1Equip,
-				Spec:      basicSpec,
+				Constellation: proto.Constellation_Troll,
+				Class:         proto.Class_ClassShaman,
+				Equipment:     p1Equip,
+				Spec:          basicSpec,
 			},
 			&proto.PartyBuffs{},
 			&proto.RaidBuffs{},

@@ -14,9 +14,9 @@ func init() {
 
 func TestFury(t *testing.T) {
 	core.RunTestSuite(t, t.Name(), core.FullCharacterTestSuiteGenerator(core.CharacterSuiteConfig{
-		Class:      proto.Class_ClassWarrior,
-		Race:       proto.Race_RaceOrc,
-		OtherRaces: []proto.Race{proto.Race_RaceHuman},
+		Class:               proto.Class_ClassWarrior,
+		Constellation:       proto.Constellation_Orc,
+		OtherConstellations: []proto.Constellation{proto.Constellation_Human},
 
 		Talents:     FuryTalents,
 		Glyphs:      FuryGlyphs,
@@ -41,9 +41,9 @@ func TestFury(t *testing.T) {
 
 func TestArms(t *testing.T) {
 	core.RunTestSuite(t, t.Name(), core.FullCharacterTestSuiteGenerator(core.CharacterSuiteConfig{
-		Class:      proto.Class_ClassWarrior,
-		Race:       proto.Race_RaceOrc,
-		OtherRaces: []proto.Race{proto.Race_RaceHuman},
+		Class:               proto.Class_ClassWarrior,
+		Constellation:       proto.Constellation_Orc,
+		OtherConstellations: []proto.Constellation{proto.Constellation_Human},
 
 		Talents:     ArmsTalents,
 		Glyphs:      ArmsGlyphs,
@@ -70,7 +70,7 @@ func BenchmarkSimulate(b *testing.B) {
 	rsr := &proto.RaidSimRequest{
 		Raid: core.SinglePlayerRaidProto(
 			&proto.Player{
-				Race:          proto.Race_RaceOrc,
+				Constellation: proto.Constellation_Orc,
 				Class:         proto.Class_ClassWarrior,
 				Equipment:     core.GetGearSet("../../../ui/warrior/gear_sets", "p1_fury").GearSet,
 				Consumes:      FullConsumes,

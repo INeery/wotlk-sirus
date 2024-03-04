@@ -13,7 +13,7 @@ import { EnchantType } from '../proto/common.js';
 import { HandType } from '../proto/common.js';
 import { ItemSlot } from '../proto/common.js';
 import { ItemType } from '../proto/common.js';
-import { Race } from '../proto/common.js';
+import { Constellation } from '../proto/common.js';
 import { Faction } from '../proto/common.js';
 import { UnitReference } from '../proto/common.js';
 import { RangedWeaponType } from '../proto/common.js';
@@ -1028,18 +1028,18 @@ export const specTypeFunctions: Record<Spec, SpecTypeFunctions<any>> = {
 	},
 };
 
-export const raceToFaction: Record<Race, Faction> = {
-	[Race.RaceUnknown]: Faction.Unknown,
-	[Race.RaceBloodElf]: Faction.Horde,
-	[Race.RaceDraenei]: Faction.Alliance,
-	[Race.RaceDwarf]: Faction.Alliance,
-	[Race.RaceGnome]: Faction.Alliance,
-	[Race.RaceHuman]: Faction.Alliance,
-	[Race.RaceNightElf]: Faction.Alliance,
-	[Race.RaceOrc]: Faction.Horde,
-	[Race.RaceTauren]: Faction.Horde,
-	[Race.RaceTroll]: Faction.Horde,
-	[Race.RaceUndead]: Faction.Horde,
+export const raceToFaction: Record<Constellation, Faction> = {
+	[Constellation.UnknownConstellation]: Faction.Unknown,
+	[Constellation.BloodElf]: Faction.Horde,
+	[Constellation.Draenei]: Faction.Alliance,
+	[Constellation.Dwarf]: Faction.Alliance,
+	[Constellation.Gnome]: Faction.Alliance,
+	[Constellation.Human]: Faction.Alliance,
+	[Constellation.NightElf]: Faction.Alliance,
+	[Constellation.Orc]: Faction.Horde,
+	[Constellation.Tauren]: Faction.Horde,
+	[Constellation.Troll]: Faction.Horde,
+	[Constellation.Undead]: Faction.Horde,
 };
 
 export const specToClass: Record<Spec, Class> = {
@@ -1067,89 +1067,89 @@ export const specToClass: Record<Spec, Class> = {
 };
 
 const druidRaces = [
-	Race.RaceTauren,
-	Race.RaceNightElf,
+	Constellation.Tauren,
+	Constellation.NightElf,
 ];
 const hunterRaces = [
-	Race.RaceBloodElf,
-	Race.RaceDraenei,
-	Race.RaceDwarf,
-	Race.RaceNightElf,
-	Race.RaceOrc,
-	Race.RaceTauren,
-	Race.RaceTroll,
+	Constellation.BloodElf,
+	Constellation.Draenei,
+	Constellation.Dwarf,
+	Constellation.NightElf,
+	Constellation.Orc,
+	Constellation.Tauren,
+	Constellation.Troll,
 ];
 const mageRaces = [
-	Race.RaceTroll,
-	Race.RaceBloodElf,
-	Race.RaceDraenei,
-	Race.RaceGnome,
-	Race.RaceHuman,
-	Race.RaceUndead,
+	Constellation.Troll,
+	Constellation.BloodElf,
+	Constellation.Draenei,
+	Constellation.Gnome,
+	Constellation.Human,
+	Constellation.Undead,
 ];
 const paladinRaces = [
-	Race.RaceBloodElf,
-	Race.RaceDraenei,
-	Race.RaceDwarf,
-	Race.RaceHuman,
+	Constellation.BloodElf,
+	Constellation.Draenei,
+	Constellation.Dwarf,
+	Constellation.Human,
 ];
 const priestRaces = [
-	Race.RaceTroll,
-	Race.RaceBloodElf,
-	Race.RaceDraenei,
-	Race.RaceDwarf,
-	Race.RaceHuman,
-	Race.RaceNightElf,
-	Race.RaceUndead,
+	Constellation.Troll,
+	Constellation.BloodElf,
+	Constellation.Draenei,
+	Constellation.Dwarf,
+	Constellation.Human,
+	Constellation.NightElf,
+	Constellation.Undead,
 ];
 const rogueRaces = [
-	Race.RaceBloodElf,
-	Race.RaceDwarf,
-	Race.RaceGnome,
-	Race.RaceHuman,
-	Race.RaceNightElf,
-	Race.RaceOrc,
-	Race.RaceTroll,
-	Race.RaceUndead,
+	Constellation.BloodElf,
+	Constellation.Dwarf,
+	Constellation.Gnome,
+	Constellation.Human,
+	Constellation.NightElf,
+	Constellation.Orc,
+	Constellation.Troll,
+	Constellation.Undead,
 ];
 const shamanRaces = [
-	Race.RaceOrc,
-	Race.RaceDraenei,
-	Race.RaceTauren,
-	Race.RaceTroll,
+	Constellation.Orc,
+	Constellation.Draenei,
+	Constellation.Tauren,
+	Constellation.Troll,
 ];
 const warlockRaces = [
-	Race.RaceBloodElf,
-	Race.RaceGnome,
-	Race.RaceHuman,
-	Race.RaceOrc,
-	Race.RaceUndead,
+	Constellation.BloodElf,
+	Constellation.Gnome,
+	Constellation.Human,
+	Constellation.Orc,
+	Constellation.Undead,
 ];
 const warriorRaces = [
-	Race.RaceDraenei,
-	Race.RaceDwarf,
-	Race.RaceGnome,
-	Race.RaceHuman,
-	Race.RaceNightElf,
-	Race.RaceOrc,
-	Race.RaceTauren,
-	Race.RaceTroll,
-	Race.RaceUndead,
+	Constellation.Draenei,
+	Constellation.Dwarf,
+	Constellation.Gnome,
+	Constellation.Human,
+	Constellation.NightElf,
+	Constellation.Orc,
+	Constellation.Tauren,
+	Constellation.Troll,
+	Constellation.Undead,
 ];
 const deathKnightRaces = [
-	Race.RaceBloodElf,
-	Race.RaceDraenei,
-	Race.RaceDwarf,
-	Race.RaceGnome,
-	Race.RaceHuman,
-	Race.RaceNightElf,
-	Race.RaceOrc,
-	Race.RaceTauren,
-	Race.RaceTroll,
-	Race.RaceUndead,
+	Constellation.BloodElf,
+	Constellation.Draenei,
+	Constellation.Dwarf,
+	Constellation.Gnome,
+	Constellation.Human,
+	Constellation.NightElf,
+	Constellation.Orc,
+	Constellation.Tauren,
+	Constellation.Troll,
+	Constellation.Undead,
 ];
 
-export const specToEligibleRaces: Record<Spec, Array<Race>> = {
+export const specToEligibleRaces: Record<Spec, Array<Constellation>> = {
 	[Spec.SpecBalanceDruid]: druidRaces,
 	[Spec.SpecFeralDruid]: druidRaces,
 	[Spec.SpecFeralTankDruid]: druidRaces,

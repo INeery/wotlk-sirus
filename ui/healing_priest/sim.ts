@@ -2,7 +2,7 @@ import {
 	Class,
 	Faction,
 	PartyBuffs,
-	Race,
+	Constellation,
 	Spec,
 	Stat,
 } from '../core/proto/common.js';
@@ -143,9 +143,9 @@ const SPEC_CONFIG = registerSpecConfig(Spec.SpecHealingPriest, {
 			specOptions: Presets.DefaultOptions,
 			consumes: Presets.DefaultConsumes,
 			defaultFactionRaces: {
-				[Faction.Unknown]: Race.RaceUnknown,
-				[Faction.Alliance]: Race.RaceDwarf,
-				[Faction.Horde]: Race.RaceUndead,
+				[Faction.Unknown]: Constellation.UnknownConstellation,
+				[Faction.Alliance]: Constellation.Dwarf,
+				[Faction.Horde]: Constellation.Undead,
 			},
 			defaultGear: {
 				[Faction.Unknown]: {},
@@ -173,9 +173,9 @@ const SPEC_CONFIG = registerSpecConfig(Spec.SpecHealingPriest, {
 			specOptions: Presets.DefaultOptions,
 			consumes: Presets.DefaultConsumes,
 			defaultFactionRaces: {
-				[Faction.Unknown]: Race.RaceUnknown,
-				[Faction.Alliance]: Race.RaceDwarf,
-				[Faction.Horde]: Race.RaceUndead,
+				[Faction.Unknown]: Constellation.UnknownConstellation,
+				[Faction.Alliance]: Constellation.Dwarf,
+				[Faction.Horde]: Constellation.Undead,
 			},
 			defaultGear: {
 				[Faction.Unknown]: {},

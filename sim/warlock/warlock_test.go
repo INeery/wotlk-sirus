@@ -14,8 +14,8 @@ func init() {
 
 func TestAffliction(t *testing.T) {
 	core.RunTestSuite(t, t.Name(), core.FullCharacterTestSuiteGenerator(core.CharacterSuiteConfig{
-		Class: proto.Class_ClassWarlock,
-		Race:  proto.Race_RaceOrc,
+		Class:         proto.Class_ClassWarlock,
+		Constellation: proto.Constellation_Orc,
 
 		GearSet:     core.GetGearSet("../../ui/warlock/gear_sets", "p4_affliction"),
 		Talents:     AfflictionTalents,
@@ -30,8 +30,8 @@ func TestAffliction(t *testing.T) {
 
 func TestDemonology(t *testing.T) {
 	core.RunTestSuite(t, t.Name(), core.FullCharacterTestSuiteGenerator(core.CharacterSuiteConfig{
-		Class: proto.Class_ClassWarlock,
-		Race:  proto.Race_RaceOrc,
+		Class:         proto.Class_ClassWarlock,
+		Constellation: proto.Constellation_Orc,
 
 		GearSet:     core.GetGearSet("../../ui/warlock/gear_sets", "p4_demo"),
 		Talents:     DemonologyTalents,
@@ -46,8 +46,8 @@ func TestDemonology(t *testing.T) {
 
 func TestDestruction(t *testing.T) {
 	core.RunTestSuite(t, t.Name(), core.FullCharacterTestSuiteGenerator(core.CharacterSuiteConfig{
-		Class: proto.Class_ClassWarlock,
-		Race:  proto.Race_RaceOrc,
+		Class:         proto.Class_ClassWarlock,
+		Constellation: proto.Constellation_Orc,
 
 		GearSet:     core.GetGearSet("../../ui/warlock/gear_sets", "p4_destro"),
 		Talents:     DestructionTalents,
