@@ -29,6 +29,7 @@ var BaseStats = map[BaseStatsKey]stats.Stats{}
 var RaceOffsets = map[proto.Race]stats.Stats{
 	proto.Race_RaceUnknown: stats.Stats{},
 	proto.Race_RaceHuman:   stats.Stats{},
+	proto.Race_RaceEredar:  stats.Stats{}, //TODO фиг знает какие офсеты на сирусе и есть ли они вообще
 	proto.Race_RaceOrc: {
 		stats.Agility:   -3,
 		stats.Strength:  3,

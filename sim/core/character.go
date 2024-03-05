@@ -36,10 +36,11 @@ const CharacterBuildPhaseAll = CharacterBuildPhaseBase | CharacterBuildPhaseGear
 type Character struct {
 	Unit
 
-	Name  string // Different from Label, needed for returned results.
-	Race  proto.Race
-	Class proto.Class
-	Spec  proto.Spec
+	Name          string // Different from Label, needed for returned results.
+	Race          proto.Race
+	Constellation proto.Constellation
+	Class         proto.Class
+	Spec          proto.Spec
 
 	// Current gear.
 	Equipment
