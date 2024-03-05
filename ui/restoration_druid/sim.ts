@@ -1,7 +1,7 @@
 import {
 	Class,
 	Faction,
-	Constellation,
+	Race,
 	Spec,
 	Stat,
 } from '../core/proto/common.js';
@@ -131,9 +131,9 @@ const SPEC_CONFIG = registerSpecConfig(Spec.SpecRestorationDruid, {
 			specOptions: Presets.DefaultOptions,
 			consumes: Presets.DefaultConsumes,
 			defaultFactionRaces: {
-				[Faction.Unknown]: Constellation.UnknownConstellation,
-				[Faction.Alliance]: Constellation.NightElf,
-				[Faction.Horde]: Constellation.Tauren,
+				[Faction.Unknown]: Race.RaceUnknown,
+				[Faction.Alliance]: Race.RaceNightElf,
+				[Faction.Horde]: Race.RaceTauren,
 			},
 			defaultGear: {
 				[Faction.Unknown]: {},

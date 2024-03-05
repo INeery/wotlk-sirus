@@ -36,10 +36,10 @@ const CharacterBuildPhaseAll = CharacterBuildPhaseBase | CharacterBuildPhaseGear
 type Character struct {
 	Unit
 
-	Name          string // Different from Label, needed for returned results.
-	Constellation proto.Constellation
-	Class         proto.Class
-	Spec          proto.Spec
+	Name  string // Different from Label, needed for returned results.
+	Race  proto.Race
+	Class proto.Class
+	Spec  proto.Spec
 
 	// Current gear.
 	Equipment
@@ -108,10 +108,10 @@ func NewCharacter(party *Party, partyIndex int, player *proto.Player) Character 
 			NibelungAverageCasts: player.NibelungAverageCasts,
 		},
 
-		Name:          player.Name,
-		Constellation: player.Constellation,
-		Class:         player.Class,
-		Spec:          PlayerProtoToSpec(player),
+		Name:  player.Name,
+		Race:  player.Race,
+		Class: player.Class,
+		Spec:  PlayerProtoToSpec(player),
 
 		Equipment: ProtoToEquipment(player.Equipment),
 
@@ -147,7 +147,7 @@ func NewCharacter(party *Party, partyIndex int, player *proto.Player) Character 
 		character.Consumes = player.Consumes
 	}
 
-	character.baseStats = BaseStats[BaseStatsKey{Constellation: character.Constellation, Class: character.Class}]
+	character.baseStats = BaseStats[BaseStatsKey{Race: character.Race, Class: character.Class}]
 
 	character.AddStats(character.baseStats)
 	character.addUniversalStatDependencies()
@@ -252,7 +252,7 @@ func (character *Character) applyAllEffects(agent Agent, raidBuffs *proto.RaidBu
 		}
 	}
 
-	applyConstellationsEffects(agent)
+	applyRaceEffects(agent)
 	character.applyProfessionEffects()
 	character.applyBuildPhaseAuras(CharacterBuildPhaseBase)
 	playerStats.BaseStats = measureStats()
@@ -393,7 +393,7 @@ func (character *Character) DefaultHealingCritMultiplier() float64 {
 func (character *Character) AddRaidBuffs(_ *proto.RaidBuffs) {
 }
 func (character *Character) AddPartyBuffs(partyBuffs *proto.PartyBuffs) {
-	if character.Constellation == proto.Constellation_Draenei {
+	if character.Race == proto.Race_RaceDraenei {
 		partyBuffs.HeroicPresence = true
 	}
 

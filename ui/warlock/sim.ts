@@ -3,7 +3,7 @@ import {
 	Faction,
 	ItemSlot,
 	PartyBuffs,
-	Constellation,
+	Race,
 	Spec,
 	Stat,
 } from '../core/proto/common.js';
@@ -188,9 +188,9 @@ const SPEC_CONFIG = registerSpecConfig(Spec.SpecWarlock, {
 			specOptions: Presets.AfflictionOptions,
 			consumes: Presets.DefaultConsumes,
 			defaultFactionRaces: {
-				[Faction.Unknown]: Constellation.UnknownConstellation,
-				[Faction.Alliance]: Constellation.Human,
-				[Faction.Horde]: Constellation.Orc,
+				[Faction.Unknown]: Race.RaceUnknown,
+				[Faction.Alliance]: Race.RaceHuman,
+				[Faction.Horde]: Race.RaceOrc,
 			},
 			defaultGear: {
 				[Faction.Unknown]: {},
@@ -219,9 +219,9 @@ const SPEC_CONFIG = registerSpecConfig(Spec.SpecWarlock, {
 			specOptions: Presets.DemonologyOptions,
 			consumes: Presets.DefaultConsumes,
 			defaultFactionRaces: {
-				[Faction.Unknown]: Constellation.UnknownConstellation,
-				[Faction.Alliance]: Constellation.Human,
-				[Faction.Horde]: Constellation.Orc,
+				[Faction.Unknown]: Race.RaceUnknown,
+				[Faction.Alliance]: Race.RaceHuman,
+				[Faction.Horde]: Race.RaceOrc,
 			},
 			defaultGear: {
 				[Faction.Unknown]: {},
@@ -250,9 +250,9 @@ const SPEC_CONFIG = registerSpecConfig(Spec.SpecWarlock, {
 			specOptions: Presets.DestructionOptions,
 			consumes: Presets.DefaultConsumes,
 			defaultFactionRaces: {
-				[Faction.Unknown]: Constellation.UnknownConstellation,
-				[Faction.Alliance]: Constellation.Human,
-				[Faction.Horde]: Constellation.Orc,
+				[Faction.Unknown]: Race.RaceUnknown,
+				[Faction.Alliance]: Race.RaceHuman,
+				[Faction.Horde]: Race.RaceOrc,
 			},
 			defaultGear: {
 				[Faction.Unknown]: {},

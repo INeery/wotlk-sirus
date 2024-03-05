@@ -4,8 +4,8 @@ import {
 	Debuffs, 
 	Faction,
 	IndividualBuffs, 
-	PartyBuffs,
-	Constellation,
+	PartyBuffs, 
+	Race,
 	RaidBuffs, 
 	Spec, 
 	Stat, 
@@ -260,9 +260,9 @@ const SPEC_CONFIG = registerSpecConfig(Spec.SpecProtectionWarrior, {
 			specOptions: Presets.DefaultOptions,
 			consumes: Presets.DefaultConsumes,
 			defaultFactionRaces: {
-				[Faction.Unknown]: Constellation.UnknownConstellation,
-				[Faction.Alliance]: Constellation.Human,
-				[Faction.Horde]: Constellation.Orc,
+				[Faction.Unknown]: Race.RaceUnknown,
+				[Faction.Alliance]: Race.RaceHuman,
+				[Faction.Horde]: Race.RaceOrc,
 			},
 			defaultGear: {
 				[Faction.Unknown]: {},

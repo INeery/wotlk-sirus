@@ -2,7 +2,7 @@ import {
 	Class,
 	Faction,
 	PartyBuffs,
-	Constellation,
+	Race,
 	Spec,
 	Stat,
 } from '../core/proto/common.js';
@@ -166,9 +166,9 @@ const SPEC_CONFIG = registerSpecConfig(Spec.SpecShadowPriest, {
 			specOptions: Presets.DefaultOptions,
 			consumes: Presets.DefaultConsumes,
 			defaultFactionRaces: {
-				[Faction.Unknown]: Constellation.UnknownConstellation,
-				[Faction.Alliance]: Constellation.Dwarf,
-				[Faction.Horde]: Constellation.Undead,
+				[Faction.Unknown]: Race.RaceUnknown,
+				[Faction.Alliance]: Race.RaceDwarf,
+				[Faction.Horde]: Race.RaceUndead,
 			},
 			defaultGear: {
 				[Faction.Unknown]: {},

@@ -14,9 +14,9 @@ func init() {
 
 func TestShadow(t *testing.T) {
 	core.RunTestSuite(t, t.Name(), core.FullCharacterTestSuiteGenerator(core.CharacterSuiteConfig{
-		Class:               proto.Class_ClassPriest,
-		Constellation:       proto.Constellation_Undead,
-		OtherConstellations: []proto.Constellation{proto.Constellation_NightElf, proto.Constellation_Draenei},
+		Class:      proto.Class_ClassPriest,
+		Race:       proto.Race_RaceUndead,
+		OtherRaces: []proto.Race{proto.Race_RaceNightElf, proto.Race_RaceDraenei},
 
 		GearSet:  core.GetGearSet("../../../ui/shadow_priest/gear_sets", "p1"),
 		Talents:  DefaultTalents,

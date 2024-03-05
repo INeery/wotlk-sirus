@@ -6,7 +6,7 @@ import {
 	IndividualBuffs,
 	ItemSlot,
 	PartyBuffs,
-	Constellation,
+	Race,
 	RaidBuffs,
 	RangedWeaponType,
 	Spec,
@@ -142,10 +142,10 @@ const SPEC_CONFIG = registerSpecConfig(Spec.SpecHunter, {
 		if (rangedWeapon?.enchant?.effectId == 3608) {
 			stats = stats.addStat(Stat.StatMeleeCrit, 40);
 		}
-		if (player.getRace() == Constellation.Dwarf && rangedWeapon?.item.rangedWeaponType == RangedWeaponType.RangedWeaponTypeGun) {
+		if (player.getRace() == Race.RaceDwarf && rangedWeapon?.item.rangedWeaponType == RangedWeaponType.RangedWeaponTypeGun) {
 			stats = stats.addStat(Stat.StatMeleeCrit, 1 * Mechanics.MELEE_CRIT_RATING_PER_CRIT_CHANCE);
 		}
-		if (player.getRace() == Constellation.Troll && rangedWeapon?.item.rangedWeaponType == RangedWeaponType.RangedWeaponTypeBow) {
+		if (player.getRace() == Race.RaceTroll && rangedWeapon?.item.rangedWeaponType == RangedWeaponType.RangedWeaponTypeBow) {
 			stats = stats.addStat(Stat.StatMeleeCrit, 1 * Mechanics.MELEE_CRIT_RATING_PER_CRIT_CHANCE);
 		}
 
@@ -378,9 +378,9 @@ const SPEC_CONFIG = registerSpecConfig(Spec.SpecHunter, {
 			specOptions: Presets.BMDefaultOptions,
 			consumes: Presets.DefaultConsumes,
 			defaultFactionRaces: {
-				[Faction.Unknown]: Constellation.UnknownConstellation,
-				[Faction.Alliance]: Constellation.NightElf,
-				[Faction.Horde]: Constellation.Orc,
+				[Faction.Unknown]: Race.RaceUnknown,
+				[Faction.Alliance]: Race.RaceNightElf,
+				[Faction.Horde]: Race.RaceOrc,
 			},
 			defaultGear: {
 				[Faction.Unknown]: {},
@@ -408,9 +408,9 @@ const SPEC_CONFIG = registerSpecConfig(Spec.SpecHunter, {
 			specOptions: Presets.DefaultOptions,
 			consumes: Presets.DefaultConsumes,
 			defaultFactionRaces: {
-				[Faction.Unknown]: Constellation.UnknownConstellation,
-				[Faction.Alliance]: Constellation.NightElf,
-				[Faction.Horde]: Constellation.Orc,
+				[Faction.Unknown]: Race.RaceUnknown,
+				[Faction.Alliance]: Race.RaceNightElf,
+				[Faction.Horde]: Race.RaceOrc,
 			},
 			defaultGear: {
 				[Faction.Unknown]: {},
@@ -438,9 +438,9 @@ const SPEC_CONFIG = registerSpecConfig(Spec.SpecHunter, {
 			specOptions: Presets.DefaultOptions,
 			consumes: Presets.DefaultConsumes,
 			defaultFactionRaces: {
-				[Faction.Unknown]: Constellation.UnknownConstellation,
-				[Faction.Alliance]: Constellation.NightElf,
-				[Faction.Horde]: Constellation.Orc,
+				[Faction.Unknown]: Race.RaceUnknown,
+				[Faction.Alliance]: Race.RaceNightElf,
+				[Faction.Horde]: Race.RaceOrc,
 			},
 			defaultGear: {
 				[Faction.Unknown]: {},

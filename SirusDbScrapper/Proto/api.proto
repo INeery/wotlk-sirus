@@ -21,7 +21,7 @@ message Player {
 	// Label used for logging.
 	string name = 16;
 
-	Constellation constellation = 1;
+	Race race = 1;
 	Class class = 2;
 
 	EquipmentSpec equipment = 3;

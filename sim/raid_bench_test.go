@@ -12,10 +12,10 @@ import (
 var castersWithElemental = &proto.Party{
 	Players: []*proto.Player{
 		{
-			Name:          "Balance Druid 1",
-			Constellation: proto.Constellation_Tauren,
-			Class:         proto.Class_ClassDruid,
-			Equipment:     MoonkinEquipment,
+			Name:      "Balance Druid 1",
+			Race:      proto.Race_RaceTauren,
+			Class:     proto.Class_ClassDruid,
+			Equipment: MoonkinEquipment,
 			Spec: &proto.Player_BalanceDruid{
 				BalanceDruid: &proto.BalanceDruid{
 					Options: &proto.BalanceDruid_Options{
@@ -32,10 +32,10 @@ var castersWithElemental = &proto.Party{
 			},
 		},
 		{
-			Name:          "Shadow Priest 1",
-			Constellation: proto.Constellation_Undead,
-			Class:         proto.Class_ClassPriest,
-			Equipment:     ShadowEquipment,
+			Name:      "Shadow Priest 1",
+			Race:      proto.Race_RaceUndead,
+			Class:     proto.Class_ClassPriest,
+			Equipment: ShadowEquipment,
 			Spec: &proto.Player_ShadowPriest{
 				ShadowPriest: &proto.ShadowPriest{
 					Options: &proto.ShadowPriest_Options{},
@@ -50,10 +50,10 @@ var castersWithElemental = &proto.Party{
 			},
 		},
 		{
-			Name:          "Elemental Shaman 1",
-			Constellation: proto.Constellation_Troll,
-			Class:         proto.Class_ClassShaman,
-			Equipment:     ElementalEquipment,
+			Name:      "Elemental Shaman 1",
+			Race:      proto.Race_RaceTroll,
+			Class:     proto.Class_ClassShaman,
+			Equipment: ElementalEquipment,
 			Spec: &proto.Player_ElementalShaman{
 				ElementalShaman: &proto.ElementalShaman{
 					Options: &proto.ElementalShaman_Options{
@@ -76,10 +76,10 @@ var castersWithElemental = &proto.Party{
 			},
 		},
 		{
-			Name:          "Arcane Mage 1",
-			Constellation: proto.Constellation_Troll,
-			Class:         proto.Class_ClassMage,
-			Equipment:     ArcaneEquipment,
+			Name:      "Arcane Mage 1",
+			Race:      proto.Race_RaceTroll,
+			Class:     proto.Class_ClassMage,
+			Equipment: ArcaneEquipment,
 			Spec: &proto.Player_Mage{
 				Mage: &proto.Mage{
 					Options: &proto.Mage_Options{
@@ -103,10 +103,10 @@ var castersWithResto = &proto.Party{
 	Players: []*proto.Player{
 		// 1 moonkin, 1 spriest, 2x arcane, 1 resto shaman
 		{
-			Name:          "Balance Druid 2",
-			Constellation: proto.Constellation_Tauren,
-			Class:         proto.Class_ClassDruid,
-			Equipment:     MoonkinEquipment,
+			Name:      "Balance Druid 2",
+			Race:      proto.Race_RaceTauren,
+			Class:     proto.Class_ClassDruid,
+			Equipment: MoonkinEquipment,
 			Spec: &proto.Player_BalanceDruid{
 				BalanceDruid: &proto.BalanceDruid{
 					Options: &proto.BalanceDruid_Options{
@@ -126,10 +126,10 @@ var castersWithResto = &proto.Party{
 			},
 		},
 		{
-			Name:          "Shadow Priest 2",
-			Constellation: proto.Constellation_Undead,
-			Class:         proto.Class_ClassPriest,
-			Equipment:     ShadowEquipment,
+			Name:      "Shadow Priest 2",
+			Race:      proto.Race_RaceUndead,
+			Class:     proto.Class_ClassPriest,
+			Equipment: ShadowEquipment,
 			Spec: &proto.Player_ShadowPriest{
 				ShadowPriest: &proto.ShadowPriest{
 					Options: &proto.ShadowPriest_Options{},
@@ -144,10 +144,10 @@ var castersWithResto = &proto.Party{
 			},
 		},
 		{
-			Name:          "Arcane Mage 3",
-			Constellation: proto.Constellation_Troll,
-			Class:         proto.Class_ClassMage,
-			Equipment:     ArcaneEquipment,
+			Name:      "Arcane Mage 3",
+			Race:      proto.Race_RaceTroll,
+			Class:     proto.Class_ClassMage,
+			Equipment: ArcaneEquipment,
 			Spec: &proto.Player_Mage{
 				Mage: &proto.Mage{
 					Options: &proto.Mage_Options{
@@ -178,10 +178,10 @@ func BenchmarkSimulate(b *testing.B) {
 				{
 					Players: []*proto.Player{
 						{
-							Name:          "Enhancement Shaman 1",
-							Constellation: proto.Constellation_Troll,
-							Class:         proto.Class_ClassShaman,
-							Equipment:     EnhancementEquipment,
+							Name:      "Enhancement Shaman 1",
+							Race:      proto.Race_RaceTroll,
+							Class:     proto.Class_ClassShaman,
+							Equipment: EnhancementEquipment,
 							Spec: &proto.Player_EnhancementShaman{
 								EnhancementShaman: &proto.EnhancementShaman{
 									Options: &proto.EnhancementShaman_Options{

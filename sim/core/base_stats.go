@@ -6,8 +6,8 @@ import (
 )
 
 type BaseStatsKey struct {
-	Constellation proto.Constellation
-	Class         proto.Class
+	Race  proto.Race
+	Class proto.Class
 }
 
 var BaseStats = map[BaseStatsKey]stats.Stats{}
@@ -26,66 +26,66 @@ var BaseStats = map[BaseStatsKey]stats.Stats{}
 // These are also scattered in various dbc/casc files,
 // `octbasempbyclass.txt`, `combatratings.txt`, `chancetospellcritbase.txt`, etc.
 
-var RaceOffsets = map[proto.Constellation]stats.Stats{
-	proto.Constellation_UnknownConstellation: stats.Stats{},
-	proto.Constellation_Human:                stats.Stats{},
-	proto.Constellation_Orc: {
+var RaceOffsets = map[proto.Race]stats.Stats{
+	proto.Race_RaceUnknown: stats.Stats{},
+	proto.Race_RaceHuman:   stats.Stats{},
+	proto.Race_RaceOrc: {
 		stats.Agility:   -3,
 		stats.Strength:  3,
 		stats.Intellect: -3,
 		stats.Spirit:    2,
 		stats.Stamina:   1,
 	},
-	proto.Constellation_Dwarf: {
+	proto.Race_RaceDwarf: {
 		stats.Agility:   -4,
 		stats.Strength:  5,
 		stats.Intellect: -1,
 		stats.Spirit:    -1,
 		stats.Stamina:   1,
 	},
-	proto.Constellation_NightElf: {
+	proto.Race_RaceNightElf: {
 		stats.Agility:   4,
 		stats.Strength:  -4,
 		stats.Intellect: 0,
 		stats.Spirit:    0,
 		stats.Stamina:   0,
 	},
-	proto.Constellation_Undead: {
+	proto.Race_RaceUndead: {
 		stats.Agility:   -2,
 		stats.Strength:  -1,
 		stats.Intellect: -2,
 		stats.Spirit:    5,
 		stats.Stamina:   0,
 	},
-	proto.Constellation_Tauren: {
+	proto.Race_RaceTauren: {
 		stats.Agility:   -4,
 		stats.Strength:  5,
 		stats.Intellect: -4,
 		stats.Spirit:    2,
 		stats.Stamina:   1,
 	},
-	proto.Constellation_Gnome: {
+	proto.Race_RaceGnome: {
 		stats.Agility:   2,
 		stats.Strength:  -5,
 		stats.Intellect: 3,
 		stats.Spirit:    0,
 		stats.Stamina:   0,
 	},
-	proto.Constellation_Troll: {
+	proto.Race_RaceTroll: {
 		stats.Agility:   2,
 		stats.Strength:  1,
 		stats.Intellect: -4,
 		stats.Spirit:    1,
 		stats.Stamina:   0,
 	},
-	proto.Constellation_BloodElf: {
+	proto.Race_RaceBloodElf: {
 		stats.Agility:   2,
 		stats.Strength:  -3,
 		stats.Intellect: 3,
 		stats.Spirit:    -2,
 		stats.Stamina:   0,
 	},
-	proto.Constellation_Draenei: {
+	proto.Race_RaceDraenei: {
 		stats.Agility:   -3,
 		stats.Strength:  1,
 		stats.Intellect: 0,
@@ -187,80 +187,80 @@ var ClassBaseStats = map[proto.Class]stats.Stats{
 	},
 }
 
-func AddBaseStatsCombo(r proto.Constellation, c proto.Class) {
-	BaseStats[BaseStatsKey{Constellation: r, Class: c}] = ClassBaseStats[c].Add(RaceOffsets[r]).Add(ExtraClassBaseStats[c])
+func AddBaseStatsCombo(r proto.Race, c proto.Class) {
+	BaseStats[BaseStatsKey{Race: r, Class: c}] = ClassBaseStats[c].Add(RaceOffsets[r]).Add(ExtraClassBaseStats[c])
 }
 
 func init() {
-	AddBaseStatsCombo(proto.Constellation_Tauren, proto.Class_ClassDruid)
-	AddBaseStatsCombo(proto.Constellation_NightElf, proto.Class_ClassDruid)
+	AddBaseStatsCombo(proto.Race_RaceTauren, proto.Class_ClassDruid)
+	AddBaseStatsCombo(proto.Race_RaceNightElf, proto.Class_ClassDruid)
 
-	AddBaseStatsCombo(proto.Constellation_Draenei, proto.Class_ClassDeathknight)
-	AddBaseStatsCombo(proto.Constellation_Dwarf, proto.Class_ClassDeathknight)
-	AddBaseStatsCombo(proto.Constellation_Gnome, proto.Class_ClassDeathknight)
-	AddBaseStatsCombo(proto.Constellation_Human, proto.Class_ClassDeathknight)
-	AddBaseStatsCombo(proto.Constellation_NightElf, proto.Class_ClassDeathknight)
-	AddBaseStatsCombo(proto.Constellation_Orc, proto.Class_ClassDeathknight)
-	AddBaseStatsCombo(proto.Constellation_Tauren, proto.Class_ClassDeathknight)
-	AddBaseStatsCombo(proto.Constellation_Troll, proto.Class_ClassDeathknight)
-	AddBaseStatsCombo(proto.Constellation_Undead, proto.Class_ClassDeathknight)
-	AddBaseStatsCombo(proto.Constellation_BloodElf, proto.Class_ClassDeathknight)
+	AddBaseStatsCombo(proto.Race_RaceDraenei, proto.Class_ClassDeathknight)
+	AddBaseStatsCombo(proto.Race_RaceDwarf, proto.Class_ClassDeathknight)
+	AddBaseStatsCombo(proto.Race_RaceGnome, proto.Class_ClassDeathknight)
+	AddBaseStatsCombo(proto.Race_RaceHuman, proto.Class_ClassDeathknight)
+	AddBaseStatsCombo(proto.Race_RaceNightElf, proto.Class_ClassDeathknight)
+	AddBaseStatsCombo(proto.Race_RaceOrc, proto.Class_ClassDeathknight)
+	AddBaseStatsCombo(proto.Race_RaceTauren, proto.Class_ClassDeathknight)
+	AddBaseStatsCombo(proto.Race_RaceTroll, proto.Class_ClassDeathknight)
+	AddBaseStatsCombo(proto.Race_RaceUndead, proto.Class_ClassDeathknight)
+	AddBaseStatsCombo(proto.Race_RaceBloodElf, proto.Class_ClassDeathknight)
 
-	AddBaseStatsCombo(proto.Constellation_BloodElf, proto.Class_ClassHunter)
-	AddBaseStatsCombo(proto.Constellation_Draenei, proto.Class_ClassHunter)
-	AddBaseStatsCombo(proto.Constellation_Dwarf, proto.Class_ClassHunter)
-	AddBaseStatsCombo(proto.Constellation_NightElf, proto.Class_ClassHunter)
-	AddBaseStatsCombo(proto.Constellation_Orc, proto.Class_ClassHunter)
-	AddBaseStatsCombo(proto.Constellation_Tauren, proto.Class_ClassHunter)
-	AddBaseStatsCombo(proto.Constellation_Troll, proto.Class_ClassHunter)
+	AddBaseStatsCombo(proto.Race_RaceBloodElf, proto.Class_ClassHunter)
+	AddBaseStatsCombo(proto.Race_RaceDraenei, proto.Class_ClassHunter)
+	AddBaseStatsCombo(proto.Race_RaceDwarf, proto.Class_ClassHunter)
+	AddBaseStatsCombo(proto.Race_RaceNightElf, proto.Class_ClassHunter)
+	AddBaseStatsCombo(proto.Race_RaceOrc, proto.Class_ClassHunter)
+	AddBaseStatsCombo(proto.Race_RaceTauren, proto.Class_ClassHunter)
+	AddBaseStatsCombo(proto.Race_RaceTroll, proto.Class_ClassHunter)
 
-	AddBaseStatsCombo(proto.Constellation_BloodElf, proto.Class_ClassMage)
-	AddBaseStatsCombo(proto.Constellation_Draenei, proto.Class_ClassMage)
-	AddBaseStatsCombo(proto.Constellation_Gnome, proto.Class_ClassMage)
-	AddBaseStatsCombo(proto.Constellation_Human, proto.Class_ClassMage)
-	AddBaseStatsCombo(proto.Constellation_Troll, proto.Class_ClassMage)
-	AddBaseStatsCombo(proto.Constellation_Undead, proto.Class_ClassMage)
+	AddBaseStatsCombo(proto.Race_RaceBloodElf, proto.Class_ClassMage)
+	AddBaseStatsCombo(proto.Race_RaceDraenei, proto.Class_ClassMage)
+	AddBaseStatsCombo(proto.Race_RaceGnome, proto.Class_ClassMage)
+	AddBaseStatsCombo(proto.Race_RaceHuman, proto.Class_ClassMage)
+	AddBaseStatsCombo(proto.Race_RaceTroll, proto.Class_ClassMage)
+	AddBaseStatsCombo(proto.Race_RaceUndead, proto.Class_ClassMage)
 
-	AddBaseStatsCombo(proto.Constellation_BloodElf, proto.Class_ClassPaladin)
-	AddBaseStatsCombo(proto.Constellation_Draenei, proto.Class_ClassPaladin)
-	AddBaseStatsCombo(proto.Constellation_Human, proto.Class_ClassPaladin)
-	AddBaseStatsCombo(proto.Constellation_Dwarf, proto.Class_ClassPaladin)
+	AddBaseStatsCombo(proto.Race_RaceBloodElf, proto.Class_ClassPaladin)
+	AddBaseStatsCombo(proto.Race_RaceDraenei, proto.Class_ClassPaladin)
+	AddBaseStatsCombo(proto.Race_RaceHuman, proto.Class_ClassPaladin)
+	AddBaseStatsCombo(proto.Race_RaceDwarf, proto.Class_ClassPaladin)
 
-	AddBaseStatsCombo(proto.Constellation_Human, proto.Class_ClassPriest)
-	AddBaseStatsCombo(proto.Constellation_Dwarf, proto.Class_ClassPriest)
-	AddBaseStatsCombo(proto.Constellation_NightElf, proto.Class_ClassPriest)
-	AddBaseStatsCombo(proto.Constellation_Draenei, proto.Class_ClassPriest)
-	AddBaseStatsCombo(proto.Constellation_Undead, proto.Class_ClassPriest)
-	AddBaseStatsCombo(proto.Constellation_Troll, proto.Class_ClassPriest)
-	AddBaseStatsCombo(proto.Constellation_BloodElf, proto.Class_ClassPriest)
+	AddBaseStatsCombo(proto.Race_RaceHuman, proto.Class_ClassPriest)
+	AddBaseStatsCombo(proto.Race_RaceDwarf, proto.Class_ClassPriest)
+	AddBaseStatsCombo(proto.Race_RaceNightElf, proto.Class_ClassPriest)
+	AddBaseStatsCombo(proto.Race_RaceDraenei, proto.Class_ClassPriest)
+	AddBaseStatsCombo(proto.Race_RaceUndead, proto.Class_ClassPriest)
+	AddBaseStatsCombo(proto.Race_RaceTroll, proto.Class_ClassPriest)
+	AddBaseStatsCombo(proto.Race_RaceBloodElf, proto.Class_ClassPriest)
 
-	AddBaseStatsCombo(proto.Constellation_BloodElf, proto.Class_ClassRogue)
-	AddBaseStatsCombo(proto.Constellation_Dwarf, proto.Class_ClassRogue)
-	AddBaseStatsCombo(proto.Constellation_Gnome, proto.Class_ClassRogue)
-	AddBaseStatsCombo(proto.Constellation_Human, proto.Class_ClassRogue)
-	AddBaseStatsCombo(proto.Constellation_NightElf, proto.Class_ClassRogue)
-	AddBaseStatsCombo(proto.Constellation_Orc, proto.Class_ClassRogue)
-	AddBaseStatsCombo(proto.Constellation_Troll, proto.Class_ClassRogue)
-	AddBaseStatsCombo(proto.Constellation_Undead, proto.Class_ClassRogue)
+	AddBaseStatsCombo(proto.Race_RaceBloodElf, proto.Class_ClassRogue)
+	AddBaseStatsCombo(proto.Race_RaceDwarf, proto.Class_ClassRogue)
+	AddBaseStatsCombo(proto.Race_RaceGnome, proto.Class_ClassRogue)
+	AddBaseStatsCombo(proto.Race_RaceHuman, proto.Class_ClassRogue)
+	AddBaseStatsCombo(proto.Race_RaceNightElf, proto.Class_ClassRogue)
+	AddBaseStatsCombo(proto.Race_RaceOrc, proto.Class_ClassRogue)
+	AddBaseStatsCombo(proto.Race_RaceTroll, proto.Class_ClassRogue)
+	AddBaseStatsCombo(proto.Race_RaceUndead, proto.Class_ClassRogue)
 
-	AddBaseStatsCombo(proto.Constellation_Draenei, proto.Class_ClassShaman)
-	AddBaseStatsCombo(proto.Constellation_Orc, proto.Class_ClassShaman)
-	AddBaseStatsCombo(proto.Constellation_Tauren, proto.Class_ClassShaman)
-	AddBaseStatsCombo(proto.Constellation_Troll, proto.Class_ClassShaman)
+	AddBaseStatsCombo(proto.Race_RaceDraenei, proto.Class_ClassShaman)
+	AddBaseStatsCombo(proto.Race_RaceOrc, proto.Class_ClassShaman)
+	AddBaseStatsCombo(proto.Race_RaceTauren, proto.Class_ClassShaman)
+	AddBaseStatsCombo(proto.Race_RaceTroll, proto.Class_ClassShaman)
 
-	AddBaseStatsCombo(proto.Constellation_BloodElf, proto.Class_ClassWarlock)
-	AddBaseStatsCombo(proto.Constellation_Orc, proto.Class_ClassWarlock)
-	AddBaseStatsCombo(proto.Constellation_Undead, proto.Class_ClassWarlock)
-	AddBaseStatsCombo(proto.Constellation_Human, proto.Class_ClassWarlock)
-	AddBaseStatsCombo(proto.Constellation_Gnome, proto.Class_ClassWarlock)
+	AddBaseStatsCombo(proto.Race_RaceBloodElf, proto.Class_ClassWarlock)
+	AddBaseStatsCombo(proto.Race_RaceOrc, proto.Class_ClassWarlock)
+	AddBaseStatsCombo(proto.Race_RaceUndead, proto.Class_ClassWarlock)
+	AddBaseStatsCombo(proto.Race_RaceHuman, proto.Class_ClassWarlock)
+	AddBaseStatsCombo(proto.Race_RaceGnome, proto.Class_ClassWarlock)
 
-	AddBaseStatsCombo(proto.Constellation_Draenei, proto.Class_ClassWarrior)
-	AddBaseStatsCombo(proto.Constellation_Dwarf, proto.Class_ClassWarrior)
-	AddBaseStatsCombo(proto.Constellation_Gnome, proto.Class_ClassWarrior)
-	AddBaseStatsCombo(proto.Constellation_Human, proto.Class_ClassWarrior)
-	AddBaseStatsCombo(proto.Constellation_NightElf, proto.Class_ClassWarrior)
-	AddBaseStatsCombo(proto.Constellation_Orc, proto.Class_ClassWarrior)
-	AddBaseStatsCombo(proto.Constellation_Tauren, proto.Class_ClassWarrior)
-	AddBaseStatsCombo(proto.Constellation_Troll, proto.Class_ClassWarrior)
-	AddBaseStatsCombo(proto.Constellation_Undead, proto.Class_ClassWarrior)
+	AddBaseStatsCombo(proto.Race_RaceDraenei, proto.Class_ClassWarrior)
+	AddBaseStatsCombo(proto.Race_RaceDwarf, proto.Class_ClassWarrior)
+	AddBaseStatsCombo(proto.Race_RaceGnome, proto.Class_ClassWarrior)
+	AddBaseStatsCombo(proto.Race_RaceHuman, proto.Class_ClassWarrior)
+	AddBaseStatsCombo(proto.Race_RaceNightElf, proto.Class_ClassWarrior)
+	AddBaseStatsCombo(proto.Race_RaceOrc, proto.Class_ClassWarrior)
+	AddBaseStatsCombo(proto.Race_RaceTauren, proto.Class_ClassWarrior)
+	AddBaseStatsCombo(proto.Race_RaceTroll, proto.Class_ClassWarrior)
+	AddBaseStatsCombo(proto.Race_RaceUndead, proto.Class_ClassWarrior)
 }

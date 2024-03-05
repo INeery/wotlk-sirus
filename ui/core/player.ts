@@ -11,7 +11,7 @@ import {
 	ItemSlot,
 	Profession,
 	PseudoStat,
-	Constellation,
+	Race,
 	UnitReference,
 	SimDatabase,
 	Spec,
@@ -239,7 +239,7 @@ export class Player<SpecType extends Spec> {
 	//private bulkEquipmentSpec: BulkEquipmentSpec = BulkEquipmentSpec.create();
 	private enableItemSwap: boolean = false;
 	private itemSwapGear: ItemSwapGear = new ItemSwapGear({});
-	private race: Constellation;
+	private race: Race;
 	private profession1: Profession = 0;
 	private profession2: Profession = 0;
 	aplRotation: APLRotation = APLRotation.create();
@@ -512,10 +512,10 @@ export class Player<SpecType extends Spec> {
 		}
 	}
 
-	getRace(): Constellation {
+	getRace(): Race {
 		return this.race;
 	}
-	setRace(eventID: EventID, newRace: Constellation) {
+	setRace(eventID: EventID, newRace: Race) {
 		if (newRace != this.race) {
 			this.race = newRace;
 			this.raceChangeEmitter.emit(eventID);
@@ -1341,7 +1341,7 @@ export class Player<SpecType extends Spec> {
 		if (exportCategory(SimSettingCategories.Miscellaneous)) {
 			PlayerProto.mergePartial(player, {
 				name: this.getName(),
-				constellation: this.getRace(),
+				race: this.getRace(),
 				profession1: this.getProfession1(),
 				profession2: this.getProfession2(),
 				reactionTimeMs: this.getReactionTime(),
@@ -1400,7 +1400,7 @@ export class Player<SpecType extends Spec> {
 			if (loadCategory(SimSettingCategories.Miscellaneous)) {
 				this.setSpecOptions(eventID, this.specTypeFunctions.optionsFromPlayer(proto));
 				this.setName(eventID, proto.name);
-				this.setRace(eventID, proto.constellation);
+				this.setRace(eventID, proto.race);
 				this.setProfession1(eventID, proto.profession1);
 				this.setProfession2(eventID, proto.profession2);
 				this.setReactionTime(eventID, proto.reactionTimeMs);

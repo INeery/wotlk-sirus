@@ -14,9 +14,9 @@ func init() {
 
 func TestElemental(t *testing.T) {
 	core.RunTestSuite(t, t.Name(), core.FullCharacterTestSuiteGenerator(core.CharacterSuiteConfig{
-		Class:               proto.Class_ClassShaman,
-		Constellation:       proto.Constellation_Troll,
-		OtherConstellations: []proto.Constellation{proto.Constellation_Orc},
+		Class:      proto.Class_ClassShaman,
+		Race:       proto.Race_RaceTroll,
+		OtherRaces: []proto.Race{proto.Race_RaceOrc},
 
 		GearSet:     core.GetGearSet("../../../ui/elemental_shaman/gear_sets", "p1"),
 		Talents:     StandardTalents,
@@ -61,7 +61,7 @@ func BenchmarkSimulate(b *testing.B) {
 	rsr := &proto.RaidSimRequest{
 		Raid: core.SinglePlayerRaidProto(
 			&proto.Player{
-				Constellation: proto.Constellation_Orc,
+				Race:          proto.Race_RaceOrc,
 				Class:         proto.Class_ClassShaman,
 				Equipment:     core.GetGearSet("../../../ui/elemental_shaman/gear_sets", "p1").GearSet,
 				TalentsString: StandardTalents,

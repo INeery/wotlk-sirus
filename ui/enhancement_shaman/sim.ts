@@ -5,7 +5,7 @@ import {
 	ItemSlot,
 	PartyBuffs,
 	PseudoStat,
-	Constellation,
+	Race,
 	Spec,
 	Stat,
 	TristateEffect,
@@ -203,9 +203,9 @@ const SPEC_CONFIG = registerSpecConfig(Spec.SpecEnhancementShaman, {
 			specOptions: Presets.DefaultOptions,
 			consumes: Presets.DefaultConsumes,
 			defaultFactionRaces: {
-				[Faction.Unknown]: Constellation.UnknownConstellation,
-				[Faction.Alliance]: Constellation.Draenei,
-				[Faction.Horde]: Constellation.Orc,
+				[Faction.Unknown]: Race.RaceUnknown,
+				[Faction.Alliance]: Race.RaceDraenei,
+				[Faction.Horde]: Race.RaceOrc,
 			},
 			defaultGear: {
 				[Faction.Unknown]: {},

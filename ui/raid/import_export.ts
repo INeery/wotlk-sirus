@@ -10,7 +10,7 @@ import {
 	Faction,
 	ItemSpec,
 	Profession,
-	Constellation,
+	Race,
 	UnitReference,
 	Spec,
 	Target as TargetProto,
@@ -297,7 +297,7 @@ export class RaidWCLImporter extends Importer {
 	}
 
 	private inferRace(eventID: EventID, wclData: any, wclPlayers: WCLSimPlayer[]) {
-		wclPlayers.forEach(p => p.player.setRace(eventID, Constellation.UnknownConstellation));
+		wclPlayers.forEach(p => p.player.setRace(eventID, Race.RaceUnknown));
 
 		// If defined in log, use that faction. Otherwise default to UI setting.
 		let faction = (wclData.guild?.faction?.id || this.simUI.raidPicker?.getCurrentFaction() || Faction.Horde) as Faction;
@@ -307,9 +307,9 @@ export class RaidWCLImporter extends Importer {
 				.filter(aura => aura.ability == 28878)
 				.forEach(aura => {
 					const sourcePlayer = wclPlayers.find(player => player.id == aura.source);
-					if (sourcePlayer && sourcePlayer.player.getRace() != Constellation.Draenei) {
-						console.log(`Inferring player ${sourcePlayer.name} has race ${raceNames.get(Constellation.Draenei)} from Heroic Presence aura event`);
-						sourcePlayer.player.setRace(eventID, Constellation.Draenei);
+					if (sourcePlayer && sourcePlayer.player.getRace() != Race.RaceDraenei) {
+						console.log(`Inferring player ${sourcePlayer.name} has race ${raceNames.get(Race.RaceDraenei)} from Heroic Presence aura event`);
+						sourcePlayer.player.setRace(eventID, Race.RaceDraenei);
 						faction = Faction.Alliance;
 					}
 				});
@@ -329,7 +329,7 @@ export class RaidWCLImporter extends Importer {
 		});
 
 		wclPlayers.forEach(p => {
-			if (p.player.getRace() == Constellation.UnknownConstellation) {
+			if (p.player.getRace() == Race.RaceUnknown) {
 				p.player.setRace(eventID, p.preset.defaultFactionRaces[faction]);
 			}
 		});
@@ -660,19 +660,19 @@ const fullTypeToSpec: Record<string, Spec> = {
 };
 
 // Spells which imply a specific Race.
-const racialSpells: Array<{ id: number, name: string, race: Constellation }> = [
-	{ id: 25046, name: 'Arcane Torrent (Energy)', race: Constellation.BloodElf },
-	{ id: 28730, name: 'Arcane Torrent (Mana)', race: Constellation.BloodElf },
-	{ id: 50613, name: 'Arcane Torrent (Runic Power)', race: Constellation.BloodElf },
-	{ id: 26297, name: 'Berserking', race: Constellation.Troll },
-	{ id: 20572, name: 'Blood Fury (AP)', race: Constellation.Orc },
-	{ id: 33697, name: 'Blood Fury (AP+SP)', race: Constellation.Orc },
-	{ id: 33702, name: 'Blood Fury (SP)', race: Constellation.Orc },
-	{ id: 20589, name: 'Escape Artist', race: Constellation.Gnome },
-	{ id: 20594, name: 'Stoneform', race: Constellation.Dwarf },
-	{ id: 20549, name: 'War Stomp', race: Constellation.Tauren },
-	{ id: 7744, name: 'Will of the Forsaken', race: Constellation.Undead },
-	{ id: 59752, name: 'Will to Survive', race: Constellation.Human },
+const racialSpells: Array<{ id: number, name: string, race: Race }> = [
+	{ id: 25046, name: 'Arcane Torrent (Energy)', race: Race.RaceBloodElf },
+	{ id: 28730, name: 'Arcane Torrent (Mana)', race: Race.RaceBloodElf },
+	{ id: 50613, name: 'Arcane Torrent (Runic Power)', race: Race.RaceBloodElf },
+	{ id: 26297, name: 'Berserking', race: Race.RaceTroll },
+	{ id: 20572, name: 'Blood Fury (AP)', race: Race.RaceOrc },
+	{ id: 33697, name: 'Blood Fury (AP+SP)', race: Race.RaceOrc },
+	{ id: 33702, name: 'Blood Fury (SP)', race: Race.RaceOrc },
+	{ id: 20589, name: 'Escape Artist', race: Race.RaceGnome },
+	{ id: 20594, name: 'Stoneform', race: Race.RaceDwarf },
+	{ id: 20549, name: 'War Stomp', race: Race.RaceTauren },
+	{ id: 7744, name: 'Will of the Forsaken', race: Race.RaceUndead },
+	{ id: 59752, name: 'Will to Survive', race: Race.RaceHuman },
 ];
 
 // Spells which imply a specific Profession.

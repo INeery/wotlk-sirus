@@ -14,8 +14,8 @@ func init() {
 
 func TestRestoration(t *testing.T) {
 	core.RunTestSuite(t, t.Name(), core.FullCharacterTestSuiteGenerator(core.CharacterSuiteConfig{
-		Class:         proto.Class_ClassDruid,
-		Constellation: proto.Constellation_Tauren,
+		Class: proto.Class_ClassDruid,
+		Race:  proto.Race_RaceTauren,
 
 		GearSet:     core.GetGearSet("../../../ui/restoration_druid/gear_sets", "p1"),
 		Talents:     StandardTalents,

@@ -8,7 +8,7 @@ import {
 	Glyphs,
 	ItemSpec,
 	Profession,
-	Constellation,
+	Race,
 	Spec,
 } from '../proto/common';
 import { IndividualSimSettings } from '../proto/ui';
@@ -76,7 +76,7 @@ export abstract class Importer extends BaseModal {
 
 	abstract onImport(data: string): void
 
-	protected async finishIndividualImport<SpecType extends Spec>(simUI: IndividualSimUI<SpecType>, charClass: Class, race: Constellation, equipmentSpec: EquipmentSpec, talentsStr: string, glyphs: Glyphs | null, professions: Array<Profession>): Promise<void> {
+	protected async finishIndividualImport<SpecType extends Spec>(simUI: IndividualSimUI<SpecType>, charClass: Class, race: Race, equipmentSpec: EquipmentSpec, talentsStr: string, glyphs: Glyphs | null, professions: Array<Profession>): Promise<void> {
 		const playerClass = simUI.player.getClass();
 		if (charClass != playerClass) {
 			throw new Error(`Wrong Class! Expected ${classNames.get(playerClass)} but found ${classNames.get(charClass)}!`);
@@ -240,7 +240,7 @@ export class Individual80UImporter<SpecType extends Spec> extends Importer {
 		}
 
 		const race = nameToRace((importJson?.character?.race as string) || '');
-		if (race == Constellation.UnknownConstellation) {
+		if (race == Race.RaceUnknown) {
 			throw new Error('Could not parse Race!');
 		}
 
@@ -301,7 +301,7 @@ export class IndividualWowheadGearPlannerImporter<SpecType extends Spec> extends
 		}
 
 		const race = nameToRace(match[2].replaceAll('-', ''));
-		if (race == Constellation.UnknownConstellation) {
+		if (race == Race.RaceUnknown) {
 			throw new Error('Could not parse Race: ' + match[2]);
 		}
 
@@ -484,7 +484,7 @@ export class IndividualAddonImporter<SpecType extends Spec> extends Importer {
 		}
 
 		const race = nameToRace((importJson['race'] as string) || '');
-		if (race == Constellation.UnknownConstellation) {
+		if (race == Race.RaceUnknown) {
 			throw new Error('Could not parse Race!');
 		}
 

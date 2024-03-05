@@ -272,7 +272,7 @@ export class SettingsTab extends SimTab {
 					playerBuffs: player.getBuffs(),
 					debuffs: simUI.sim.raid.getDebuffs(),
 					consumes: player.getConsumes(),
-					constellation: player.getRace(),
+					race: player.getRace(),
 					professions: player.getProfessions(),
 					enableItemSwap: player.getEnableItemSwap(),
 					itemSwap: player.getItemSwapGear().toProto(),
@@ -294,7 +294,7 @@ export class SettingsTab extends SimTab {
 					}
 					simUI.player.setBuffs(eventID, newSettings.playerBuffs || IndividualBuffs.create());
 					simUI.player.setConsumes(eventID, newSettings.consumes || Consumes.create());
-					simUI.player.setRace(eventID, newSettings.constellation);
+					simUI.player.setRace(eventID, newSettings.race);
 					simUI.player.setProfessions(eventID, newSettings.professions);
 					simUI.player.setEnableItemSwap(eventID, newSettings.enableItemSwap);
 					simUI.player.setItemSwapGear(eventID, simUI.sim.db.lookupItemSwap(newSettings.itemSwap || ItemSwap.create()));

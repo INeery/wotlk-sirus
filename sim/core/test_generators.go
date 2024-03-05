@@ -103,30 +103,30 @@ type EncounterCombo struct {
 	Encounter *proto.Encounter
 }
 type SettingsCombos struct {
-	Class          proto.Class
-	Constellations []proto.Constellation
-	GearSets       []GearSetCombo
-	TalentSets     []TalentsCombo
-	SpecOptions    []SpecOptionsCombo
-	Rotations      []RotationCombo
-	Buffs          []BuffsCombo
-	Encounters     []EncounterCombo
-	SimOptions     *proto.SimOptions
-	IsHealer       bool
-	Cooldowns      *proto.Cooldowns
+	Class       proto.Class
+	Races       []proto.Race
+	GearSets    []GearSetCombo
+	TalentSets  []TalentsCombo
+	SpecOptions []SpecOptionsCombo
+	Rotations   []RotationCombo
+	Buffs       []BuffsCombo
+	Encounters  []EncounterCombo
+	SimOptions  *proto.SimOptions
+	IsHealer    bool
+	Cooldowns   *proto.Cooldowns
 }
 
 func (combos *SettingsCombos) NumTests() int {
-	return len(combos.Constellations) * len(combos.GearSets) * len(combos.TalentSets) * len(combos.SpecOptions) * len(combos.Buffs) * len(combos.Encounters) * max(1, len(combos.Rotations))
+	return len(combos.Races) * len(combos.GearSets) * len(combos.TalentSets) * len(combos.SpecOptions) * len(combos.Buffs) * len(combos.Encounters) * max(1, len(combos.Rotations))
 }
 
 func (combos *SettingsCombos) GetTest(testIdx int) (string, *proto.ComputeStatsRequest, *proto.StatWeightsRequest, *proto.RaidSimRequest) {
 	testNameParts := []string{}
 
-	constellationIdx := testIdx % len(combos.Constellations)
-	testIdx /= len(combos.Constellations)
-	constellation := combos.Constellations[constellationIdx]
-	testNameParts = append(testNameParts, constellation.String()[4:])
+	raceIdx := testIdx % len(combos.Races)
+	testIdx /= len(combos.Races)
+	race := combos.Races[raceIdx]
+	testNameParts = append(testNameParts, race.String()[4:])
 
 	gearSetIdx := testIdx % len(combos.GearSets)
 	testIdx /= len(combos.GearSets)
@@ -164,7 +164,7 @@ func (combos *SettingsCombos) GetTest(testIdx int) (string, *proto.ComputeStatsR
 	rsr := &proto.RaidSimRequest{
 		Raid: SinglePlayerRaidProto(
 			WithSpec(&proto.Player{
-				Constellation:      constellation,
+				Race:               race,
 				Class:              combos.Class,
 				Equipment:          gearSetCombo.GearSet,
 				TalentsString:      talentSetCombo.Talents,
@@ -423,12 +423,12 @@ func (generator *CombinedTestGenerator) GetTest(testIdx int) (string, *proto.Com
 type CharacterSuiteConfig struct {
 	Class proto.Class
 
-	Constellation proto.Constellation
-	GearSet       GearSetCombo
-	SpecOptions   SpecOptionsCombo
-	Glyphs        *proto.Glyphs
-	Talents       string
-	Rotation      RotationCombo
+	Race        proto.Race
+	GearSet     GearSetCombo
+	SpecOptions SpecOptionsCombo
+	Glyphs      *proto.Glyphs
+	Talents     string
+	Rotation    RotationCombo
 
 	Consumes *proto.Consumes
 
@@ -436,10 +436,10 @@ type CharacterSuiteConfig struct {
 	IsTank          bool
 	InFrontOfTarget bool
 
-	OtherConstellations []proto.Constellation
-	OtherGearSets       []GearSetCombo
-	OtherSpecOptions    []SpecOptionsCombo
-	OtherRotations      []RotationCombo
+	OtherRaces       []proto.Race
+	OtherGearSets    []GearSetCombo
+	OtherSpecOptions []SpecOptionsCombo
+	OtherRotations   []RotationCombo
 
 	ItemFilter ItemFilter
 
@@ -450,7 +450,7 @@ type CharacterSuiteConfig struct {
 }
 
 func FullCharacterTestSuiteGenerator(config CharacterSuiteConfig) TestGenerator {
-	allConstellations := append(config.OtherConstellations, config.Constellation)
+	allRaces := append(config.OtherRaces, config.Race)
 	allGearSets := append(config.OtherGearSets, config.GearSet)
 	allTalentSets := []TalentsCombo{{
 		Label:   "Talents",
@@ -463,7 +463,7 @@ func FullCharacterTestSuiteGenerator(config CharacterSuiteConfig) TestGenerator 
 	defaultPlayer := WithSpec(
 		&proto.Player{
 			Class:         config.Class,
-			Constellation: config.Constellation,
+			Race:          config.Race,
 			Equipment:     config.GearSet.GearSet,
 			Consumes:      config.Consumes,
 			Buffs:         FullIndividualBuffs,
@@ -502,12 +502,12 @@ func FullCharacterTestSuiteGenerator(config CharacterSuiteConfig) TestGenerator 
 			{
 				name: "Settings",
 				generator: &SettingsCombos{
-					Class:          config.Class,
-					Constellations: allConstellations,
-					GearSets:       allGearSets,
-					TalentSets:     allTalentSets,
-					SpecOptions:    allSpecOptions,
-					Rotations:      allRotations,
+					Class:       config.Class,
+					Races:       allRaces,
+					GearSets:    allGearSets,
+					TalentSets:  allTalentSets,
+					SpecOptions: allSpecOptions,
+					Rotations:   allRotations,
 					Buffs: []BuffsCombo{
 						{
 							Label: "NoBuffs",

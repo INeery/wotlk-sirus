@@ -1,4 +1,4 @@
-import {Class, Cooldowns, Debuffs, Faction, IndividualBuffs, PartyBuffs, Constellation, RaidBuffs, Spec, Stat, TristateEffect} from '../core/proto/common.js';
+import {Class, Cooldowns, Debuffs, Faction, IndividualBuffs, PartyBuffs, Race, RaidBuffs, Spec, Stat, TristateEffect} from '../core/proto/common.js';
 import {APLAction, APLListItem, APLPrepullAction, APLRotation} from '../core/proto/apl.js';
 import {Stats} from '../core/proto_utils/stats.js';
 import { getSpecIcon } from '../core/proto_utils/utils.js';
@@ -304,9 +304,9 @@ const SPEC_CONFIG = registerSpecConfig(Spec.SpecMage, {
 			consumes: Presets.DefaultArcaneConsumes,
 			otherDefaults: Presets.OtherDefaults,
 			defaultFactionRaces: {
-				[Faction.Unknown]: Constellation.UnknownConstellation,
-				[Faction.Alliance]: Constellation.Gnome,
-				[Faction.Horde]: Constellation.Troll,
+				[Faction.Unknown]: Race.RaceUnknown,
+				[Faction.Alliance]: Race.RaceGnome,
+				[Faction.Horde]: Race.RaceTroll,
 			},
 			defaultGear: {
 				[Faction.Unknown]: {},
@@ -335,9 +335,9 @@ const SPEC_CONFIG = registerSpecConfig(Spec.SpecMage, {
 			consumes: Presets.DefaultFireConsumes,
 			otherDefaults: Presets.OtherDefaults,
 			defaultFactionRaces: {
-				[Faction.Unknown]: Constellation.UnknownConstellation,
-				[Faction.Alliance]: Constellation.Gnome,
-				[Faction.Horde]: Constellation.Troll,
+				[Faction.Unknown]: Race.RaceUnknown,
+				[Faction.Alliance]: Race.RaceGnome,
+				[Faction.Horde]: Race.RaceTroll,
 			},
 			defaultGear: {
 				[Faction.Unknown]: {},
@@ -366,9 +366,9 @@ const SPEC_CONFIG = registerSpecConfig(Spec.SpecMage, {
 			consumes: Presets.DefaultFireConsumes,
 			otherDefaults: Presets.OtherDefaults,
 			defaultFactionRaces: {
-				[Faction.Unknown]: Constellation.UnknownConstellation,
-				[Faction.Alliance]: Constellation.Gnome,
-				[Faction.Horde]: Constellation.Troll,
+				[Faction.Unknown]: Race.RaceUnknown,
+				[Faction.Alliance]: Race.RaceGnome,
+				[Faction.Horde]: Race.RaceTroll,
 			},
 			defaultGear: {
 				[Faction.Unknown]: {},

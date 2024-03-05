@@ -14,9 +14,9 @@ func init() {
 
 func TestDisc(t *testing.T) {
 	core.RunTestSuite(t, t.Name(), core.FullCharacterTestSuiteGenerator(core.CharacterSuiteConfig{
-		Class:         proto.Class_ClassPriest,
-		Constellation: proto.Constellation_Undead,
-		IsHealer:      true,
+		Class:    proto.Class_ClassPriest,
+		Race:     proto.Race_RaceUndead,
+		IsHealer: true,
 
 		GearSet:     core.GetGearSet("../../../ui/healing_priest/gear_sets", "p1_disc"),
 		Talents:     DiscTalents,
@@ -50,9 +50,9 @@ func TestDisc(t *testing.T) {
 
 func TestHoly(t *testing.T) {
 	core.RunTestSuite(t, t.Name(), core.FullCharacterTestSuiteGenerator(core.CharacterSuiteConfig{
-		Class:         proto.Class_ClassPriest,
-		Constellation: proto.Constellation_Undead,
-		IsHealer:      true,
+		Class:    proto.Class_ClassPriest,
+		Race:     proto.Race_RaceUndead,
+		IsHealer: true,
 
 		GearSet:     core.GetGearSet("../../../ui/healing_priest/gear_sets", "p1_holy"),
 		Talents:     HolyTalents,

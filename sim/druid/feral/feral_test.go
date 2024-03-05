@@ -28,8 +28,8 @@ var FeralItemFilter = core.ItemFilter{
 
 func TestFeral(t *testing.T) {
 	core.RunTestSuite(t, t.Name(), core.FullCharacterTestSuiteGenerator(core.CharacterSuiteConfig{
-		Class:         proto.Class_ClassDruid,
-		Constellation: proto.Constellation_Tauren,
+		Class: proto.Class_ClassDruid,
+		Race:  proto.Race_RaceTauren,
 
 		GearSet:     core.GetGearSet("../../../ui/feral_druid/gear_sets", "p1"),
 		Talents:     StandardTalents,
@@ -47,8 +47,8 @@ func TestFeral(t *testing.T) {
 
 func TestFeralApl(t *testing.T) {
 	core.RunTestSuite(t, t.Name(), core.FullCharacterTestSuiteGenerator(core.CharacterSuiteConfig{
-		Class:         proto.Class_ClassDruid,
-		Constellation: proto.Constellation_Tauren,
+		Class: proto.Class_ClassDruid,
+		Race:  proto.Race_RaceTauren,
 
 		GearSet:     core.GetGearSet("../../../ui/feral_druid/gear_sets", "p3"),
 		Talents:     StandardTalents,
@@ -64,13 +64,13 @@ func BenchmarkSimulate(b *testing.B) {
 	rsr := &proto.RaidSimRequest{
 		Raid: core.SinglePlayerRaidProto(
 			&proto.Player{
-				Constellation: proto.Constellation_Tauren,
-				Class:         proto.Class_ClassDruid,
-				Equipment:     core.GetGearSet("../../../ui/feral_druid/gear_sets", "p1").GearSet,
-				Consumes:      FullConsumes,
-				Spec:          PlayerOptionsMonoCat,
-				Buffs:         core.FullIndividualBuffs,
-				Glyphs:        StandardGlyphs,
+				Race:      proto.Race_RaceTauren,
+				Class:     proto.Class_ClassDruid,
+				Equipment: core.GetGearSet("../../../ui/feral_druid/gear_sets", "p1").GearSet,
+				Consumes:  FullConsumes,
+				Spec:      PlayerOptionsMonoCat,
+				Buffs:     core.FullIndividualBuffs,
+				Glyphs:    StandardGlyphs,
 
 				InFrontOfTarget: true,
 			},

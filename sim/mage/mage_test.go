@@ -14,8 +14,8 @@ func init() {
 
 func TestArcane(t *testing.T) {
 	core.RunTestSuite(t, t.Name(), core.FullCharacterTestSuiteGenerator(core.CharacterSuiteConfig{
-		Class:         proto.Class_ClassMage,
-		Constellation: proto.Constellation_Troll,
+		Class: proto.Class_ClassMage,
+		Race:  proto.Race_RaceTroll,
 
 		GearSet:     core.GetGearSet("../../ui/mage/gear_sets", "p3_arcane_alliance"),
 		Talents:     ArcaneTalents,
@@ -33,8 +33,8 @@ func TestArcane(t *testing.T) {
 
 func TestFire(t *testing.T) {
 	core.RunTestSuite(t, t.Name(), core.FullCharacterTestSuiteGenerator(core.CharacterSuiteConfig{
-		Class:         proto.Class_ClassMage,
-		Constellation: proto.Constellation_Troll,
+		Class: proto.Class_ClassMage,
+		Race:  proto.Race_RaceTroll,
 
 		GearSet:     core.GetGearSet("../../ui/mage/gear_sets", "p3_fire_alliance"),
 		Talents:     FireTalents,
@@ -52,8 +52,8 @@ func TestFire(t *testing.T) {
 
 func TestFrostFire(t *testing.T) {
 	core.RunTestSuite(t, t.Name(), core.FullCharacterTestSuiteGenerator(core.CharacterSuiteConfig{
-		Class:         proto.Class_ClassMage,
-		Constellation: proto.Constellation_Troll,
+		Class: proto.Class_ClassMage,
+		Race:  proto.Race_RaceTroll,
 
 		GearSet:     core.GetGearSet("../../ui/mage/gear_sets", "p3_ffb_alliance"),
 		Talents:     FrostFireTalents,
@@ -68,8 +68,8 @@ func TestFrostFire(t *testing.T) {
 
 func TestFrost(t *testing.T) {
 	core.RunTestSuite(t, t.Name(), core.FullCharacterTestSuiteGenerator(core.CharacterSuiteConfig{
-		Class:         proto.Class_ClassMage,
-		Constellation: proto.Constellation_Troll,
+		Class: proto.Class_ClassMage,
+		Race:  proto.Race_RaceTroll,
 
 		GearSet:     core.GetGearSet("../../ui/mage/gear_sets", "p3_frost_alliance"),
 		Talents:     FrostTalents,

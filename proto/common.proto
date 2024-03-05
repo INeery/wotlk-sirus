@@ -27,18 +27,18 @@ enum Spec {
 	SpecTankDeathknight = 16;
 }
 
-enum Constellation {
-	UnknownConstellation = 0;
-	BloodElf = 1;
-	Draenei = 2;
-	Dwarf = 3;
-	Gnome = 4;
-	Human = 5;
-	NightElf = 6;
-	Orc = 7;
-	Tauren = 8;
-	Troll = 9;
-	Undead = 10;
+enum Race {
+	RaceUnknown = 0;
+	RaceBloodElf = 1;
+	RaceDraenei = 2;
+	RaceDwarf = 3;
+	RaceGnome = 4;
+	RaceHuman = 5;
+	RaceNightElf = 6;
+	RaceOrc = 7;
+	RaceTauren = 8;
+	RaceTroll = 9;
+	RaceUndead = 10;
 }
 
 enum Faction {

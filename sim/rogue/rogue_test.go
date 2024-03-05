@@ -14,14 +14,14 @@ func init() {
 
 func TestCombat(t *testing.T) {
 	core.RunTestSuite(t, t.Name(), core.FullCharacterTestSuiteGenerator(core.CharacterSuiteConfig{
-		Class:               proto.Class_ClassRogue,
-		Constellation:       proto.Constellation_Human,
-		OtherConstellations: []proto.Constellation{proto.Constellation_Orc},
-		GearSet:             core.GetGearSet("../../ui/rogue/gear_sets", "p1_combat"),
-		Talents:             CombatTalents,
-		Glyphs:              CombatGlyphs,
-		Consumes:            FullConsumes,
-		SpecOptions:         core.SpecOptionsCombo{Label: "MH Deadly OH Instant", SpecOptions: PlayerOptionsCombatDI},
+		Class:       proto.Class_ClassRogue,
+		Race:        proto.Race_RaceHuman,
+		OtherRaces:  []proto.Race{proto.Race_RaceOrc},
+		GearSet:     core.GetGearSet("../../ui/rogue/gear_sets", "p1_combat"),
+		Talents:     CombatTalents,
+		Glyphs:      CombatGlyphs,
+		Consumes:    FullConsumes,
+		SpecOptions: core.SpecOptionsCombo{Label: "MH Deadly OH Instant", SpecOptions: PlayerOptionsCombatDI},
 		OtherSpecOptions: []core.SpecOptionsCombo{
 			{Label: "MH Instant OH Deadly", SpecOptions: PlayerOptionsCombatID},
 			{Label: "MH Instant OH Instant", SpecOptions: PlayerOptionsCombatII},
@@ -46,14 +46,14 @@ func TestCombat(t *testing.T) {
 
 func TestAssassination(t *testing.T) {
 	core.RunTestSuite(t, t.Name(), core.FullCharacterTestSuiteGenerator(core.CharacterSuiteConfig{
-		Class:               proto.Class_ClassRogue,
-		Constellation:       proto.Constellation_Human,
-		OtherConstellations: []proto.Constellation{proto.Constellation_Orc},
-		GearSet:             core.GetGearSet("../../ui/rogue/gear_sets", "p1_assassination"),
-		Talents:             AssassinationTalents,
-		Glyphs:              AssassinationGlyphs,
-		Consumes:            FullConsumes,
-		SpecOptions:         core.SpecOptionsCombo{Label: "Assassination", SpecOptions: PlayerOptionsAssassinationDI},
+		Class:       proto.Class_ClassRogue,
+		Race:        proto.Race_RaceHuman,
+		OtherRaces:  []proto.Race{proto.Race_RaceOrc},
+		GearSet:     core.GetGearSet("../../ui/rogue/gear_sets", "p1_assassination"),
+		Talents:     AssassinationTalents,
+		Glyphs:      AssassinationGlyphs,
+		Consumes:    FullConsumes,
+		SpecOptions: core.SpecOptionsCombo{Label: "Assassination", SpecOptions: PlayerOptionsAssassinationDI},
 		OtherSpecOptions: []core.SpecOptionsCombo{
 			{Label: "MH Instant OH Deadly", SpecOptions: PlayerOptionsAssassinationID},
 			{Label: "MH Instant OH Instant", SpecOptions: PlayerOptionsAssassinationII},
@@ -83,15 +83,15 @@ func TestAssassination(t *testing.T) {
 
 func TestSubtlety(t *testing.T) {
 	core.RunTestSuite(t, t.Name(), core.FullCharacterTestSuiteGenerator(core.CharacterSuiteConfig{
-		Class:               proto.Class_ClassRogue,
-		Constellation:       proto.Constellation_BloodElf,
-		OtherConstellations: []proto.Constellation{proto.Constellation_Orc},
-		GearSet:             core.GetGearSet("../../ui/rogue/gear_sets", "p2_hemosub"),
-		Talents:             SubtletyTalents,
-		Glyphs:              SubtletyGlyphs,
-		Consumes:            FullConsumes,
-		SpecOptions:         core.SpecOptionsCombo{Label: "Subtlety", SpecOptions: PlayerOptionsSubtletyID},
-		Rotation:            core.GetAplRotation("../../ui/rogue/apls", "combat_expose"),
+		Class:       proto.Class_ClassRogue,
+		Race:        proto.Race_RaceBloodElf,
+		OtherRaces:  []proto.Race{proto.Race_RaceOrc},
+		GearSet:     core.GetGearSet("../../ui/rogue/gear_sets", "p2_hemosub"),
+		Talents:     SubtletyTalents,
+		Glyphs:      SubtletyGlyphs,
+		Consumes:    FullConsumes,
+		SpecOptions: core.SpecOptionsCombo{Label: "Subtlety", SpecOptions: PlayerOptionsSubtletyID},
+		Rotation:    core.GetAplRotation("../../ui/rogue/apls", "combat_expose"),
 		ItemFilter: core.ItemFilter{
 			ArmorType: proto.ArmorType_ArmorTypeLeather,
 			RangedWeaponTypes: []proto.RangedWeaponType{
@@ -127,7 +127,7 @@ func GenerateCriticalDamageMultiplierTestCase(
 	expectedMultiplier float64) {
 	raid := core.SinglePlayerRaidProto(core.WithSpec(&proto.Player{
 		Class:         proto.Class_ClassRogue,
-		Constellation: proto.Constellation_Orc,
+		Race:          proto.Race_RaceOrc,
 		Equipment:     equipment,
 		TalentsString: talents,
 		Rotation:      core.GetAplRotation("../../ui/rogue/apls", "combat_expose").Rotation,
@@ -191,13 +191,13 @@ func BenchmarkSimulate(b *testing.B) {
 	rsr := &proto.RaidSimRequest{
 		Raid: core.SinglePlayerRaidProto(
 			&proto.Player{
-				Constellation: proto.Constellation_Troll,
-				Class:         proto.Class_ClassRogue,
-				Equipment:     core.GetGearSet("../../ui/rogue/gear_sets", "p1_combat").GearSet,
-				Consumes:      FullConsumes,
-				Spec:          PlayerOptionsCombatDI,
-				Buffs:         core.FullIndividualBuffs,
-				Rotation:      core.GetAplRotation("../../ui/rogue/apls", "combat_cleave_snd").Rotation,
+				Race:      proto.Race_RaceTroll,
+				Class:     proto.Class_ClassRogue,
+				Equipment: core.GetGearSet("../../ui/rogue/gear_sets", "p1_combat").GearSet,
+				Consumes:  FullConsumes,
+				Spec:      PlayerOptionsCombatDI,
+				Buffs:     core.FullIndividualBuffs,
+				Rotation:  core.GetAplRotation("../../ui/rogue/apls", "combat_cleave_snd").Rotation,
 			},
 			core.FullPartyBuffs,
 			core.FullRaidBuffs,

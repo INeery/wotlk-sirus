@@ -14,9 +14,9 @@ func init() {
 
 func TestRetribution(t *testing.T) {
 	core.RunTestSuite(t, t.Name(), core.FullCharacterTestSuiteGenerator(core.CharacterSuiteConfig{
-		Class:               proto.Class_ClassPaladin,
-		Constellation:       proto.Constellation_BloodElf,
-		OtherConstellations: []proto.Constellation{proto.Constellation_Human, proto.Constellation_Draenei, proto.Constellation_Dwarf},
+		Class:      proto.Class_ClassPaladin,
+		Race:       proto.Race_RaceBloodElf,
+		OtherRaces: []proto.Race{proto.Race_RaceHuman, proto.Race_RaceDraenei, proto.Race_RaceDwarf},
 
 		GearSet:     core.GetGearSet("../../../ui/retribution_paladin/gear_sets", "p1"),
 		Talents:     StandardTalents,
@@ -82,7 +82,7 @@ func BenchmarkSimulate(b *testing.B) {
 	rsr := &proto.RaidSimRequest{
 		Raid: core.SinglePlayerRaidProto(
 			&proto.Player{
-				Constellation: proto.Constellation_BloodElf,
+				Race:          proto.Race_RaceBloodElf,
 				Class:         proto.Class_ClassPaladin,
 				TalentsString: StandardTalents,
 				Glyphs:        StandardGlyphs,

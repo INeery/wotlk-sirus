@@ -14,9 +14,9 @@ func init() {
 
 func TestBloodTank(t *testing.T) {
 	core.RunTestSuite(t, t.Name(), core.FullCharacterTestSuiteGenerator(core.CharacterSuiteConfig{
-		Class:               proto.Class_ClassDeathknight,
-		Constellation:       proto.Constellation_Orc,
-		OtherConstellations: []proto.Constellation{proto.Constellation_Human},
+		Class:      proto.Class_ClassDeathknight,
+		Race:       proto.Race_RaceOrc,
+		OtherRaces: []proto.Race{proto.Race_RaceHuman},
 
 		GearSet:     core.GetGearSet("../../../ui/tank_deathknight/gear_sets", "p1_blood"),
 		Talents:     BloodTankTalents,

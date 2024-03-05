@@ -4,7 +4,7 @@ import {
 	Faction,
 	IndividualBuffs,
 	PartyBuffs,
-	Constellation,
+	Race,
 	RaidBuffs,
 	Spec,
 	Stat, PseudoStat,
@@ -218,9 +218,9 @@ const SPEC_CONFIG = registerSpecConfig(Spec.SpecRetributionPaladin, {
 			specOptions: Presets.DefaultOptions,
 			consumes: Presets.DefaultConsumes,
 			defaultFactionRaces: {
-				[Faction.Unknown]: Constellation.UnknownConstellation,
-				[Faction.Alliance]: Constellation.Human,
-				[Faction.Horde]: Constellation.BloodElf,
+				[Faction.Unknown]: Race.RaceUnknown,
+				[Faction.Alliance]: Race.RaceHuman,
+				[Faction.Horde]: Race.RaceBloodElf,
 			},
 			defaultGear: {
 				[Faction.Unknown]: {},

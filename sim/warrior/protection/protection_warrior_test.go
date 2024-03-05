@@ -14,9 +14,9 @@ func init() {
 
 func TestProtectionWarrior(t *testing.T) {
 	core.RunTestSuite(t, t.Name(), core.FullCharacterTestSuiteGenerator(core.CharacterSuiteConfig{
-		Class:               proto.Class_ClassWarrior,
-		Constellation:       proto.Constellation_Orc,
-		OtherConstellations: []proto.Constellation{proto.Constellation_Human},
+		Class:      proto.Class_ClassWarrior,
+		Race:       proto.Race_RaceOrc,
+		OtherRaces: []proto.Race{proto.Race_RaceHuman},
 
 		GearSet:     core.GetGearSet("../../../ui/protection_warrior/gear_sets", "p1_balanced"),
 		Talents:     DefaultTalents,
@@ -56,7 +56,7 @@ func BenchmarkSimulate(b *testing.B) {
 	rsr := &proto.RaidSimRequest{
 		Raid: core.SinglePlayerRaidProto(
 			&proto.Player{
-				Constellation: proto.Constellation_Orc,
+				Race:          proto.Race_RaceOrc,
 				Class:         proto.Class_ClassWarrior,
 				Equipment:     core.GetGearSet("../../../ui/protection_warrior/gear_sets", "p1_balanced").GearSet,
 				Consumes:      FullConsumes,

@@ -4,7 +4,7 @@ import {
 	ItemSlot,
 	Profession,
 	PseudoStat,
-	Constellation,
+	Race,
 	RangedWeaponType,
 	Stat,
 	WeaponType,
@@ -50,28 +50,28 @@ export const rangedWeaponTypeNames: Map<RangedWeaponType, string> = new Map([
 	[RangedWeaponType.RangedWeaponTypeWand, 'Wand'],
 ]);
 
-export const raceNames: Map<Constellation, string> = new Map([
-	[Constellation.UnknownConstellation, 'None'],
-	[Constellation.BloodElf, 'Blood Elf'],
-	[Constellation.Draenei, 'Draenei'],
-	[Constellation.Dwarf, 'Dwarf'],
-	[Constellation.Gnome, 'Gnome'],
-	[Constellation.Human, 'Human'],
-	[Constellation.NightElf, 'Night Elf'],
-	[Constellation.Orc, 'Orc'],
-	[Constellation.Tauren, 'Tauren'],
-	[Constellation.Troll, 'Troll'],
-	[Constellation.Undead, 'Undead'],
+export const raceNames: Map<Race, string> = new Map([
+	[Race.RaceUnknown, 'None'],
+	[Race.RaceBloodElf, 'Blood Elf'],
+	[Race.RaceDraenei, 'Draenei'],
+	[Race.RaceDwarf, 'Dwarf'],
+	[Race.RaceGnome, 'Gnome'],
+	[Race.RaceHuman, 'Human'],
+	[Race.RaceNightElf, 'Night Elf'],
+	[Race.RaceOrc, 'Orc'],
+	[Race.RaceTauren, 'Tauren'],
+	[Race.RaceTroll, 'Troll'],
+	[Race.RaceUndead, 'Undead'],
 ]);
 
-export function nameToRace(name: string): Constellation {
+export function nameToRace(name: string): Race {
 	const normalized = name.toLowerCase().replaceAll(' ', '');
 	for (const [key, value] of raceNames) {
 		if (value.toLowerCase().replaceAll(' ', '') == normalized) {
 			return key;
 		}
 	}
-	return Constellation.UnknownConstellation;
+	return Race.RaceUnknown;
 }
 
 export const classNames: Map<Class, string> = new Map([
