@@ -254,6 +254,7 @@ func (character *Character) applyAllEffects(agent Agent, raidBuffs *proto.RaidBu
 	}
 
 	applyRaceEffects(agent)
+	applyConstellationEffects(agent)
 	character.applyProfessionEffects()
 	character.applyBuildPhaseAuras(CharacterBuildPhaseBase)
 	playerStats.BaseStats = measureStats()
