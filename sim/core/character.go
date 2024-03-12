@@ -39,6 +39,7 @@ type Character struct {
 	Name          string // Different from Label, needed for returned results.
 	Race          proto.Race
 	Constellation proto.Constellation
+	VipLevel      proto.VipLevel
 	Class         proto.Class
 	Spec          proto.Spec
 
@@ -109,10 +110,12 @@ func NewCharacter(party *Party, partyIndex int, player *proto.Player) Character 
 			NibelungAverageCasts: player.NibelungAverageCasts,
 		},
 
-		Name:  player.Name,
-		Race:  player.Race,
-		Class: player.Class,
-		Spec:  PlayerProtoToSpec(player),
+		Name:          player.Name,
+		Race:          player.Race,
+		Constellation: player.Constellation,
+		VipLevel:      player.VipLevel,
+		Class:         player.Class,
+		Spec:          PlayerProtoToSpec(player),
 
 		Equipment: ProtoToEquipment(player.Equipment),
 
@@ -255,6 +258,7 @@ func (character *Character) applyAllEffects(agent Agent, raidBuffs *proto.RaidBu
 
 	applyRaceEffects(agent)
 	applyConstellationEffects(agent)
+	applyVipLevelEffects(agent)
 	character.applyProfessionEffects()
 	character.applyBuildPhaseAuras(CharacterBuildPhaseBase)
 	playerStats.BaseStats = measureStats()

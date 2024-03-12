@@ -2,6 +2,7 @@ import * as Tooltips from '../../constants/tooltips.js';
 import { Encounter } from '../../encounter';
 import { IndividualSimUI, InputSection } from "../../individual_sim_ui";
 import {
+	Constellation,
 	Consumes,
 	Debuffs,
 	HealingModel,
@@ -11,9 +12,10 @@ import {
 	Profession,
 	RaidBuffs,
 	Spec,
+	VipLevel,
 } from "../../proto/common";
 import { SavedEncounter, SavedSettings } from "../../proto/ui";
-import { professionNames, raceNames } from "../../proto_utils/names";
+import {constellationNames, professionNames, raceNames, vipNames} from "../../proto_utils/names";
 import { specToEligibleRaces } from "../../proto_utils/utils";
 import { EventID, TypedEvent } from "../../typed_event";
 import { getEnumValues } from "../../utils";
@@ -130,6 +132,38 @@ export class SettingsTab extends SimTab {
 		if (this.simUI.individualConfig.playerInputs?.inputs.length) {
 			this.configureInputSection(contentBlock.bodyElement, this.simUI.individualConfig.playerInputs);
 		}
+
+		const constellationGroup = Input.newGroupContainer();
+		contentBlock.bodyElement.appendChild(constellationGroup);
+		const constellations = getEnumValues(Constellation) as Array<Constellation>;
+		const _constellationPicker = new EnumPicker(constellationGroup, this.simUI.player, {
+			label: 'Constellation',
+			values: constellations.map(constellation => {
+				return {
+					name: constellationNames.get(constellation)!,
+					value: constellation,
+				};
+			}),
+			changedEvent: sim => sim.constellationChangeEmitter,
+			getValue: sim => sim.getConstellation(),
+			setValue: (eventID, sim, newValue) => sim.setConstellation(eventID, newValue),
+		});
+
+		const vipLevelGroup = Input.newGroupContainer();
+		contentBlock.bodyElement.appendChild(vipLevelGroup);
+		const vipLevels = getEnumValues(VipLevel) as Array<VipLevel>;
+		const _vipLevelsPicker = new EnumPicker(vipLevelGroup, this.simUI.player, {
+			label: 'VIP',
+			values: vipLevels.map(vipLevel => {
+				return {
+					name: vipNames.get(vipLevel)!,
+					value: vipLevel,
+				};
+			}),
+			changedEvent: sim => sim.vipLevelChangeEmitter,
+			getValue: sim => sim.getVipLevel(),
+			setValue: (eventID, sim, newValue) => sim.setVipLevel(eventID, newValue),
+		});
 
 		const professionGroup = Input.newGroupContainer();
 		contentBlock.bodyElement.appendChild(professionGroup);
@@ -270,6 +304,8 @@ export class SettingsTab extends SimTab {
 					debuffs: simUI.sim.raid.getDebuffs(),
 					consumes: player.getConsumes(),
 					race: player.getRace(),
+					constellation: player.getConstellation(),
+					vipLevel: player.getVipLevel(),
 					professions: player.getProfessions(),
 					enableItemSwap: player.getEnableItemSwap(),
 					itemSwap: player.getItemSwapGear().toProto(),
@@ -292,6 +328,8 @@ export class SettingsTab extends SimTab {
 					simUI.player.setBuffs(eventID, newSettings.playerBuffs || IndividualBuffs.create());
 					simUI.player.setConsumes(eventID, newSettings.consumes || Consumes.create());
 					simUI.player.setRace(eventID, newSettings.race);
+					simUI.player.setConstellation(eventID, newSettings.constellation);
+					simUI.player.setVipLevel(eventID, newSettings.vipLevel);
 					simUI.player.setProfessions(eventID, newSettings.professions);
 					simUI.player.setEnableItemSwap(eventID, newSettings.enableItemSwap);
 					simUI.player.setItemSwapGear(eventID, simUI.sim.db.lookupItemSwap(newSettings.itemSwap || ItemSwap.create()));
@@ -310,6 +348,8 @@ export class SettingsTab extends SimTab {
 				this.simUI.player.buffsChangeEmitter,
 				this.simUI.player.consumesChangeEmitter,
 				this.simUI.player.raceChangeEmitter,
+				this.simUI.player.constellationChangeEmitter,
+				this.simUI.player.vipLevelChangeEmitter,
 				this.simUI.player.professionChangeEmitter,
 				this.simUI.player.itemSwapChangeEmitter,
 				this.simUI.player.miscOptionsChangeEmitter,

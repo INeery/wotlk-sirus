@@ -1,12 +1,13 @@
 import {
 	ArmorType,
 	Class,
+	Constellation,
 	ItemSlot,
 	Profession,
 	PseudoStat,
 	Race,
 	RangedWeaponType,
-	Stat,
+	Stat, VipLevel,
 	WeaponType,
 } from '../proto/common.js';
 import {
@@ -62,6 +63,7 @@ export const raceNames: Map<Race, string> = new Map([
 	[Race.RaceTauren, 'Tauren'],
 	[Race.RaceTroll, 'Troll'],
 	[Race.RaceUndead, 'Undead'],
+	[Race.RaceEredar, 'Eredar'],
 ]);
 
 export function nameToRace(name: string): Race {
@@ -73,6 +75,21 @@ export function nameToRace(name: string): Race {
 	}
 	return Race.RaceUnknown;
 }
+
+export const constellationNames: Map<Constellation, string> = new Map([
+	[Constellation.ConstellationUnknown, 'None'],
+	[Constellation.Demon, 'Demon'],
+]);
+
+export const vipNames: Map<VipLevel, string> = new Map([
+	[VipLevel.None, 'None'],
+	[VipLevel.Bronze, 'Bronze'],
+	[VipLevel.Silver, 'Silver'],
+	[VipLevel.Gold, 'Gold'],
+	[VipLevel.EliteBronze, 'Elite Bronze'],
+	[VipLevel.EliteSilver, 'Elite Silver'],
+	[VipLevel.EliteGold, 'Elite Gold'],
+]);
 
 export const classNames: Map<Class, string> = new Map([
 	[Class.ClassUnknown, 'None'],

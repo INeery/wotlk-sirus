@@ -142,7 +142,7 @@ message UIEnchant {
 	int32 item_id = 2;   // ID of the enchant "item". Might be 0 if not available.
 	int32 spell_id = 3;  // ID of the enchant "spell". Might be 0 if not available.
 
-	string name = 4;     
+	string name = 4;
 	string icon = 5;
 
 	ItemType type = 6;                  // Which type of item this enchant can be applied to.
@@ -286,6 +286,8 @@ message SavedSettings {
 	IndividualBuffs player_buffs = 3;
 	Consumes consumes = 4;
 	Race race = 5;
+	Constellation constellation = 6;
+	VipLevel vipLevel = 8;
 	repeated Profession professions = 9;
 	bool enable_item_swap = 18;
 	ItemSwap item_swap = 17;

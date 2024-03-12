@@ -47,6 +47,16 @@ enum Constellation {
 	Demon = 1;
 }
 
+enum VipLevel {
+	None = 0;
+	Bronze = 1;
+	Silver = 2;
+	Gold = 3;
+	EliteBronze = 4;
+	EliteSilver = 5;
+	EliteGold = 6;
+}
+
 enum Faction {
 	Unknown = 0;
 	Alliance = 1;

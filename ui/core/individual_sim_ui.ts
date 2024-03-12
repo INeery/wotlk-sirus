@@ -1,23 +1,24 @@
-import { simLaunchStatuses } from './launched_sims';
-import { Player, PlayerConfig, registerSpecConfig as registerPlayerConfig } from './player';
-import { SimUI, SimWarning } from './sim_ui';
-import { EventID, TypedEvent } from './typed_event';
+import {simLaunchStatuses} from './launched_sims';
+import {Player, PlayerConfig, registerSpecConfig as registerPlayerConfig} from './player';
+import {SimUI, SimWarning} from './sim_ui';
+import {EventID, TypedEvent} from './typed_event';
 
-import { CharacterStats, StatMods } from './components/character_stats';
-import { ContentBlock } from './components/content_block';
-import { EmbeddedDetailedResults } from './components/detailed_results';
-import { EncounterPickerConfig } from './components/encounter_picker';
-import { addRaidSimAction, RaidSimResultsManager } from './components/raid_sim_action';
-import { SavedDataConfig } from './components/saved_data_manager';
-import { addStatWeightsAction } from './components/stat_weights_action';
+import {CharacterStats, StatMods} from './components/character_stats';
+import {ContentBlock} from './components/content_block';
+import {EmbeddedDetailedResults} from './components/detailed_results';
+import {EncounterPickerConfig} from './components/encounter_picker';
+import {addRaidSimAction, RaidSimResultsManager} from './components/raid_sim_action';
+import {SavedDataConfig} from './components/saved_data_manager';
+import {addStatWeightsAction} from './components/stat_weights_action';
 
-import { BulkTab } from './components/individual_sim_ui/bulk_tab';
-import { GearTab } from './components/individual_sim_ui/gear_tab';
-import { SettingsTab } from './components/individual_sim_ui/settings_tab';
-import { RotationTab } from './components/individual_sim_ui/rotation_tab';
-import { TalentsTab } from './components/individual_sim_ui/talents_tab';
+import {BulkTab} from './components/individual_sim_ui/bulk_tab';
+import {GearTab} from './components/individual_sim_ui/gear_tab';
+import {SettingsTab} from './components/individual_sim_ui/settings_tab';
+import {RotationTab} from './components/individual_sim_ui/rotation_tab';
+import {TalentsTab} from './components/individual_sim_ui/talents_tab';
 
 import {
+	Constellation,
 	Consumes,
 	Debuffs,
 	Encounter as EncounterProto,
@@ -34,14 +35,15 @@ import {
 	RaidBuffs,
 	Spec,
 	Stat,
+	VipLevel,
 } from './proto/common';
 
-import { IndividualSimSettings, SavedTalents } from './proto/ui';
-import { StatWeightsResult } from './proto/api';
+import {IndividualSimSettings, SavedTalents} from './proto/ui';
+import {StatWeightsResult} from './proto/api';
 
-import { getMetaGemConditionDescription } from './proto_utils/gems';
-import { professionNames } from './proto_utils/names';
-import { Stats } from './proto_utils/stats';
+import {getMetaGemConditionDescription} from './proto_utils/gems';
+import {professionNames} from './proto_utils/names';
+import {Stats} from './proto_utils/stats';
 import {
 	getTalentPoints,
 	isHealingSpec,
@@ -59,7 +61,7 @@ import * as IconInputs from './components/icon_inputs';
 import * as InputHelpers from './components/input_helpers';
 import * as Mechanics from './constants/mechanics';
 import * as Tooltips from './constants/tooltips';
-import { SimSettingCategories } from './sim';
+import {SimSettingCategories} from './sim';
 
 const SAVED_GEAR_STORAGE_KEY = '__savedGear__';
 const SAVED_ROTATION_STORAGE_KEY = '__savedRotation__';
@@ -407,6 +409,8 @@ export abstract class IndividualSimUI<SpecType extends Spec> extends SimUI {
 
 			this.player.applySharedDefaults(eventID);
 			this.player.setRace(eventID, specToEligibleRaces[this.player.spec][0]);
+			this.player.setConstellation(eventID, Constellation.ConstellationUnknown);
+			this.player.setVipLevel(eventID, VipLevel.None)
 			this.player.setGear(eventID, this.sim.db.lookupEquipmentSpec(this.individualConfig.defaults.gear));
 			this.player.setConsumes(eventID, this.individualConfig.defaults.consumes);
 			this.player.setTalentsString(eventID, this.individualConfig.defaults.talents.talentsString);
@@ -469,7 +473,7 @@ export abstract class IndividualSimUI<SpecType extends Spec> extends SimUI {
 				!exportCategories
 				|| exportCategories.length == 0
 				|| exportCategories.includes(cat);
-		
+
 		const proto = IndividualSimSettings.create({
 			player: this.player.toProto(true, false, exportCategories),
 		});

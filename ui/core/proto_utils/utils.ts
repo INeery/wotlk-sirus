@@ -1,25 +1,36 @@
-import { REPO_NAME } from '../constants/other.js'
-import { camelToSnakeCase } from '../utils.js';
-import { getEnumValues } from '../utils.js';
-import { intersection } from '../utils.js';
-import { maxIndex } from '../utils.js';
-import { sum } from '../utils.js';
+import {REPO_NAME} from '../constants/other.js'
+import {camelToSnakeCase, getEnumValues, intersection, maxIndex, sum} from '../utils.js';
 
-import { Player } from '../proto/api.js';
-import { ResourceType } from '../proto/api.js';
-import { ArmorType, UnitReference_Type } from '../proto/common.js';
-import { Class } from '../proto/common.js';
-import { EnchantType } from '../proto/common.js';
-import { HandType } from '../proto/common.js';
-import { ItemSlot } from '../proto/common.js';
-import { ItemType } from '../proto/common.js';
-import { Race } from '../proto/common.js';
-import { Faction } from '../proto/common.js';
-import { UnitReference } from '../proto/common.js';
-import { RangedWeaponType } from '../proto/common.js';
-import { Spec } from '../proto/common.js';
-import { WeaponType } from '../proto/common.js';
-import { Blessings } from '../proto/paladin.js';
+import {Player, ResourceType} from '../proto/api.js';
+import {
+	ArmorType,
+	Class,
+	Constellation,
+	EnchantType,
+	Faction,
+	HandType,
+	ItemSlot,
+	ItemType,
+	Race,
+	RangedWeaponType,
+	Spec,
+	UnitReference,
+	UnitReference_Type,
+	WeaponType
+} from '../proto/common.js';
+import {
+	Blessings,
+	HolyPaladin,
+	HolyPaladin_Options as HolyPaladinOptions,
+	HolyPaladin_Rotation as HolyPaladinRotation,
+	PaladinTalents,
+	ProtectionPaladin,
+	ProtectionPaladin_Options as ProtectionPaladinOptions,
+	ProtectionPaladin_Rotation as ProtectionPaladinRotation,
+	RetributionPaladin,
+	RetributionPaladin_Options as RetributionPaladinOptions,
+	RetributionPaladin_Rotation as RetributionPaladinRotation
+} from '../proto/paladin.js';
 import {
 	BlessingsAssignment,
 	BlessingsAssignments,
@@ -28,7 +39,7 @@ import {
 	UIItem as Item,
 } from '../proto/ui.js';
 
-import { Stats } from './stats.js';
+import {Stats} from './stats.js';
 
 import * as Gems from '../proto_utils/gems.js';
 
@@ -59,21 +70,14 @@ import {
 	RestorationShaman_Rotation as RestorationShamanRotation,
 	ShamanTalents,
 } from '../proto/shaman.js';
-import { Hunter, Hunter_Rotation as HunterRotation, HunterTalents, Hunter_Options as HunterOptions } from '../proto/hunter.js';
-import { Mage, Mage_Rotation as MageRotation, MageTalents, Mage_Options as MageOptions } from '../proto/mage.js';
-import { Rogue, Rogue_Rotation as RogueRotation, RogueTalents, Rogue_Options as RogueOptions } from '../proto/rogue.js';
 import {
-	HolyPaladin,
-	HolyPaladin_Options as HolyPaladinOptions,
-	HolyPaladin_Rotation as HolyPaladinRotation,
-	PaladinTalents,
-	ProtectionPaladin,
-	ProtectionPaladin_Options as ProtectionPaladinOptions,
-	ProtectionPaladin_Rotation as ProtectionPaladinRotation,
-	RetributionPaladin,
-	RetributionPaladin_Options as RetributionPaladinOptions,
-	RetributionPaladin_Rotation as RetributionPaladinRotation,
-} from '../proto/paladin.js';
+	Hunter,
+	Hunter_Options as HunterOptions,
+	Hunter_Rotation as HunterRotation,
+	HunterTalents
+} from '../proto/hunter.js';
+import {Mage, Mage_Options as MageOptions, Mage_Rotation as MageRotation, MageTalents} from '../proto/mage.js';
+import {Rogue, Rogue_Options as RogueOptions, Rogue_Rotation as RogueRotation, RogueTalents} from '../proto/rogue.js';
 import {
 	HealingPriest,
 	HealingPriest_Options as HealingPriestOptions,
@@ -86,11 +90,30 @@ import {
 	SmitePriest_Options as SmitePriestOptions,
 	SmitePriest_Rotation as SmitePriestRotation,
 } from '../proto/priest.js';
-import { Warlock, Warlock_Rotation as WarlockRotation, WarlockTalents, Warlock_Options as WarlockOptions } from '../proto/warlock.js';
-import { Warrior, Warrior_Rotation as WarriorRotation, WarriorTalents, Warrior_Options as WarriorOptions } from '../proto/warrior.js';
-import { Deathknight, Deathknight_Rotation as DeathknightRotation, DeathknightTalents, Deathknight_Options as DeathknightOptions } from '../proto/deathknight.js';
-import { TankDeathknight, TankDeathknight_Rotation as TankDeathknightRotation, TankDeathknight_Options as TankDeathknightOptions } from '../proto/deathknight.js';
-import { ProtectionWarrior, ProtectionWarrior_Rotation as ProtectionWarriorRotation, ProtectionWarrior_Options as ProtectionWarriorOptions } from '../proto/warrior.js';
+import {
+	Warlock,
+	Warlock_Options as WarlockOptions,
+	Warlock_Rotation as WarlockRotation,
+	WarlockTalents
+} from '../proto/warlock.js';
+import {
+	ProtectionWarrior,
+	ProtectionWarrior_Options as ProtectionWarriorOptions,
+	ProtectionWarrior_Rotation as ProtectionWarriorRotation,
+	Warrior,
+	Warrior_Options as WarriorOptions,
+	Warrior_Rotation as WarriorRotation,
+	WarriorTalents
+} from '../proto/warrior.js';
+import {
+	Deathknight,
+	Deathknight_Options as DeathknightOptions,
+	Deathknight_Rotation as DeathknightRotation,
+	DeathknightTalents,
+	TankDeathknight,
+	TankDeathknight_Options as TankDeathknightOptions,
+	TankDeathknight_Rotation as TankDeathknightRotation
+} from '../proto/deathknight.js';
 
 export type DeathknightSpecs = Spec.SpecDeathknight | Spec.SpecTankDeathknight;
 export type DruidSpecs = Spec.SpecBalanceDruid | Spec.SpecFeralDruid | Spec.SpecFeralTankDruid | Spec.SpecRestorationDruid;
@@ -1040,6 +1063,7 @@ export const raceToFaction: Record<Race, Faction> = {
 	[Race.RaceTauren]: Faction.Horde,
 	[Race.RaceTroll]: Faction.Horde,
 	[Race.RaceUndead]: Faction.Horde,
+	[Race.RaceEredar]: Faction.Horde,
 };
 
 export const specToClass: Record<Spec, Class> = {
@@ -1117,6 +1141,7 @@ const shamanRaces = [
 	Race.RaceDraenei,
 	Race.RaceTauren,
 	Race.RaceTroll,
+	Race.RaceEredar
 ];
 const warlockRaces = [
 	Race.RaceBloodElf,
@@ -1712,7 +1737,7 @@ export function getEligibleItemSlots(item: Item): Array<ItemSlot> {
 			return [ItemSlot.ItemSlotMainHand];
 		} else if (item.handType == HandType.HandTypeOffHand) {
 			return [ItemSlot.ItemSlotOffHand];
-			// Missing HandTypeTwoHand 
+			// Missing HandTypeTwoHand
 			// We allow 2H weapons to be wielded in mainhand and offhand for Fury Warriors
 		} else {
 			return [ItemSlot.ItemSlotMainHand, ItemSlot.ItemSlotOffHand];
@@ -1748,7 +1773,7 @@ export function validWeaponCombo(mainHand: Item | null | undefined, offHand: Ite
 }
 
 // Returns all item slots to which the enchant might be applied.
-// 
+//
 // Note that this alone is not enough; some items have further restrictions,
 // e.g. some weapon enchants may only be applied to 2H weapons.
 export function getEligibleEnchantSlots(enchant: Enchant): Array<ItemSlot> {
