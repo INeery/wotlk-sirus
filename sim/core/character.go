@@ -369,6 +369,11 @@ func (character *Character) calculateCritMultiplier(normalCritDamage float64, pr
 		character.HasMetaGemEquipped(41398) {
 		primaryModifiers *= 1.03
 	}
+
+	if character.HasAura(PowerOfPrimordialDemonAuraName) {
+		primaryModifiers *= 1.02
+	}
+
 	return 1.0 + (normalCritDamage*primaryModifiers-1.0)*(1.0+secondaryModifiers)
 }
 func (character *Character) calculateHealingCritMultiplier(normalCritDamage float64, primaryModifiers float64, secondaryModifiers float64) float64 {

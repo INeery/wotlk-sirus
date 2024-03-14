@@ -1401,6 +1401,22 @@ func BlessingOfMightAura(unit *Unit, impBomPts int32) *Aura {
 	return aura
 }
 
+// Мощь первобытного демона
+const PowerOfPrimordialDemonAuraName = "Power of a primordial demon"
+
+func PowerOfPrimordialDemonAura(character *Character) *Aura {
+	aura := character.GetOrRegisterAura(Aura{
+		Label:    PowerOfPrimordialDemonAuraName,
+		ActionID: ActionID{SpellID: 316458},
+		Duration: NeverExpires,
+		OnReset: func(aura *Aura, sim *Simulation) {
+			aura.Activate(sim)
+		},
+	})
+
+	return aura
+}
+
 func attackPowerBonusEffect(aura *Aura, apBonus float64) *ExclusiveEffect {
 	return aura.NewExclusiveEffect("AttackPowerBonus", false, ExclusiveEffect{
 		Priority: apBonus,
