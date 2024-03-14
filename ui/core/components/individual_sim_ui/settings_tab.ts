@@ -194,6 +194,32 @@ export class SettingsTab extends SimTab {
 			getValue: sim => sim.getProfession2(),
 			setValue: (eventID, sim, newValue) => sim.setProfession2(eventID, newValue),
 		});
+
+		const _profession3Picker = new EnumPicker(professionGroup, this.simUI.player, {
+			label: 'Profession 3',
+			values: professions.map(p => {
+				return {
+					name: professionNames.get(p)!,
+					value: p,
+				};
+			}),
+			changedEvent: sim => sim.professionChangeEmitter,
+			getValue: sim => sim.getProfession3(),
+			setValue: (eventID, sim, newValue) => sim.setProfession3(eventID, newValue),
+		});
+
+		const _profession4Picker = new EnumPicker(professionGroup, this.simUI.player, {
+			label: 'Profession 4',
+			values: professions.map(p => {
+				return {
+					name: professionNames.get(p)!,
+					value: p,
+				};
+			}),
+			changedEvent: sim => sim.professionChangeEmitter,
+			getValue: sim => sim.getProfession4(),
+			setValue: (eventID, sim, newValue) => sim.setProfession4(eventID, newValue),
+		});
 	}
 
 	private buildCustomSettingsSections() {

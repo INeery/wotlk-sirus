@@ -63,6 +63,8 @@ message Player {
 	Glyphs glyphs = 28;
 	Profession profession1 = 29;
 	Profession profession2 = 30;
+	Profession profession3 = 48;
+	Profession profession4 = 49;
 	Cooldowns cooldowns = 19;
 
 	APLRotation rotation = 40;

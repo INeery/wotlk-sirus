@@ -197,6 +197,8 @@ export const OtherDefaults = {
 	distanceFromTarget: 25,
 	profession1: Profession.Engineering,
 	profession2: Profession.Tailoring,
+	profession3: Profession.Enchanting,
+	profession4: Profession.Jewelcrafting,
 	channelClipDelay: 150,
 	nibelungAverageCasts: 11,
 };

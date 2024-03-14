@@ -82,6 +82,8 @@ export interface InputSection {
 export interface OtherDefaults {
 	profession1?: Profession,
 	profession2?: Profession,
+	profession3?: Profession,
+	profession4?: Profession,
 	distanceFromTarget?: number,
 	channelClipDelay?: number,
 	nibelungAverageCasts?: number,

@@ -167,7 +167,7 @@ export class Sim {
 				let gear = this.db.lookupEquipmentSpec(player.equipment);
 				let gearChanged = false;
 
-				const isBlacksmith = [player.profession1, player.profession2].includes(Profession.Blacksmithing);
+				const isBlacksmith = [player.profession1, player.profession2,player.profession3,player.profession4].includes(Profession.Blacksmithing);
 
 				// Disable meta gem if inactive.
 				if (gear.hasInactiveMetaGem(isBlacksmith)) {
@@ -324,9 +324,9 @@ export class Sim {
 					}))
 				.flat()
 				.filter(p => p != null) as Array<Promise<boolean>>;
-			
+
 			const targetUpdatePromise = this.encounter.targetsMetadata.update(result.encounterStats!.targets.map(t => t.metadata!));
-			
+
 			const anyUpdates = await Promise.all(playerUpdatePromises.concat([targetUpdatePromise]));
 			if (anyUpdates.some(v => v)) {
 				this.unitMetadataEmitter.emit(eventID);

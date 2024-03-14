@@ -235,6 +235,8 @@ export class Player<SpecType extends Spec> {
 	private vipLevel: VipLevel;
 	private profession1: Profession = 0;
 	private profession2: Profession = 0;
+	private profession3: Profession = 0;
+	private profession4: Profession = 0;
 	aplRotation: APLRotation = APLRotation.create();
 	private talentsString = '';
 	private glyphs: Glyphs = Glyphs.create();
@@ -559,13 +561,33 @@ export class Player<SpecType extends Spec> {
 			this.professionChangeEmitter.emit(eventID);
 		}
 	}
+	getProfession3(): Profession {
+		return this.profession3;
+	}
+	setProfession3(eventID: EventID, newProfession: Profession) {
+		if (newProfession != this.profession3) {
+			this.profession3 = newProfession;
+			this.professionChangeEmitter.emit(eventID);
+		}
+	}
+	getProfession4(): Profession {
+		return this.profession4;
+	}
+	setProfession4(eventID: EventID, newProfession: Profession) {
+		if (newProfession != this.profession4) {
+			this.profession4 = newProfession;
+			this.professionChangeEmitter.emit(eventID);
+		}
+	}
 	getProfessions(): Array<Profession> {
-		return [this.profession1, this.profession2].filter(p => p != Profession.ProfessionUnknown);
+		return [this.profession1, this.profession2, this.profession3, this.profession4].filter(p => p != Profession.ProfessionUnknown);
 	}
 	setProfessions(eventID: EventID, newProfessions: Array<Profession>) {
 		TypedEvent.freezeAllAndDo(() => {
 			this.setProfession1(eventID, newProfessions[0] || Profession.ProfessionUnknown);
 			this.setProfession2(eventID, newProfessions[1] || Profession.ProfessionUnknown);
+			this.setProfession3(eventID, newProfessions[2] || Profession.ProfessionUnknown);
+			this.setProfession3(eventID, newProfessions[3] || Profession.ProfessionUnknown);
 		});
 	}
 	hasProfession(prof: Profession): boolean {

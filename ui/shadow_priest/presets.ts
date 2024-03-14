@@ -124,5 +124,7 @@ export const OtherDefaults = {
 	channelClipDelay: 100,
 	profession1: Profession.Engineering,
 	profession2: Profession.Tailoring,
+	profession3: Profession.Enchanting,
+	profession4: Profession.Jewelcrafting,
 	nibelungAverageCasts: 11,
 };
