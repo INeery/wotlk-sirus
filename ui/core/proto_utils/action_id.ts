@@ -1,14 +1,10 @@
-import { getWowheadLanguagePrefix } from '../constants/lang.js';
-import { ActionID as ActionIdProto } from '../proto/common.js';
-import { ResourceType } from '../proto/api.js';
-import { OtherAction } from '../proto/common.js';
-import { IconData } from '../proto/ui.js';
-import {
-	UIItem as Item,
-} from '../proto/ui.js';
+import {getWowheadLanguagePrefix} from '../constants/lang.js';
+import {ActionID as ActionIdProto, OtherAction} from '../proto/common.js';
+import {ResourceType} from '../proto/api.js';
+import {IconData, UIItem as Item} from '../proto/ui.js';
 
-import { Database } from './database.js';
-import { CHARACTER_LEVEL } from '../constants/mechanics.js';
+import {Database} from './database.js';
+import {CHARACTER_LEVEL} from '../constants/mechanics.js';
 
 // If true uses wotlkdb.com, else uses wowhead.com.
 export const USE_WOTLK_DB = false;
@@ -144,6 +140,7 @@ export class ActionId {
 			return `https://wowhead.com/wotlk/${langPrefix}item=${id}?lvl=${CHARACTER_LEVEL}`;
 		}
 	}
+
 	static makeSpellUrl(id: number): string {
 		const langPrefix = getWowheadLanguagePrefix();
 		if (USE_WOTLK_DB) {
@@ -152,6 +149,7 @@ export class ActionId {
 			return `https://wowhead.com/wotlk/${langPrefix}spell=${id}`;
 		}
 	}
+
 	static makeQuestUrl(id: number): string {
 		const langPrefix = getWowheadLanguagePrefix();
 		if (USE_WOTLK_DB) {
@@ -160,6 +158,7 @@ export class ActionId {
 			return `https://wowhead.com/wotlk/${langPrefix}quest=${id}`;
 		}
 	}
+
 	static makeNpcUrl(id: number): string {
 		const langPrefix = getWowheadLanguagePrefix();
 		if (USE_WOTLK_DB) {
@@ -168,6 +167,7 @@ export class ActionId {
 			return `https://wowhead.com/wotlk/${langPrefix}npc=${id}`;
 		}
 	}
+
 	static makeZoneUrl(id: number): string {
 		const langPrefix = getWowheadLanguagePrefix();
 		if (USE_WOTLK_DB) {
@@ -387,7 +387,8 @@ export class ActionId {
 			case 'Heart Strike':
 				/*if (this.tag == 1) {
 					name += ' (Physical)';
-				} else */if (this.tag == 2) {
+				} else */
+				if (this.tag == 2) {
 					name += ' (Off-target)';
 				}
 				break;
@@ -456,7 +457,7 @@ export class ActionId {
 		const idString = this.toProtoString();
 		const iconOverrideId = idOverrides[idString] || null;
 
-		let iconUrl = ActionId.makeIconUrl(tooltipData['icon']);
+		let iconUrl = ActionId.makeIconUrl(tooltipData['icon'], tooltipData['useSirusCdn']);
 		if (iconOverrideId) {
 			const overrideTooltipData = await ActionId.getTooltipData(iconOverrideId);
 			iconUrl = ActionId.makeIconUrl(overrideTooltipData['icon']);
@@ -552,6 +553,7 @@ export class ActionId {
 
 	private static readonly logRegex = /{((SpellID)|(ItemID)|(OtherID)): (\d+)(, Tag: (-?\d+))?}/;
 	private static readonly logRegexGlobal = new RegExp(ActionId.logRegex, 'g');
+
 	private static fromMatch(match: RegExpMatchArray): ActionId {
 		const idType = match[1];
 		const id = parseInt(match[5]);
@@ -562,6 +564,7 @@ export class ActionId {
 			match[7] ? parseInt(match[7]) : 0,
 			'', '', '');
 	}
+
 	static fromLogString(str: string): ActionId {
 		const match = str.match(ActionId.logRegex);
 		if (match) {
@@ -594,7 +597,12 @@ export class ActionId {
 		return str;
 	}
 
-	private static makeIconUrl(iconLabel: string): string {
+	private static makeIconUrl(iconLabel: string, useSirusCdn = false): string {
+
+		if (useSirusCdn) {
+			return `https://cdn.scourge.tech/icons/${iconLabel}.png`;
+		}
+
 		if (USE_WOTLK_DB) {
 			return `https://wotlkdb.com/static/images/wow/icons/large/${iconLabel}.jpg`;
 		} else {
@@ -679,7 +687,7 @@ const petNameToIcon: Record<string, string> = {
 	'Worm': 'https://wow.zamimg.com/images/wow/icons/medium/ability_hunter_pet_worm.jpg',
 };
 
-export function getPetIconFromName(name: string): string|ActionId|undefined {
+export function getPetIconFromName(name: string): string | ActionId | undefined {
 	return petNameToActionId[name] || petNameToIcon[name];
 }
 

@@ -195,6 +195,7 @@ func AddBaseStatsCombo(r proto.Race, c proto.Class) {
 func init() {
 	AddBaseStatsCombo(proto.Race_RaceTauren, proto.Class_ClassDruid)
 	AddBaseStatsCombo(proto.Race_RaceNightElf, proto.Class_ClassDruid)
+	AddBaseStatsCombo(proto.Race_RaceEredar, proto.Class_ClassDruid)
 
 	AddBaseStatsCombo(proto.Race_RaceDraenei, proto.Class_ClassDeathknight)
 	AddBaseStatsCombo(proto.Race_RaceDwarf, proto.Class_ClassDeathknight)
@@ -206,6 +207,7 @@ func init() {
 	AddBaseStatsCombo(proto.Race_RaceTroll, proto.Class_ClassDeathknight)
 	AddBaseStatsCombo(proto.Race_RaceUndead, proto.Class_ClassDeathknight)
 	AddBaseStatsCombo(proto.Race_RaceBloodElf, proto.Class_ClassDeathknight)
+	AddBaseStatsCombo(proto.Race_RaceEredar, proto.Class_ClassDeathknight)
 
 	AddBaseStatsCombo(proto.Race_RaceBloodElf, proto.Class_ClassHunter)
 	AddBaseStatsCombo(proto.Race_RaceDraenei, proto.Class_ClassHunter)
@@ -214,6 +216,7 @@ func init() {
 	AddBaseStatsCombo(proto.Race_RaceOrc, proto.Class_ClassHunter)
 	AddBaseStatsCombo(proto.Race_RaceTauren, proto.Class_ClassHunter)
 	AddBaseStatsCombo(proto.Race_RaceTroll, proto.Class_ClassHunter)
+	AddBaseStatsCombo(proto.Race_RaceEredar, proto.Class_ClassHunter)
 
 	AddBaseStatsCombo(proto.Race_RaceBloodElf, proto.Class_ClassMage)
 	AddBaseStatsCombo(proto.Race_RaceDraenei, proto.Class_ClassMage)
@@ -221,11 +224,13 @@ func init() {
 	AddBaseStatsCombo(proto.Race_RaceHuman, proto.Class_ClassMage)
 	AddBaseStatsCombo(proto.Race_RaceTroll, proto.Class_ClassMage)
 	AddBaseStatsCombo(proto.Race_RaceUndead, proto.Class_ClassMage)
+	AddBaseStatsCombo(proto.Race_RaceEredar, proto.Class_ClassMage)
 
 	AddBaseStatsCombo(proto.Race_RaceBloodElf, proto.Class_ClassPaladin)
 	AddBaseStatsCombo(proto.Race_RaceDraenei, proto.Class_ClassPaladin)
 	AddBaseStatsCombo(proto.Race_RaceHuman, proto.Class_ClassPaladin)
 	AddBaseStatsCombo(proto.Race_RaceDwarf, proto.Class_ClassPaladin)
+	AddBaseStatsCombo(proto.Race_RaceEredar, proto.Class_ClassPaladin)
 
 	AddBaseStatsCombo(proto.Race_RaceHuman, proto.Class_ClassPriest)
 	AddBaseStatsCombo(proto.Race_RaceDwarf, proto.Class_ClassPriest)
@@ -234,6 +239,7 @@ func init() {
 	AddBaseStatsCombo(proto.Race_RaceUndead, proto.Class_ClassPriest)
 	AddBaseStatsCombo(proto.Race_RaceTroll, proto.Class_ClassPriest)
 	AddBaseStatsCombo(proto.Race_RaceBloodElf, proto.Class_ClassPriest)
+	AddBaseStatsCombo(proto.Race_RaceEredar, proto.Class_ClassPriest)
 
 	AddBaseStatsCombo(proto.Race_RaceBloodElf, proto.Class_ClassRogue)
 	AddBaseStatsCombo(proto.Race_RaceDwarf, proto.Class_ClassRogue)
@@ -243,17 +249,20 @@ func init() {
 	AddBaseStatsCombo(proto.Race_RaceOrc, proto.Class_ClassRogue)
 	AddBaseStatsCombo(proto.Race_RaceTroll, proto.Class_ClassRogue)
 	AddBaseStatsCombo(proto.Race_RaceUndead, proto.Class_ClassRogue)
+	AddBaseStatsCombo(proto.Race_RaceEredar, proto.Class_ClassRogue)
 
 	AddBaseStatsCombo(proto.Race_RaceDraenei, proto.Class_ClassShaman)
 	AddBaseStatsCombo(proto.Race_RaceOrc, proto.Class_ClassShaman)
 	AddBaseStatsCombo(proto.Race_RaceTauren, proto.Class_ClassShaman)
 	AddBaseStatsCombo(proto.Race_RaceTroll, proto.Class_ClassShaman)
+	AddBaseStatsCombo(proto.Race_RaceEredar, proto.Class_ClassShaman)
 
 	AddBaseStatsCombo(proto.Race_RaceBloodElf, proto.Class_ClassWarlock)
 	AddBaseStatsCombo(proto.Race_RaceOrc, proto.Class_ClassWarlock)
 	AddBaseStatsCombo(proto.Race_RaceUndead, proto.Class_ClassWarlock)
 	AddBaseStatsCombo(proto.Race_RaceHuman, proto.Class_ClassWarlock)
 	AddBaseStatsCombo(proto.Race_RaceGnome, proto.Class_ClassWarlock)
+	AddBaseStatsCombo(proto.Race_RaceEredar, proto.Class_ClassWarlock)
 
 	AddBaseStatsCombo(proto.Race_RaceDraenei, proto.Class_ClassWarrior)
 	AddBaseStatsCombo(proto.Race_RaceDwarf, proto.Class_ClassWarrior)
@@ -264,4 +273,5 @@ func init() {
 	AddBaseStatsCombo(proto.Race_RaceTauren, proto.Class_ClassWarrior)
 	AddBaseStatsCombo(proto.Race_RaceTroll, proto.Class_ClassWarrior)
 	AddBaseStatsCombo(proto.Race_RaceUndead, proto.Class_ClassWarrior)
+	AddBaseStatsCombo(proto.Race_RaceEredar, proto.Class_ClassWarrior)
 }
