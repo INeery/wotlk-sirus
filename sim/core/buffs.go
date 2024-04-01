@@ -101,12 +101,12 @@ func applyBuffEffects(agent Agent, raidBuffs *proto.RaidBuffs, partyBuffs *proto
 		character.PseudoStats.DamageDealtMultiplier *= 1.03
 	}
 
-	if partyBuffs.HeroicPresence {
-		character.AddStats(stats.Stats{
-			stats.MeleeHit: 1 * MeleeHitRatingPerHitChance,
-			stats.SpellHit: 1 * SpellHitRatingPerHitChance,
-		})
-	}
+	//if partyBuffs.HeroicPresence {
+	//	character.AddStats(stats.Stats{
+	//		stats.MeleeHit: 1 * MeleeHitRatingPerHitChance,
+	//		stats.SpellHit: 1 * SpellHitRatingPerHitChance,
+	//	})
+	//}
 
 	if raidBuffs.CommandingShout > 0 {
 		MakePermanent(CommandingShoutAura(&character.Unit, GetTristateValueInt32(raidBuffs.CommandingShout, 0, 5), 0, false))

@@ -505,7 +505,24 @@ message PartyBuffs {
 
 	// Group buffs
 	int32 mana_tide_totems = 6;
-	bool heroic_presence = 7;
+
+	// Constellations auras
+	bool WanderingInTheVoid = 8; // Скиталец / Странствующий в пустоте / 316275 / +2% стамины
+	bool TemperingSteel = 9; // Кузнеца / Закаляющие Сталь / 316240 / +1% мили и спел хасты
+	bool Spotter = 10; // Изобретателя / Наводчик / 316260 / +1%  метоксти
+	bool BullishTenacity = 11; // Быка / Бычье упорство / 316383 / -1%  физ. урона
+	bool ConnectionWithLoa = 13; // Вуду / Связь с Лоа / 316400 / +2%  духа
+	bool PackLeader = 14; // Волка / Лидер стаи / 316285 / +2%  ловкости
+	bool SerpentineAgility = 15; // Змея / Змеиная изворотливость / 316408 / -1% маг урона
+	bool WarriorWill = 16; // Варвара / Воля воителя / 316369 / +2% силы
+	bool SecretKnowledge = 17; // Аристократа / Тайные знания / 316291 / +2% инты
+	bool Vengefulness = 18; // Феникса / Мстительность / 316415 / +1% в шансу крит удара
+	bool LordOfThePack = 19; // Ящера / Владыка стаи / 319323 319324 / +1% силы атаки и спд (проценты кастера?)
+	bool PowerOfTheVoid = 20; // Безликого / Могущество пустоты / 316358 316359 / +5 или 5% ресурса
+	bool PowerOfPrimordialDemon = 21; // Демона / Мощь первобытного демона / 316458 / +2% к модификатору крит урона
+	bool VolcanicAnger = 22; // Вулкана / Вулканический гнев / 316152 / +2% к модификатору крит урона
+	bool AuraOfMagicalPower = 23; // Магистра / Аура чародейской мощи / 316423 310771 310772 / +5 или 5% ресурса
+	bool GreaterCause = 24; // Наару / Высшее предназначение / 319316 319317 319461 / +1% силы атаки и спд (проценты кастера?)
 }
 
 // These are usually individual actions taken by other Characters.

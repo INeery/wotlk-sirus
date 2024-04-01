@@ -125,8 +125,7 @@ type Deathknight struct {
 
 	HowlingBlast *core.Spell
 
-	HasDraeneiHitAura bool
-	HornOfWinter      *core.Spell
+	HornOfWinter *core.Spell
 
 	// "CDs"
 	RuneTap     *core.Spell
@@ -225,7 +224,6 @@ func (dk *Deathknight) GetCharacter() *core.Character {
 }
 
 func (dk *Deathknight) AddPartyBuffs(partyBuffs *proto.PartyBuffs) {
-	dk.HasDraeneiHitAura = partyBuffs.HeroicPresence
 }
 
 func (dk *Deathknight) AddRaidBuffs(raidBuffs *proto.RaidBuffs) {

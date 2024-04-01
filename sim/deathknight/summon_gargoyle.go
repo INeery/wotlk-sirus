@@ -80,9 +80,6 @@ func (dk *Deathknight) NewGargoyle() *GargoylePet {
 	if dk.nervesOfColdSteelActive() {
 		nocsHit = float64(dk.Talents.NervesOfColdSteel) * core.MeleeHitRatingPerHitChance
 	}
-	if dk.HasDraeneiHitAura {
-		nocsHit += 1 * core.MeleeHitRatingPerHitChance
-	}
 
 	gargoyle := &GargoylePet{
 		Pet: core.NewPet("Gargoyle", &dk.Character, stats.Stats{

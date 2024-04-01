@@ -25,9 +25,6 @@ func (dk *Deathknight) NewArmyGhoulPet(_ int) *GhoulPet {
 	if dk.nervesOfColdSteelActive() {
 		nocsHit = float64(dk.Talents.NervesOfColdSteel) * core.MeleeHitRatingPerHitChance
 	}
-	if dk.HasDraeneiHitAura {
-		nocsHit += 1 * core.MeleeHitRatingPerHitChance
-	}
 
 	armyGhoulPetBaseStats := stats.Stats{
 		stats.Stamina:     159,
@@ -77,9 +74,6 @@ func (dk *Deathknight) NewGhoulPet(permanent bool) *GhoulPet {
 	var nocsHit float64
 	if dk.nervesOfColdSteelActive() {
 		nocsHit = float64(dk.Talents.NervesOfColdSteel) * core.MeleeHitRatingPerHitChance
-	}
-	if dk.HasDraeneiHitAura {
-		nocsHit += 1 * core.MeleeHitRatingPerHitChance
 	}
 
 	ghoulPetBaseStats := stats.Stats{

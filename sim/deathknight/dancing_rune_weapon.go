@@ -125,9 +125,6 @@ func (dk *Deathknight) NewRuneWeapon() *RuneWeaponPet {
 	if dk.nervesOfColdSteelActive() {
 		nocsHit = float64(dk.Talents.NervesOfColdSteel) * core.MeleeHitRatingPerHitChance
 	}
-	if dk.HasDraeneiHitAura {
-		nocsHit += 1 * core.MeleeHitRatingPerHitChance
-	}
 
 	runeWeapon := &RuneWeaponPet{
 		Pet: core.NewPet("Rune Weapon", &dk.Character, stats.Stats{

@@ -112,7 +112,6 @@ const SPEC_CONFIG = registerSpecConfig(Spec.SpecDeathknight, {
 			powerWordFortitude: TristateEffect.TristateEffectImproved,
 		}),
 		partyBuffs: PartyBuffs.create({
-			heroicPresence: false,
 		}),
 		individualBuffs: IndividualBuffs.create({
 			blessingOfKings: true,
@@ -133,7 +132,7 @@ const SPEC_CONFIG = registerSpecConfig(Spec.SpecDeathknight, {
 		const talentTree = player.getTalentTree();
 		const numTargets = player.sim.encounter.targets.length;
 		switch (talentTree) {
-			case 0: 
+			case 0:
 				if (player.getSpecOptions().drwPestiApply || numTargets > 1) {
 					if (numTargets > 5) {
 						return Presets.BLOOD_PESTI_AOE_ROTATION_PRESET_DEFAULT.rotation.rotation!;
@@ -143,7 +142,7 @@ const SPEC_CONFIG = registerSpecConfig(Spec.SpecDeathknight, {
 				} else {
 					return Presets.BLOOD_DPS_ROTATION_PRESET_DEFAULT.rotation.rotation!;
 				}
-			case 1: 
+			case 1:
 				const talentPoints = player.getTalentTreePoints()
 				// TODO: Add Frost AOE rotation
 				if (talentPoints[0] > talentPoints[2]) {
@@ -151,7 +150,7 @@ const SPEC_CONFIG = registerSpecConfig(Spec.SpecDeathknight, {
 				} else {
 					return Presets.FROST_UH_PESTI_ROTATION_PRESET_DEFAULT.rotation.rotation!;
 				}
-			default: 
+			default:
 				if (numTargets > 1) {
 					return Presets.UNHOLY_DND_AOE_ROTATION_PRESET_DEFAULT.rotation.rotation!;
 				} else {

@@ -111,7 +111,6 @@ const SPEC_CONFIG = registerSpecConfig(Spec.SpecFeralDruid, {
 			sanctifiedRetribution: true,
 		}),
 		partyBuffs: PartyBuffs.create({
-			heroicPresence: true,
 		}),
 		individualBuffs: IndividualBuffs.create({
 			blessingOfKings: true,
@@ -175,7 +174,7 @@ const SPEC_CONFIG = registerSpecConfig(Spec.SpecFeralDruid, {
 			Presets.P4_PRESET,
 		],
 	},
-	
+
 	autoRotation: (_player: Player<Spec.SpecFeralDruid>): APLRotation => {
 		return Presets.APL_ROTATION_DEFAULT.rotation.rotation!;
 	},

@@ -118,7 +118,6 @@ const SPEC_CONFIG = registerSpecConfig(Spec.SpecWarrior, {
 			stoneskinTotem: TristateEffect.TristateEffectImproved,
 		}),
 		partyBuffs: PartyBuffs.create({
-			heroicPresence: false,
 		}),
 		individualBuffs: IndividualBuffs.create({
 			blessingOfKings: true,
@@ -295,7 +294,7 @@ class WarriorGemOptimizer extends PhysicalDPSGemOptimizer {
 		let expTarget = super.calcExpTarget();
 		const weaponMastery = this.player.getTalents().weaponMastery;
 		const hasWeaponMasteryTalent = !!weaponMastery;
-		
+
 		if (hasWeaponMasteryTalent) {
 			expTarget -= weaponMastery * 4 * Mechanics.EXPERTISE_PER_QUARTER_PERCENT_REDUCTION;
 		}

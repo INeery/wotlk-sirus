@@ -131,7 +131,6 @@ const SPEC_CONFIG = registerSpecConfig(Spec.SpecFeralTankDruid, {
 			moonkinAura: TristateEffect.TristateEffectImproved,
 		}),
 		partyBuffs: PartyBuffs.create({
-			heroicPresence: true,
 		}),
 		individualBuffs: IndividualBuffs.create({
 			blessingOfKings: true,

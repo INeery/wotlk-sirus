@@ -1,6 +1,5 @@
 import { Stat, TristateEffect } from "../../proto/common";
 import { ActionId } from "../../proto_utils/action_id";
-
 import {
   makeBooleanDebuffInput,
   makeBooleanIndividualBuffInput,
@@ -17,11 +16,9 @@ import {
   withLabel,
 } from "../icon_inputs";
 import { IconPicker } from "../icon_picker";
-import { MultiIconPicker } from "../multi_icon_picker";
-
-import { IconPickerStatOption, PickerStatOptions } from "./stat_options";
-
 import * as InputHelpers from '../input_helpers';
+import { MultiIconPicker } from "../multi_icon_picker";
+import { IconPickerStatOption, PickerStatOptions } from "./stat_options";
 
 ///////////////////////////////////////////////////////////////////////////
 //                                 RAID BUFFS
@@ -170,7 +167,6 @@ export const StrengthOfWrynn = makeBooleanRaidBuffInput({actionId: ActionId.from
 export const RetributionAura = makeBooleanRaidBuffInput({actionId: ActionId.fromSpellId(54043), fieldName: 'retributionAura'});
 export const BraidedEterniumChain = makeBooleanPartyBuffInput({actionId: ActionId.fromSpellId(31025), fieldName: 'braidedEterniumChain'});
 export const ChainOfTheTwilightOwl = makeBooleanPartyBuffInput({actionId: ActionId.fromSpellId(31035), fieldName: 'chainOfTheTwilightOwl'});
-export const HeroicPresence = makeBooleanPartyBuffInput({actionId: ActionId.fromSpellId(6562), fieldName: 'heroicPresence'});
 export const EyeOfTheNight = makeBooleanPartyBuffInput({actionId: ActionId.fromSpellId(31033), fieldName: 'eyeOfTheNight'});
 export const Thorns = makeTristateRaidBuffInput({actionId: ActionId.fromSpellId(53307), impId: ActionId.fromSpellId(16840), fieldName: 'thorns'});
 export const ManaTideTotem = makeMultistatePartyBuffInput(ActionId.fromSpellId(16190), 5, 'manaTideTotems');
@@ -179,6 +175,90 @@ export const PowerInfusion = makeMultistateIndividualBuffInput({actionId: Action
 export const FocusMagic = makeBooleanIndividualBuffInput({actionId: ActionId.fromSpellId(54648), fieldName: 'focusMagic'});
 export const TricksOfTheTrade = makeMultistateIndividualBuffInput({actionId: ActionId.fromSpellId(57933), numStates: 20, fieldName: 'tricksOfTheTrades'});
 export const UnholyFrenzy = makeMultistateIndividualBuffInput({actionId: ActionId.fromSpellId(49016), numStates: 11, fieldName: 'unholyFrenzy'});
+
+///////////////////////////////////////////////////////////////////////////
+//                                 PARTY BUFFS
+///////////////////////////////////////////////////////////////////////////
+
+export const WanderingInTheVoidBuff = withLabel(
+	makeBooleanPartyBuffInput({actionId: ActionId.fromSpellId(316275), fieldName: 'wanderingInTheVoid'}),
+	'Party stamina',
+);
+
+export const TemperingSteelBuff = withLabel(
+	makeBooleanPartyBuffInput({actionId: ActionId.fromSpellId(316240), fieldName: 'temperingSteel'}),
+	'1% haste',
+);
+
+export const SpotterBuff = withLabel(
+	makeBooleanPartyBuffInput({actionId: ActionId.fromSpellId(316260), fieldName: 'spotter'}),
+	'1% hit',
+);
+
+export const BullishTenacityBuff = withLabel(
+	makeBooleanPartyBuffInput({actionId: ActionId.fromSpellId(316383), fieldName: 'bullishTenacity'}),
+	'1% physical damage reduction',
+);
+
+export const ConnectionWithLoaBuff = withLabel(
+	makeBooleanPartyBuffInput({actionId: ActionId.fromSpellId(316400), fieldName: 'connectionWithLoa'}),
+	'2% spirit',
+);
+
+export const PackLeaderBuff = withLabel(
+	makeBooleanPartyBuffInput({actionId: ActionId.fromSpellId(316285), fieldName: 'packLeader'}),
+	'2% agility',
+);
+
+export const SerpentineAgilityBuff = withLabel(
+	makeBooleanPartyBuffInput({actionId: ActionId.fromSpellId(316408), fieldName: 'serpentineAgility'}),
+	'1% magical damage reduction',
+);
+
+export const WarriorWillBuff = withLabel(
+	makeBooleanPartyBuffInput({actionId: ActionId.fromSpellId(316369), fieldName: 'warriorWill'}),
+	'2% strength',
+);
+
+export const SecretKnowledgeBuff = withLabel(
+	makeBooleanPartyBuffInput({actionId: ActionId.fromSpellId(316291), fieldName: 'secretKnowledge'}),
+	'2% intellect',
+);
+
+export const VengefulnessBuff = withLabel(
+	makeBooleanPartyBuffInput({actionId: ActionId.fromSpellId(316415), fieldName: 'vengefulness'}),
+	'1% crit chance',
+);
+
+export const LordOfThePackBuff = withLabel(
+	makeBooleanPartyBuffInput({actionId: ActionId.fromSpellId(319324), fieldName: 'lordOfThePack'}),
+	'1% attacks power and spell power',
+);
+
+export const PowerOfTheVoidBuff = withLabel(
+	makeBooleanPartyBuffInput({actionId: ActionId.fromSpellId(316359), fieldName: 'powerOfTheVoid'}),
+	'5% of resource pool (5 rage/energy/runic power or 5% mana)',
+);
+
+export const PowerOfPrimordialDemonBuff = withLabel(
+	makeBooleanPartyBuffInput({actionId: ActionId.fromSpellId(316458), fieldName: 'powerOfPrimordialDemon'}),
+	'2% crit damage modifier',
+);
+
+export const VolcanicAngerBuff = withLabel(
+	makeBooleanPartyBuffInput({actionId: ActionId.fromSpellId(316152), fieldName: 'volcanicAnger'}),
+	'2% crit damage modifier',
+);
+
+export const AuraOfMagicalPowerBuff = withLabel(
+	makeBooleanPartyBuffInput({actionId: ActionId.fromSpellId(310772), fieldName: 'auraOfMagicalPower'}),
+	'5% of resource pool (5 rage/energy/runic power or 5% mana)',
+);
+
+export const GreaterCauseBuff = withLabel(
+	makeBooleanPartyBuffInput({actionId: ActionId.fromSpellId(319461), fieldName: 'greaterCause'}),
+	'1% attacks power and spell power',
+);
 
 ///////////////////////////////////////////////////////////////////////////
 //                                 DEBUFFS
@@ -389,16 +469,95 @@ export const RAID_BUFFS_CONFIG = [
   },
 ] as PickerStatOptions[]
 
+export const PARTY_BUFFS_CONFIG = [
+	// Party buffs. Mostly constellation party auras
+	{
+		config: WanderingInTheVoidBuff,
+		picker: IconPicker,
+		stats: [Stat.StatStamina],
+	},
+	{
+		config: TemperingSteelBuff,
+		picker: IconPicker,
+		stats: [Stat.StatMeleeHaste, Stat.StatSpellHaste],
+	},
+	{
+		config: SpotterBuff,
+		picker: IconPicker,
+		stats: [Stat.StatMeleeHit, Stat.StatSpellHit],
+	},
+	{
+		config: BullishTenacityBuff,
+		picker: IconPicker,
+		stats: [],
+	},
+	{
+		config: ConnectionWithLoaBuff,
+		picker: IconPicker,
+		stats: [Stat.StatSpirit],
+	},
+	{
+		config: PackLeaderBuff,
+		picker: IconPicker,
+		stats: [Stat.StatAgility],
+	},
+	{
+		config: SerpentineAgilityBuff,
+		picker: IconPicker,
+		stats: [],
+	},
+	{
+		config: WarriorWillBuff,
+		picker: IconPicker,
+		stats: [Stat.StatStrength],
+	},
+	{
+		config: SecretKnowledgeBuff,
+		picker: IconPicker,
+		stats: [Stat.StatIntellect],
+	},
+	{
+		config: VengefulnessBuff,
+		picker: IconPicker,
+		stats: [Stat.StatMeleeCrit, Stat.StatSpellCrit],
+	},
+	{
+		config: LordOfThePackBuff,
+		picker: IconPicker,
+		stats: [Stat.StatAttackPower, Stat.StatSpellPower],
+	},
+	{
+		config: PowerOfTheVoidBuff,
+		picker: IconPicker,
+		stats: [Stat.StatMana, Stat.StatEnergy, Stat.StatRage, Stat.StatRunicPower],
+	},
+	{
+		config: PowerOfPrimordialDemonBuff,
+		picker: IconPicker,
+		stats: [Stat.StatMeleeCrit, Stat.StatSpellCrit],
+	},
+	{
+		config: VolcanicAngerBuff,
+		picker: IconPicker,
+		stats: [Stat.StatMeleeCrit, Stat.StatSpellCrit],
+	},
+	{
+		config: AuraOfMagicalPowerBuff,
+		picker: IconPicker,
+		stats: [Stat.StatMana, Stat.StatEnergy, Stat.StatRage, Stat.StatRunicPower],
+	},
+	{
+		config: GreaterCauseBuff,
+		picker: IconPicker,
+		stats: [Stat.StatAttackPower, Stat.StatSpellPower],
+	},
+] as PickerStatOptions[]
+
 export const RAID_BUFFS_MISC_CONFIG = [
   {
     config: StrengthOfWrynn,
     picker: IconPicker,
     stats: [Stat.StatAttackPower, Stat.StatRangedAttackPower, Stat.StatSpellPower],
-  },
-  {
-    config: HeroicPresence,
-    picker: IconPicker,
-    stats: [Stat.StatMeleeHit, Stat.StatSpellHit],
   },
   {
     config: BraidedEterniumChain,

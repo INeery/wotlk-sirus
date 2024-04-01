@@ -33,6 +33,7 @@ import { NumberPicker } from "../number_picker";
 import { SavedDataManager } from "../saved_data_manager";
 import { SimTab } from "../sim_tab";
 import { ConsumesPicker } from "./consumes_picker";
+import {PARTY_BUFFS_SECTION} from "../../constants/tooltips.js";
 
 export class SettingsTab extends SimTab {
 	protected simUI: IndividualSimUI<Spec>;
@@ -82,7 +83,8 @@ export class SettingsTab extends SimTab {
 		this.buildOtherSettings();
 
 		if (!this.simUI.isWithinRaidSim) {
-			this.buildBuffsSettings();
+			this.buildRaidBuffsSettings();
+			this.buildPartyBuffsSettings();
 			this.buildDebuffsSettings();
 		}
 
@@ -264,7 +266,7 @@ export class SettingsTab extends SimTab {
 		}
 	}
 
-	private buildBuffsSettings() {
+	private buildRaidBuffsSettings() {
 		const contentBlock = new ContentBlock(this.column3, 'buffs-settings', {
 			header: { title: 'Raid Buffs', tooltip: Tooltips.BUFFS_SECTION }
 		});
@@ -282,6 +284,18 @@ export class SettingsTab extends SimTab {
 				label: 'Misc',
 			}, this.simUI);
 		}
+	}
+
+	private buildPartyBuffsSettings() {
+		const contentBlock = new ContentBlock(this.column3, 'buffs-settings', {
+			header: { title: 'Party Buffs', tooltip: Tooltips.PARTY_BUFFS_SECTION }
+		});
+
+		const buffOptions = relevantStatOptions(BuffDebuffInputs.PARTY_BUFFS_CONFIG, this.simUI);
+		this.configureIconSection(
+			contentBlock.bodyElement,
+			buffOptions.map(options => options.picker && new options.picker(contentBlock.bodyElement, this.simUI.player, options.config as any, this.simUI)),
+		);
 	}
 
 	private buildDebuffsSettings() {

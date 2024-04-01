@@ -71,9 +71,7 @@ var FullRaidBuffs = &proto.RaidBuffs{
 	RetributionAura:       true,
 	IcyTalons:             true,
 }
-var FullPartyBuffs = &proto.PartyBuffs{
-	HeroicPresence: true,
-}
+var FullPartyBuffs = &proto.PartyBuffs{}
 var FullIndividualBuffs = &proto.IndividualBuffs{
 	BlessingOfKings:     true,
 	BlessingOfMight:     proto.TristateEffect_TristateEffectImproved,
