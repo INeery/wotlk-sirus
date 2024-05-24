@@ -59,7 +59,6 @@ func (shaman *Shaman) newWindfuryImbueSpell(isMH bool) *core.Spell {
 		ThreatMultiplier: 1,
 
 		ApplyEffects: func(sim *core.Simulation, target *core.Unit, spell *core.Spell) {
-			//	TODO Убедится что прок ВФ снимает 1 стак бури
 
 			constBaseDamage := spell.BonusWeaponDamage()
 			mAP := spell.MeleeAttackPower() + apBonus
@@ -157,7 +156,9 @@ func (shaman *Shaman) newFlametongueImbueSpell(weapon *core.Item, isDownranked b
 
 		ApplyEffects: func(sim *core.Simulation, target *core.Unit, spell *core.Spell) {
 			if weapon.SwingSpeed != 0 {
-				damage := weapon.SwingSpeed * (baseDamage + 0.1/2.6*spell.SpellPower())
+				// Урон был снижен на 50% на сирусе
+				nerfCoefficient := 0.5
+				damage := nerfCoefficient * weapon.SwingSpeed * (baseDamage + 0.1/2.6*spell.SpellPower())
 				spell.CalcAndDealDamage(sim, target, damage, spell.OutcomeMagicHitAndCrit)
 			}
 		},

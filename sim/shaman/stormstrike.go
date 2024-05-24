@@ -43,11 +43,7 @@ func (shaman *Shaman) StormstrikeDebuffAura(target *core.Unit) *core.Aura {
 }
 
 func (shaman *Shaman) newStormstrikeHitSpell(isMH bool) func(*core.Simulation, *core.Unit, *core.Spell) {
-	var flatDamageBonus float64 = 0
-	if shaman.Ranged().ID == TotemOfTheDancingFlame {
-		flatDamageBonus += 155
-	}
-
+	ohHitDmgCoefficient := 1.34
 	var procMask core.ProcMask
 	if isMH {
 		procMask = core.ProcMaskMeleeMHSpecial
@@ -59,13 +55,14 @@ func (shaman *Shaman) newStormstrikeHitSpell(isMH bool) func(*core.Simulation, *
 		var baseDamage float64
 		spell.ProcMask = procMask
 		if isMH {
-			baseDamage = flatDamageBonus +
+			baseDamage =
 				spell.Unit.MHWeaponDamage(sim, spell.MeleeAttackPower()) +
-				spell.BonusWeaponDamage()
+					spell.BonusWeaponDamage()
 		} else {
-			baseDamage = flatDamageBonus +
-				spell.Unit.OHWeaponDamage(sim, spell.MeleeAttackPower()) +
-				spell.BonusWeaponDamage()
+			baseDamage =
+				ohHitDmgCoefficient*
+					spell.Unit.OHWeaponDamage(sim, spell.MeleeAttackPower()) +
+					spell.BonusWeaponDamage()
 		}
 
 		spell.CalcAndDealDamage(sim, target, baseDamage, spell.OutcomeMeleeSpecialCritOnly)
@@ -81,11 +78,6 @@ func (shaman *Shaman) registerStormstrikeSpell() {
 	var skyshatterAura *core.Aura
 	if shaman.HasSetBonus(ItemSetSkyshatterHarness, 4) {
 		skyshatterAura = shaman.NewTemporaryStatsAura("Skyshatter 4pc AP Bonus", core.ActionID{SpellID: 38432}, stats.Stats{stats.AttackPower: 70}, time.Second*12)
-	}
-	var totemOfDuelingAura *core.Aura
-	if shaman.Ranged().ID == TotemOfDueling {
-		totemOfDuelingAura = shaman.NewTemporaryStatsAura("Essense of the Storm", core.ActionID{SpellID: 60766},
-			stats.Stats{stats.MeleeHaste: 60, stats.SpellHaste: 60}, time.Second*6)
 	}
 
 	manaMetrics := shaman.NewManaMetrics(core.ActionID{SpellID: 51522})
@@ -130,9 +122,6 @@ func (shaman *Shaman) registerStormstrikeSpell() {
 
 				if skyshatterAura != nil {
 					skyshatterAura.Activate(sim)
-				}
-				if totemOfDuelingAura != nil {
-					totemOfDuelingAura.Activate(sim)
 				}
 
 				if shaman.HasMHWeapon() {

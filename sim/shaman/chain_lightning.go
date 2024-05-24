@@ -26,6 +26,7 @@ func (shaman *Shaman) newChainLightningSpell(isLightningOverload bool) *core.Spe
 	if shaman.HasSetBonus(ItemSetWorldbreakerBattlegear, 4) {
 		spellConfig.DamageMultiplier += 0.34
 	}
+	has2T9Bonus := shaman.HasSetBonus(ItemSetThrallsBattlegear, 2)
 
 	if !isLightningOverload {
 		spellConfig.Cast.CD = core.Cooldown{
@@ -49,6 +50,7 @@ func (shaman *Shaman) newChainLightningSpell(isLightningOverload bool) *core.Spe
 		for hitIndex := int32(0); hitIndex < numHits; hitIndex++ {
 			baseDamage := dmgBonus + sim.Roll(973, 1111) + spellCoeff*spell.SpellPower()
 			baseDamage *= bounceCoeff
+
 			result := spell.CalcDamage(sim, curTarget, baseDamage, spell.OutcomeMagicHitAndCrit)
 
 			if canLO && result.Landed() && sim.RandomFloat("CL Lightning Overload") <= lightningOverloadChance {
@@ -62,6 +64,14 @@ func (shaman *Shaman) newChainLightningSpell(isLightningOverload bool) *core.Spe
 			}
 
 			bounceCoeff *= dmgMultiplierPerBounce
+
+			if has2T9Bonus {
+				// каждый прыжок цепнухи добавляет +28% урона при 2т9
+				// TODO проверить что коэф сам с собой не перемножается. Пока адитивный
+				nextHitDmgMultiplier := 0.28 * (float64(hitIndex) + 1)
+				bounceCoeff *= 1 + nextHitDmgMultiplier
+			}
+
 			curTarget = sim.Environment.NextTargetUnit(curTarget)
 		}
 	}

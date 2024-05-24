@@ -226,10 +226,10 @@ var ItemSetThrallsBattlegear = core.NewItemSet(core.ItemSet{
 	AlternativeName: "Nobundo's Battlegear",
 	Bonuses: map[int32]core.ApplyEffect{
 		2: func(agent core.Agent) {
-			// +3% increase to static shock proc rate
+			// +28% dmg increase for every next chain lightning jump
 		},
 		4: func(agent core.Agent) {
-			// +25% shock damage
+			// lava burst applies 5 seconds long dot dealing 17% of its damage every 1
 		},
 	},
 })

@@ -74,11 +74,11 @@ func NewEnhancementShaman(character *core.Character, options *proto.Player) *Enh
 func CalculateOffhandMultiplier(enh *EnhancementShaman) float64 {
 	switch enh.Talents.DualWieldSpecialization {
 	case 1:
-		return 0.665
+		return 0.58
 	case 2:
-		return 0.83
+		return 0.665
 	case 3:
-		return 1
+		return 0.75
 	default:
 		return 0.5
 	}

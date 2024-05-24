@@ -39,10 +39,8 @@ func (shaman *Shaman) newShockSpellConfig(spellID int32, spellSchool core.SpellS
 			},
 		},
 
-		BonusHitRating: float64(shaman.Talents.ElementalPrecision) * core.SpellHitRatingPerHitChance,
-		DamageMultiplier: 1 +
-			0.01*float64(shaman.Talents.Concussion) +
-			core.TernaryFloat64(shaman.HasSetBonus(ItemSetThrallsBattlegear, 4), 0.25, 0),
+		BonusHitRating:   float64(shaman.Talents.ElementalPrecision) * core.SpellHitRatingPerHitChance,
+		DamageMultiplier: 1 + 0.01*float64(shaman.Talents.Concussion),
 		CritMultiplier:   shaman.ElementalCritMultiplier(0),
 		ThreatMultiplier: shaman.spellThreatMultiplier(),
 	}

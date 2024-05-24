@@ -16,22 +16,24 @@ func (shaman *Shaman) registerLavaBurstSpell() {
 		core.TernaryFloat64(shaman.HasMajorGlyph(proto.ShamanMajorGlyph_GlyphOfLava), 0.1, 0)
 
 	var lvbDotSpell *core.Spell
-	if shaman.HasSetBonus(ItemSetThrallsRegalia, 4) {
+	// теперь дот у энха на 4Т9
+	if shaman.HasSetBonus(ItemSetThrallsBattlegear, 4) {
 		lvbDotSpell = shaman.RegisterSpell(core.SpellConfig{
-			ActionID:    core.ActionID{SpellID: 71824},
+			ActionID:    core.ActionID{SpellID: 373524},
 			SpellSchool: core.SpellSchoolFire,
 			ProcMask:    core.ProcMaskEmpty,
-			Flags:       core.SpellFlagNoOnCastComplete | core.SpellFlagIgnoreModifiers,
+			// TODO игнорирует ли модификаторы на целе? Например +13%
+			Flags: core.SpellFlagNoOnCastComplete | core.SpellFlagIgnoreModifiers,
 
 			DamageMultiplier: 1,
 			ThreatMultiplier: 1,
 
 			Dot: core.DotConfig{
 				Aura: core.Aura{
-					Label: "LavaBursted",
+					Label: "LavaBursted 4Т9",
 				},
-				TickLength:    time.Second * 2,
-				NumberOfTicks: 3,
+				TickLength:    time.Second,
+				NumberOfTicks: 5,
 
 				OnTick: func(sim *core.Simulation, target *core.Unit, dot *core.Dot) {
 					dot.CalcAndDealPeriodicSnapshotDamage(sim, target, dot.OutcomeTick)
@@ -79,7 +81,7 @@ func (shaman *Shaman) registerLavaBurstSpell() {
 			result := spell.CalcDamage(sim, target, baseDamage, spell.OutcomeMagicHitAndCrit)
 			if lvbDotSpell != nil && result.Landed() {
 				dot := lvbDotSpell.Dot(target)
-				dot.SnapshotBaseDamage = result.Damage * 0.1 / float64(dot.NumberOfTicks)
+				dot.SnapshotBaseDamage = result.Damage * 0.17
 				dot.SnapshotAttackerMultiplier = 1
 				dot.Spell.Cast(sim, target)
 			}
