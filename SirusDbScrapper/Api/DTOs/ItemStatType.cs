@@ -1,0 +1,3 @@
+namespace SirusDbScrapper.Api.DTOs;
+
+

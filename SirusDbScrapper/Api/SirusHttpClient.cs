@@ -7,12 +7,12 @@ public class SirusHttpClient : HttpClient
 {
 	private const string SirusBaseApiUrl = "https://sirus.su/api/base";
 
-	private static readonly HttpClientHandler handler = new HttpClientHandler()
+	private static readonly HttpClientHandler HttpHandler = new()
 	{
 		AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate
 	};
 
-	public SirusHttpClient() : base(handler)
+	public SirusHttpClient() : base(HttpHandler)
 	{
 		BaseAddress = new Uri(SirusBaseApiUrl);
 
@@ -42,20 +42,6 @@ public class SirusHttpClient : HttpClient
 			MaxAge = TimeSpan.Zero
 		};
 
-
-		// DefaultRequestHeaders.TryAddWithoutValidation("Accept", new[] { "v=b3", "q=0.7", "q=0.8", "q=0.9" });
-		// DefaultRequestHeaders.TryAddWithoutValidation("Accept-Language", new[] { "q=0.9" });
-		//
-		// DefaultRequestHeaders.TryAddWithoutValidation("Pragma", new[] { "no-cache" });
-		// DefaultRequestHeaders.TryAddWithoutValidation("Priority", new[] { "u=0, i" });
-		// DefaultRequestHeaders.TryAddWithoutValidation("Upgrade-Insecure-Requests", "1");
-		// DefaultRequestHeaders.TryAddWithoutValidation("Sec-Fetch-User", "?1");
-		// DefaultRequestHeaders.TryAddWithoutValidation("Sec-Fetch-Site", "none");
-		// DefaultRequestHeaders.TryAddWithoutValidation("Sec-Fetch-Mode", "navigate");
-		// DefaultRequestHeaders.TryAddWithoutValidation("Sec-Fetch-Dest", "document");
-		// DefaultRequestHeaders.TryAddWithoutValidation("Sec-Ch-Ua-Platform", "Linux");
-		// DefaultRequestHeaders.TryAddWithoutValidation("Sec-Ch-Ua-Mobile", "?0");
-		// DefaultRequestHeaders.TryAddWithoutValidation("Sec-Ch-Ua", "Google Chrome\";v=\"125\", \"Chromium\";v=\"125\", \"Not.A/Brand\";v=\"24");
 		DefaultRequestHeaders.TryAddWithoutValidation("User-Agent",
 			"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36");
 	}
